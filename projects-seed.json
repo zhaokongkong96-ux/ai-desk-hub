@@ -1,0 +1,278 @@
+{
+  "source": "https://github.com/s87343472/awesome-ai-hardware",
+  "snapshot_date": "2026-10-19",
+  "projects": [
+    {
+      "id": "ai-doorbell-home-assistant",
+      "name": "AI Doorbell for Home Assistant",
+      "repo_url": "https://github.com/nwkuga/ha-ai-doorbell",
+      "category": "smart-home-iot",
+      "description_zh": "通过视觉语言模型比较门铃快照与已标注参考照片，并在 Home Assistant 与 Telegram 中完成识别和纠正。",
+      "ai_role": "多模态 AI 代理根据摄像头快照和参考图像匹配并描述人物。",
+      "hardware_role": "Home Assistant 摄像头或视频门铃提供事件触发的快照。",
+      "license": "MIT",
+      "added_at": "2026-08-01",
+      "last_verified": "2026-08-01",
+      "tags": [
+        "doorbell",
+        "home-assistant",
+        "vision-language-model"
+      ]
+    },
+    {
+      "id": "anima",
+      "name": "Anima",
+      "repo_url": "https://github.com/Fullive-AI/Anima",
+      "category": "smart-home-iot",
+      "description_zh": "在本地网络运行 LangGraph Agent OS，自动发现米家设备，并结合环境状态、长期记忆和设备技能规划真实控制动作。",
+      "ai_role": "LLM 结合设备状态、偏好、记忆和设备技能规划动作。",
+      "hardware_role": "本地适配器发现、读取和控制灯、空调、加湿器、空气净化器等米家设备。",
+      "license": "Apache-2.0",
+      "added_at": "2026-08-01",
+      "last_verified": "2026-08-01",
+      "tags": [
+        "agent",
+        "local-first",
+        "mi-home"
+      ]
+    },
+    {
+      "id": "autonomous-computer",
+      "name": "Autonomous Computer",
+      "repo_url": "https://github.com/autonomous-ai/autonomous-computer",
+      "category": "edge-ai",
+      "description_zh": "提供 2、4、8 GPU 本地 AI 电脑的开放 BOM、CAD、装配照片、BIOS 设置和多档完整构建指南。",
+      "ai_role": "通过本地推理软件运行、服务或微调开放语言模型。",
+      "hardware_role": "开放式多 GPU 工作站设计明确列出组件、机箱、散热、电源和装配步骤。",
+      "license": "MIT",
+      "added_at": "2026-08-01",
+      "last_verified": "2026-08-01",
+      "tags": [
+        "gpu",
+        "local-ai",
+        "open-hardware"
+      ]
+    },
+    {
+      "id": "autonomous-os",
+      "name": "Autonomous OS",
+      "repo_url": "https://github.com/autonomous-ai/autonomous-os",
+      "category": "robotics",
+      "description_zh": "面向真实机器人的可组合 Agent 操作系统，通过 ROBOT.md 声明机体、能力与安全边界，再将感知、推理和动作组合成可替换的运行时与技能。",
+      "ai_role": "Agent 运行时基于摄像头、麦克风和技能上下文选择动作。",
+      "hardware_role": "硬件抽象层连接摄像头、麦克风、LED、舵机等执行器，并设置安全门控。",
+      "license": "Apache-2.0（根目录；组件和模型需单独核验）",
+      "added_at": "2026-09-12",
+      "last_verified": "2026-09-12",
+      "tags": [
+        "agent-runtime",
+        "physical-ai",
+        "robotics"
+      ]
+    },
+    {
+      "id": "cyclo-intelligence",
+      "name": "Cyclo Intelligence",
+      "repo_url": "https://github.com/ROBOTIS-GIT/cyclo_intelligence",
+      "category": "robotics",
+      "description_zh": "为 ROBOTIS AI Worker 提供物理 AI 数据采集、数据转换、策略训练、推理和真机执行平台，并支持 Behavior Tree 与 VLA 混合控制。",
+      "ai_role": "学习策略和 VLA 组件负责感知与动作，行为树编排长链路任务逻辑。",
+      "hardware_role": "通过 ROS 2 包向 ROBOTIS AI Worker 机器人记录数据并部署策略。",
+      "license": "Apache-2.0",
+      "added_at": "2026-08-01",
+      "last_verified": "2026-08-01",
+      "tags": [
+        "behavior-tree",
+        "physical-ai",
+        "vla"
+      ]
+    },
+    {
+      "id": "esp-claw",
+      "name": "ESP-Claw",
+      "repo_url": "https://github.com/espressif/esp-claw",
+      "category": "edge-ai",
+      "description_zh": "乐鑫的 IoT 对话式 Agent 框架：在 ESP32 系列芯片上闭环完成感知、决策、工具调用和设备执行。",
+      "ai_role": "Agent 使用支持的云端 LLM 端点推理事件、调用技能和设备工具。",
+      "hardware_role": "ESP32-S3、P4、C5 等板卡运行本地运行时，并连接传感器、显示器与 IoT 外设。",
+      "license": "Apache-2.0",
+      "added_at": "2026-09-12",
+      "last_verified": "2026-09-12",
+      "tags": [
+        "agent",
+        "esp32",
+        "iot"
+      ]
+    },
+    {
+      "id": "esp32-ai",
+      "name": "ESP32 AI",
+      "repo_url": "https://github.com/slvDev/esp32-ai",
+      "category": "edge-ai",
+      "description_zh": "在 ESP32-S3 上完全离线运行 2890 万参数 TinyStories 语言模型，并将生成文本输出到连接的显示屏。",
+      "ai_role": "量化语言模型在设备端执行自回归文本生成。",
+      "hardware_role": "ESP32-S3 的 Flash、PSRAM 和连接显示屏承载模型并展示输出。",
+      "license": "MIT",
+      "added_at": "2026-08-01",
+      "last_verified": "2026-08-01",
+      "tags": [
+        "esp32",
+        "llm",
+        "on-device-ai"
+      ]
+    },
+    {
+      "id": "esprec",
+      "name": "esprec",
+      "repo_url": "https://github.com/tig/esprec",
+      "category": "protocols-infrastructure",
+      "description_zh": "通过 ESP32 端组件和主机工具，让编码 Agent 经 USB 串口捕获设备帧缓冲并进行真实屏幕的视觉验证。",
+      "ai_role": "编码 Agent 调用捕获工作流，检查并迭代验证嵌入式 UI。",
+      "hardware_role": "ESP32 组件通过 USB 串口导出帧缓冲，主机工具生成 PNG 或 GIF。",
+      "license": "Apache-2.0",
+      "added_at": "2026-08-01",
+      "last_verified": "2026-08-01",
+      "tags": [
+        "agent-tooling",
+        "esp32",
+        "screen-capture"
+      ]
+    },
+    {
+      "id": "hailo-apps",
+      "name": "Hailo Apps",
+      "repo_url": "https://github.com/hailo-ai/hailo-apps",
+      "category": "edge-ai",
+      "description_zh": "为树莓派 5 等平台上的 Hailo 加速器提供可运行的计算机视觉、VLM、LLM 与语音应用和开发管线。",
+      "ai_role": "模型和流水线在 Hailo 加速器上执行视觉、语言和语音推理。",
+      "hardware_role": "树莓派 5 或支持的电脑运行 Hailo-8、Hailo-8L、Hailo-10H 等加速器应用。",
+      "license": "MIT",
+      "added_at": "2026-08-01",
+      "last_verified": "2026-08-01",
+      "tags": [
+        "computer-vision",
+        "hailo",
+        "raspberry-pi"
+      ]
+    },
+    {
+      "id": "home-generative-agent",
+      "name": "Home Generative Agent",
+      "repo_url": "https://github.com/goruck/home-generative-agent",
+      "category": "smart-home-iot",
+      "description_zh": "将 LangGraph Agent 集成到 Home Assistant，用云端或本地模型控制实体、创建自动化、分析摄像头并提供异常提醒。",
+      "ai_role": "LLM Agent 使用工具控制实体、生成自动化、理解摄像头内容和管理语义记忆。",
+      "hardware_role": "Home Assistant 实体、摄像头、锁、传感器和执行器提供状态并执行经确认的操作。",
+      "license": "MIT",
+      "added_at": "2026-08-01",
+      "last_verified": "2026-08-01",
+      "tags": [
+        "agent",
+        "home-assistant",
+        "local-llm"
+      ]
+    },
+    {
+      "id": "lerobot",
+      "name": "LeRobot",
+      "repo_url": "https://github.com/huggingface/lerobot",
+      "category": "robotics",
+      "description_zh": "Hugging Face 的端到端机器人学习库，统一真实机器人数据采集、数据集、策略训练和部署。",
+      "ai_role": "模仿学习与视觉语言动作策略从机器人数据集中训练，并将观察转化为真实动作。",
+      "hardware_role": "硬件无关的机器人接口支持机械臂、遥操作设备、移动机器人、人形机器人、摄像头和电机总线。",
+      "license": "Apache-2.0",
+      "added_at": "2026-09-12",
+      "last_verified": "2026-09-12",
+      "tags": [
+        "imitation-learning",
+        "physical-ai",
+        "vla"
+      ]
+    },
+    {
+      "id": "lightmem-ego",
+      "name": "LightMem-Ego",
+      "repo_url": "https://github.com/zjunlp/LightMem-Ego",
+      "category": "wearables",
+      "description_zh": "连接 Rokid AI 眼镜、浏览器前端和在线后端，将第一视角摄像头与音频流组织成可查询的分层多模态记忆。",
+      "ai_role": "LLM、嵌入模型和分层记忆层回答实时及历史第一视角上下文问题。",
+      "hardware_role": "Rokid AI Glass Android 应用采集第一视角摄像头与麦克风流，并呈现回答。",
+      "license": "MIT",
+      "added_at": "2026-08-02",
+      "last_verified": "2026-08-02",
+      "tags": [
+        "ai-glasses",
+        "memory",
+        "multimodal"
+      ]
+    },
+    {
+      "id": "mcp2mqtt",
+      "name": "mcp2mqtt",
+      "repo_url": "https://github.com/mcp2everything/mcp2mqtt",
+      "category": "protocols-infrastructure",
+      "description_zh": "把 MCP 工具调用转换成 MQTT 命令，让大模型通过自然语言控制灯光、电机和其他联网设备。",
+      "ai_role": "MCP Server 将已配置的设备命令作为工具暴露给 LLM。",
+      "hardware_role": "通过 MQTT 连接的灯、马达、传感器和控制器执行命令并返回状态。",
+      "license": "MIT",
+      "added_at": "2026-08-01",
+      "last_verified": "2026-08-01",
+      "tags": [
+        "mcp",
+        "mqtt",
+        "smart-home"
+      ]
+    },
+    {
+      "id": "microduck",
+      "name": "Microduck",
+      "repo_url": "https://github.com/pollen-robotics/microduck",
+      "category": "robotics",
+      "description_zh": "25 厘米双足鸭机器人，在板载 Rockchip 上以 50Hz 神经网络策略控制 15 个舵机，并提供从仿真训练到真机的完整链路。",
+      "ai_role": "使用 MuJoCo 与 PPO 训练的 ONNX 神经网络策略控制机器人运动。",
+      "hardware_role": "双足机器人搭载 RK3566、摄像头、IMU 和 15 个舵机。",
+      "license": "Apache-2.0（软件；硬件设计需单独核验）",
+      "added_at": "2026-09-12",
+      "last_verified": "2026-09-12",
+      "tags": [
+        "biped",
+        "reinforcement-learning",
+        "sim-to-real"
+      ]
+    },
+    {
+      "id": "nightrun",
+      "name": "NIGHTRUN",
+      "repo_url": "https://github.com/hardrave/NIGHTRUN",
+      "category": "edge-ai",
+      "description_zh": "从 UEFI USB 或树莓派 5 SD 卡直接启动的本地 LLM 运行时，不依赖传统操作系统或网络栈。",
+      "ai_role": "量化推理内核在支持的 Llama 与 Qwen GGUF 模型上执行离线推理。",
+      "hardware_role": "可直接运行于 x86_64 UEFI PC 或 Raspberry Pi 5，使用 framebuffer、USB 或 microSD 启动。",
+      "license": "MIT",
+      "added_at": "2026-09-12",
+      "last_verified": "2026-09-12",
+      "tags": [
+        "llm",
+        "raspberry-pi",
+        "uefi"
+      ]
+    },
+    {
+      "id": "omi",
+      "name": "Omi",
+      "repo_url": "https://github.com/BasedHardware/omi",
+      "category": "wearables",
+      "description_zh": "开源可穿戴与配套应用持续采集对话和屏幕内容，进行实时转写、摘要、行动项提取和个人记忆检索。",
+      "ai_role": "语音和语言模型进行转写、摘要、记忆检索，并回答历史上下文问题。",
+      "hardware_role": "可穿戴麦克风和配套桌面或移动设备采集音频与屏幕上下文。",
+      "license": "MIT",
+      "added_at": "2026-08-01",
+      "last_verified": "2026-08-01",
+      "tags": [
+        "memory",
+        "voice-ai",
+        "wearable"
+      ]
+    }
+  ]
+}
