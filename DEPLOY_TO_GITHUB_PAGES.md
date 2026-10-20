@@ -11,11 +11,11 @@
 5. 以成功 deployment 输出的 page_url 为实际地址，检查首页、manifest、sw.js、图标和种子 JSON 的 HTTPS 状态及文件指纹。
 6. 在线浏览器验收基础交互、真实 GitHub 搜索、刷新持久化、主路径和 index.html、首次缓存后的离线重开；记录每项实际结果。
 
-工作流使用 `_site` 白名单产物，只有七个静态文件进入网站。说明和脚本将随代码在公开仓库中可见。
+工作流使用 `_site` 白名单产物，只有11 个白名单资源文件进入网站。说明和脚本将随代码在公开仓库中可见。
 
 ## 手动分支发布替代方案
 
-若不使用 Actions，只上传 `_site/` 中的七个文件到仓库根目录，然后在 Pages 选择 Deploy from a branch / main / root。两种发布方式二选一。
+若不使用 Actions，只上传 `_site/` 中的白名单文件及 vendor 子目录到仓库根目录，然后在 Pages 选择 Deploy from a branch / main / root。两种发布方式二选一。
 
 ## iPad Pro 实机验收（全部待验证）
 
