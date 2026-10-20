@@ -24,23 +24,24 @@ button,.project-actions a{min-height:44px;min-width:44px}.project-card h3,.note-
 @media(max-width:400px){.hero{flex-wrap:wrap}.hero-date{text-align:left}.nav button{padding:11px 8px}}
 .brief-placeholder{font-size:12px;line-height:1.8;color:#bdc4b8;margin:0}.note-item{align-items:flex-start}
 </style>
-<link rel="stylesheet" href="./workspace.css?v=0.5.3">
-<link rel="stylesheet" href="./return.css?v=0.5.3">
-<link rel="stylesheet" href="./radar.css?v=0.5.3">
-<link rel="stylesheet" href="./timeline.css?v=0.5.3">
+<link rel="stylesheet" href="./workspace.css?v=0.6.0">
+<link rel="stylesheet" href="./return.css?v=0.6.0">
+<link rel="stylesheet" href="./radar.css?v=0.6.0">
+<link rel="stylesheet" href="./timeline.css?v=0.6.0">
+<link rel="stylesheet" href="./companion.css?v=0.6.0">
 <script>try{if(JSON.parse(localStorage.getItem('ai-desk-hub-return-v04')||'null')?.privacyHidden===true)document.documentElement.classList.add('return-private');}catch(e){}</script>
-<script src="./vendor/fullcalendar-6.1.19.min.js?v=0.5.3"></script>
+<script src="./vendor/fullcalendar-6.1.19.min.js?v=0.6.0"></script>
 </head>
 <body>
 <div class="app">
   <header class="topbar">
-    <div class="brand"><div class="brand-mark">AI.</div><div><div class="brand-title">AI Desk Hub <span id="appVersion" style="font-size:10px;color:#8090a3;font-weight:400">v0.5.3</span></div><div class="brand-sub">PERSONAL WORK SYSTEM</div></div></div>
+    <div class="brand"><div class="brand-mark">AI.</div><div><div class="brand-title">AI Desk Hub <span id="appVersion" style="font-size:10px;color:#8090a3;font-weight:400">v0.6.0</span></div><div class="brand-sub">PERSONAL WORK SYSTEM</div></div></div>
     <nav class="nav" aria-label="主导航">
       <button class="active" data-page="today">工作台 <span>01</span></button>
       <button data-page="radar">AI RADAR <span>02</span></button>
       <button data-page="return">RETURN <span>03</span></button>
     </nav>
-    <div class="top-actions"><div class="status-pill"><span class="status-dot"></span>本机保存 · 外部日历未连接</div><button class="icon-btn" id="exportBtn" title="导出本地记录">导出记录 ↗</button></div>
+    <div class="top-actions"><div class="status-pill"><span class="status-dot"></span>本机保存 · 外部日历未连接</div><button class="icon-btn" id="openAmbient">环境屏</button><button class="icon-btn" id="openDeskSettings" aria-label="打开体验设置">设置</button><button class="icon-btn" id="exportBtn" title="导出本地记录">导出记录 ↗</button></div>
   </header>
 
   <p id="storageWarning" role="alert" hidden>本地保存失败：记录目前只在此页面内，请立即导出备份。</p>
@@ -53,7 +54,7 @@ button,.project-actions a{min-height:44px;min-width:44px}.project-card h3,.note-
         <div class="event-legend" aria-label="日程分类颜色"><span style="--event-color:#00bfd3"><i class="legend-dot"></i>工作</span><span style="--event-color:#b489ed"><i class="legend-dot"></i>研究</span><span style="--event-color:#00c68d"><i class="legend-dot"></i>个人</span><span style="--event-color:#e769a7"><i class="legend-dot"></i>会议</span><span style="--event-color:#ef9a42"><i class="legend-dot"></i>截止</span><span>虚线框：重要 · 划线：已完成</span></div><div class="calendar-hint">点选日程编辑 · 横向拖动调整时间 · 点“新增日程”安排</div>
       </section>
       <section class="panel clock-panel">
-        <div class="eyebrow">YOUR DAILY DESK</div><div class="time" id="clock">09:00</div><div class="date" id="dateText"></div>
+        <div class="eyebrow">YOUR DAILY DESK</div><div class="time" id="clock">09:00</div><div class="date" id="dateText"></div><button id="weatherChip" class="weather-chip">启用定位天气</button>
         <div class="next-event"><span class="eyebrow accent-cyan">UP NEXT / 接下来</span><div id="nextEventTitle">暂无日程</div><div id="nextEventTime" class="panel-sub"></div></div>
       </section>
       <section class="panel tasks-panel">
@@ -65,12 +66,12 @@ button,.project-actions a{min-height:44px;min-width:44px}.project-card h3,.note-
         <div class="note-list zone-scroll" id="noteList"></div>
       </section>
       <div class="utility-stack">
-        <section class="panel focus-card">
-          <div class="panel-head"><div><div class="eyebrow accent-green">FOCUS</div><h2 class="panel-title">专注计时</h2></div><span class="tiny-label">25 / 05</span></div>
-          <div class="focus-time" id="focusTime">25:00</div>
-          <div class="focus-controls"><button class="btn btn-primary" id="focusStart">开始</button><button class="btn btn-soft" id="focusReset">重置</button><button class="btn btn-soft" id="focusShort">休息 5 分钟</button></div>
+        <section class="panel focus-card media-card">
+          <div class="panel-head"><div><div class="eyebrow accent-green">NOW PLAYING</div><h2 class="panel-title">音乐与媒体</h2></div><button class="btn btn-light" id="expandMedia">打开播放器</button></div>
+          <div class="media-preview"><div class="media-art" aria-hidden="true">♫</div><div><strong id="mediaTitle">给书桌一点声音</strong><p id="mediaStatus">网易云歌单待添加 · 也可播放本地音频</p></div></div>
+          <button class="btn btn-soft" id="mediaQuickPlay" disabled>播放本地音频</button>
         </section>
-        <section class="panel briefing"><div class="eyebrow accent-purple">DAILY BRIEF</div><h2 class="panel-title">今日简报 <span class="tiny-label">待接入</span></h2><p class="brief-placeholder">暂无新简报。信息源与 AI 接入后显示。</p></section>
+        <section class="panel briefing"><div class="eyebrow accent-purple">DAILY BRIEF</div><h2 class="panel-title">今日重点 <span class="tiny-label">本机规则摘要</span></h2><p id="dailySummary" class="brief-placeholder"></p><button class="brief-link" id="reviewPriorities">查看重点</button></section>
       </div>
     </div>
   </main>
@@ -135,11 +136,11 @@ let projects=[
 ];
 let state={tasks:initialTasks.slice(),notes:[]};
 try{const saved=localStorage.getItem(STORAGE_KEY);if(saved){const parsed=JSON.parse(saved);if(parsed&&Array.isArray(parsed.tasks)&&Array.isArray(parsed.notes)){state={tasks:parsed.tasks.filter(t=>t&&typeof t.id==='string'&&typeof t.text==='string'),notes:parsed.notes.filter(n=>n&&typeof n.text==='string')};}}}catch(e){}
-function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){document.getElementById('storageWarning').hidden=false;}}
+function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));window.dispatchEvent(new Event('desk-data-change'));}catch(e){document.getElementById('storageWarning').hidden=false;}}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 let toastTimer;function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2600)}
-function renderTasks(){const box=document.getElementById('taskList');const open=state.tasks.filter(t=>!t.done).length;document.getElementById('taskCount').textContent=`${open} 未完成 / ${state.tasks.length} 总计`;if(!state.tasks.length){box.innerHTML='<div class="empty-state">还没有待办。用底部快速记录添加第一项。</div>';return;}box.innerHTML=state.tasks.map(t=>`<div class="task-row ${t.done?'done':''}" data-task="${esc(t.id)}"><label class="task-toggle"><input class="task-check" type="checkbox" ${t.done?'checked':''} aria-label="完成任务"></label><div class="task-text">${esc(t.text)}</div><span class="task-category">${esc(t.category||'待办')}</span><button class="delete-task" aria-label="删除任务" title="删除任务">×</button></div>`).join('');}
-function renderNotes(){const box=document.getElementById('noteList');document.getElementById('noteCount').textContent=`${state.notes.length} NOTES`;if(!state.notes.length){box.innerHTML='<div class="empty-state">还没有记录。使用底部快速记录栏保存灵感、待办或研究线索。</div>';return;}box.innerHTML=state.notes.slice().reverse().slice(0,12).map(n=>`<div class="note-item"><span class="note-kind">${esc(n.type)}</span><span style="flex:1">${esc(n.text)}</span><span style="font-size:9px;color:#a0a69c;white-space:nowrap">${esc(n.time)}</span></div>`).join('');}
+function renderTasks(){const box=document.getElementById('taskList');const open=state.tasks.filter(t=>!t.done).length;document.getElementById('taskCount').textContent=`${open} 未完成 / ${state.tasks.length} 总计`;if(!state.tasks.length){box.innerHTML='<div class="empty-state">还没有待办。用底部快速记录添加第一项。</div>';return;}box.innerHTML=state.tasks.slice().sort((a,b)=>Number(!!a.done)-Number(!!b.done)||Number(!!b.important)-Number(!!a.important)).map(t=>`<div class="task-row ${t.done?'done':''}" data-task="${esc(t.id)}"><label class="task-toggle"><input class="task-check" type="checkbox" ${t.done?'checked':''} aria-label="完成任务"></label><button class="task-text record-open" data-edit-task="${esc(t.id)}">${t.important?'<span class="priority-label">重点</span> ':''}${esc(t.text)}</button><span class="task-category">${esc(t.category||'待办')}</span><button class="delete-task" aria-label="删除任务" title="删除任务">×</button></div>`).join('');}
+function renderNotes(){const box=document.getElementById('noteList');document.getElementById('noteCount').textContent=`${state.notes.length} NOTES`;if(!state.notes.length){box.innerHTML='<div class="empty-state">还没有记录。使用底部快速记录栏保存灵感、待办或研究线索。</div>';return;}box.innerHTML=state.notes.map((n,i)=>({n,i})).reverse().map(({n,i})=>`<button class="note-item record-open" data-edit-note="${i}"><span class="note-kind">${esc(n.type||'灵感')}</span><span style="flex:1">${esc(n.text)}</span><span style="font-size:9px;color:#a0a69c;white-space:nowrap">${esc(n.time||'')}</span></button>`).join('');}
 let liveProjects=[];
 let hasSearchedGithub=false;
 let radarSource='curated';
@@ -205,19 +206,8 @@ document.getElementById('page-radar').addEventListener('click',e=>{const b=e.tar
 document.getElementById('radarSavedOnly').addEventListener('change',renderProjects);
 document.getElementById('page-radar').addEventListener('click',e=>{const saveButton=e.target.closest('[data-save-project]');if(saveButton){const id=saveButton.dataset.saveProject;const saved=!radarSaved.has(id);if(saved)radarSaved.add(id);else radarSaved.delete(id);try{localStorage.setItem(RADAR_SAVED_KEY,JSON.stringify([...radarSaved]));}catch(error){document.getElementById('storageWarning').hidden=false;}if(document.getElementById('radarSavedOnly').checked&&!saved){renderProjects();}else{document.querySelectorAll('[data-save-project]').forEach(button=>{if(button.dataset.saveProject===id){button.textContent=saved?'已收藏':'收藏';button.setAttribute('aria-pressed',String(saved));button.setAttribute('aria-label',(saved?'取消收藏 ':'收藏 ')+(currentProjects().find(p=>p.id===id)?.name||''));}});document.getElementById('radarSavedCount').textContent=radarSaved.size;}return;}const topic=e.target.closest('[data-topic]');if(topic){const filter=[...document.querySelectorAll('[data-filter]')].find(b=>b.dataset.filter===topic.dataset.topic);if(filter)filter.click();}});
 document.getElementById('exportBtn').addEventListener('click',()=>{const payload={exportedAt:new Date().toISOString(),tasks:state.tasks,notes:state.notes,calendarEvents:window.deskCalendarEvents?window.deskCalendarEvents():[]};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='ai-desk-hub-records.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('已导出本地任务与记录');});
-let remaining=25*60,focusInterval=null,focusDeadline=null;
-function saveFocus(){try{localStorage.setItem('ai-desk-hub-focus',JSON.stringify({remaining,deadline:focusDeadline}));}catch(e){}}
-function showTimer(){document.getElementById('focusTime').textContent=String(Math.floor(remaining/60)).padStart(2,'0')+':'+String(remaining%60).padStart(2,'0');}
-function stopTimer(){if(focusInterval){clearInterval(focusInterval);focusInterval=null;}focusDeadline=null;document.getElementById('focusStart').textContent='继续';saveFocus();}
-function tickTimer(){if(focusDeadline===null)return;remaining=Math.max(0,Math.ceil((focusDeadline-Date.now())/1000));showTimer();if(remaining===0){stopTimer();toast('专注时段结束，起来活动一下。');if('vibrate'in navigator)navigator.vibrate([150,80,150]);}}
-function runTimer(){if(focusInterval){tickTimer();stopTimer();return;}if(remaining<=0){toast('本轮已结束，请重置或选择休息。');return;}focusDeadline=Date.now()+remaining*1000;document.getElementById('focusStart').textContent='暂停';focusInterval=setInterval(tickTimer,1000);saveFocus();}
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)tickTimer();});
-document.getElementById('focusStart').addEventListener('click',runTimer);
-document.getElementById('focusReset').addEventListener('click',()=>{stopTimer();remaining=25*60;showTimer();saveFocus();});
-document.getElementById('focusShort').addEventListener('click',()=>{stopTimer();remaining=5*60;showTimer();saveFocus();toast('已切换为 5 分钟休息计时');});
-try{const saved=JSON.parse(localStorage.getItem('ai-desk-hub-focus')||'null');if(saved&&Number.isFinite(saved.remaining)&&saved.remaining>=0){remaining=saved.remaining;if(Number.isFinite(saved.deadline)){focusDeadline=saved.deadline;document.getElementById('focusStart').textContent='暂停';focusInterval=setInterval(tickTimer,1000);tickTimer();}}}catch(e){}
-function updateClock(){const now=new Date();document.getElementById('clock').textContent=now.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',hour12:false});document.getElementById('dateText').textContent=now.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});}setInterval(updateClock,1000);updateClock();renderTasks();renderNotes();renderProjects();loadCuratedProjects(false);showTimer();
-if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')){navigator.serviceWorker.register('./sw.js?v=0.5.3',{updateViaCache:'none'}).catch(()=>{console.warn('离线缓存注册失败，请检查 HTTPS 与 sw.js 路径。');});}
+function updateClock(){const now=new Date();document.getElementById('clock').textContent=now.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',hour12:false});document.getElementById('dateText').textContent=now.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});}setInterval(updateClock,1000);updateClock();renderTasks();renderNotes();renderProjects();loadCuratedProjects(false);
+if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')){navigator.serviceWorker.register('./sw.js?v=0.6.0',{updateViaCache:'none'}).catch(()=>{console.warn('离线缓存注册失败，请检查 HTTPS 与 sw.js 路径。');});}
 </script>
 <dialog id="eventDialog" aria-labelledby="eventDialogTitle">
   <form id="eventForm">
@@ -230,8 +220,30 @@ if('serviceWorker' in navigator && (location.protocol==='https:' || location.hos
     <div class="dialog-actions"><button type="button" class="btn btn-danger" id="deleteEvent" hidden>删除日程</button><button type="button" class="btn btn-soft" id="cancelEvent">取消</button><button type="submit" class="btn btn-primary">保存日程</button></div>
   </form>
 </dialog>
-<script src="./calendar.js?v=0.5.3"></script>
+<script src="./calendar.js?v=0.6.0"></script>
 <dialog id="returnPrivacy" aria-labelledby="returnPrivacyTitle"><div class="privacy-content"><div class="eyebrow accent-cyan">RETURN / 隐私画面演示</div><h2 id="returnPrivacyTitle">你好，欢迎回来。</h2><p>身份不确定，已遮住当前应用内容。</p><p class="return-note">这是手动模拟，不是真实身份认证。停止演示后会重新显示本机数据。</p><button class="btn btn-primary" id="endPrivacyDemo">结束模拟，返回应用</button></div></dialog>
-<script src="./return.js?v=0.5.3"></script>
+<script src="./return.js?v=0.6.0"></script>
+
+
+<dialog id="ambientDialog" aria-labelledby="ambientTitle">
+  <div class="ambient-art" id="ambientArt" aria-hidden="true"></div><img id="ambientImage" alt="你选择的环境画作" hidden>
+  <div class="ambient-top"><span id="ambientTitle">AMBIENT / 环境屏</span><button class="btn btn-light" id="leaveAmbient">进入工作台</button></div>
+  <div class="ambient-clock"><time id="ambientClock"></time><p id="ambientDate"></p><p id="ambientWeather">天气未启用</p></div>
+  <div class="ambient-bottom"><div class="ambient-themes" aria-label="环境主题"><button data-theme="gallery">Gallery</button><button data-theme="nature">Nature</button><button data-theme="digital">Digital</button><label class="btn btn-light">自己的画作<input id="ambientImageFile" type="file" accept="image/*" hidden></label></div><div class="ambient-actions"><button class="btn btn-light" id="ambientReturn">归来模拟</button><button class="btn btn-light" id="ambientMusic">音乐</button><button class="btn btn-light" id="ambientCapture">记录想法</button></div></div>
+</dialog>
+<dialog id="mediaDialog" aria-labelledby="mediaDialogTitle"><div class="dialog-head"><h2 id="mediaDialogTitle">音乐与媒体</h2><button class="icon-btn" data-close-dialog="mediaDialog">关闭</button></div><div class="media-modes"><button class="btn btn-soft" id="showNetease">网易云</button><button class="btn btn-soft" id="showLocalAudio">本地音频</button></div>
+  <section id="neteasePanel"><form id="neteaseForm"><label class="companion-field">网易云公开歌单或歌曲链接<input id="neteaseLink" type="url" placeholder="https://music.163.com/#/playlist?id=…" required></label><button class="btn btn-primary" type="submit">载入官方播放器</button></form><p class="companion-note" id="neteaseFeedback" role="status">添加你常听的歌单。这里只嵌入官方播放器，不读取网易云 App 的播放状态。</p><iframe id="neteaseFrame" title="网易云官方播放器" hidden allow="autoplay" referrerpolicy="no-referrer"></iframe><a id="neteaseOriginal" href="https://music.163.com/" target="_blank" rel="noopener noreferrer">在网易云打开 ↗</a><button class="btn btn-light" id="unloadNetease" hidden>关闭官方播放器</button></section>
+  <section id="localAudioPanel" hidden><label class="btn btn-primary">选择本地音频<input id="audioFiles" type="file" accept="audio/*" multiple hidden></label><p id="localMediaName">尚未选择音频</p><audio id="deskAudio" controls preload="metadata"></audio><div class="media-modes"><button class="btn btn-light" id="previousAudio" disabled>上一首</button><button class="btn btn-light" id="nextAudio" disabled>下一首</button></div><p class="companion-note">文件在当前页面播放，不上传。刷新后需要重新选择；浏览器或系统可能暂停后台播放。</p></section>
+</dialog>
+<dialog id="deskSettings" aria-labelledby="deskSettingsTitle"><div class="dialog-head"><h2 id="deskSettingsTitle">体验与接入</h2><button class="icon-btn" data-close-dialog="deskSettings">关闭</button></div>
+ <label class="companion-field">闲置时进入环境屏<select id="ambientIdle"><option value="0">仅手动开启</option><option value="2">2 分钟</option><option value="5">5 分钟</option><option value="15">15 分钟</option></select></label><p class="companion-note">仅在页面前台、没有编辑或本地播放时切换；网易云播放器载入后不自动切换。不会唤醒锁屏，也不表示检测到无人。</p>
+ <section class="connection-row"><strong>飞书日历 · 待授权</strong><p>下一步接入只读日历，保持现在的横向排版。需要飞书应用与可用的服务端授权回调，密钥不填在网页内。</p><a href="https://open.feishu.cn/app" target="_blank" rel="noopener noreferrer">飞书开放平台 ↗</a></section>
+ <section class="connection-row"><strong>当前位置天气</strong><p id="weatherStatus" role="status">点击启用后请求浏览器定位，将约 1 公里精度的坐标发送至 Open-Meteo 查询当前天气。位置仅在本次页面内使用。</p><button class="btn btn-primary" id="enableWeather">启用／刷新定位天气</button><button class="btn btn-light" id="disableWeather">停止并清除天气</button><a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">天气数据：Open-Meteo ↗</a></section>
+ <p class="companion-note">摄像头、麦克风、后台感知与外部通知均未启用。RETURN 中可设置免打扰与模拟问候时段。</p>
+</dialog>
+<dialog id="recordEditor" aria-labelledby="recordEditorTitle"><form id="recordEditorForm"><div class="dialog-head"><h2 id="recordEditorTitle">编辑记录</h2><button type="button" class="icon-btn" data-close-dialog="recordEditor">关闭</button></div><label class="companion-field">内容<textarea id="recordText" maxlength="2000" rows="5" required></textarea></label><label id="recordImportantLabel"><input id="recordImportant" type="checkbox"> 标为今日重点</label><div class="media-modes"><button class="btn btn-primary" type="submit">保存</button><button class="btn btn-danger" type="button" id="deleteRecord">删除</button></div><p id="recordEditorFeedback" class="companion-note" role="status"></p></form></dialog>
+<dialog id="briefDialog" aria-labelledby="briefDialogTitle"><div class="dialog-head"><h2 id="briefDialogTitle">今日重点</h2><button class="icon-btn" data-close-dialog="briefDialog">关闭</button></div><p class="companion-note">来自本机日程与待办的规则摘要，不是 AI 生成。示例日程不会计入。</p><div id="briefDetails"></div><button class="btn btn-primary" id="briefOpenDesk">回到工作台</button></dialog>
+<script src="./companion.js?v=0.6.0"></script>
+
 </body>
 </html>

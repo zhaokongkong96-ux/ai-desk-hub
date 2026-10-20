@@ -1,0 +1,73 @@
+/* Companion experience layer: original calendar/Radar data and layouts remain authoritative. */
+(() => {
+  'use strict';
+  const $=id=>document.getElementById(id), KEY='ai-desk-hub-companion-v1';
+  const themes=['gallery','nature','digital'];
+  let prefs={theme:'gallery',idle:0,netease:''}, idleSince=Date.now(),imageURL='',weatherPosition=null,weatherAt=0,weatherRequest=0;
+  let weatherAbort=null, mediaMode='netease',playlist=[],trackIndex=0,editor=null,returnFocus=null;
+  const audio=$('deskAudio');
+  try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved){if(themes.includes(saved.theme))prefs.theme=saved.theme;if([0,2,5,15].includes(saved.idle))prefs.idle=saved.idle;if(typeof saved.netease==='string'&&neteaseURL(saved.netease))prefs.netease=saved.netease;}}catch{}
+  function savePrefs(){try{localStorage.setItem(KEY,JSON.stringify(prefs));}catch{$('storageWarning').hidden=false;}}
+  function showDialog(id){const d=$(id);if(d.open)return;returnFocus=document.activeElement;d.showModal();}
+  function closeDialog(id){$(id).close();if(returnFocus?.isConnected)returnFocus.focus();idleSince=Date.now();}
+  document.querySelectorAll('dialog').forEach(dialog=>dialog.addEventListener('close',()=>{idleSince=Date.now();}));
+  document.querySelectorAll('[data-close-dialog]').forEach(b=>b.addEventListener('click',()=>closeDialog(b.dataset.closeDialog)));
+  $('openDeskSettings').addEventListener('click',()=>showDialog('deskSettings'));
+  // AMBIENT deliberately has no task, note or calendar content.
+  function clock(){const now=new Date();$('ambientClock').textContent=now.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',hour12:false});$('ambientDate').textContent=now.toLocaleDateString('zh-CN',{month:'long',day:'numeric',weekday:'long'});}
+  function setTheme(theme){prefs.theme=theme;savePrefs();$('ambientArt').dataset.theme=theme;$('ambientImage').hidden=true;$('ambientArt').hidden=false;document.querySelectorAll('[data-theme]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.theme===theme)));}
+  function enterAmbient(){if(document.querySelector('dialog[open]'))return;clock();showDialog('ambientDialog');}
+  $('openAmbient').addEventListener('click',enterAmbient);$('leaveAmbient').addEventListener('click',()=>{closeDialog('ambientDialog');switchPage('today');});
+  $('ambientReturn').addEventListener('click',()=>{closeDialog('ambientDialog');switchPage('return');});
+  $('ambientMusic').addEventListener('click',()=>{closeDialog('ambientDialog');showDialog('mediaDialog');});
+  $('ambientCapture').addEventListener('click',()=>{closeDialog('ambientDialog');$('captureInput').focus();});
+  document.querySelectorAll('[data-theme]').forEach(b=>b.addEventListener('click',()=>setTheme(b.dataset.theme)));
+  $('ambientImageFile').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;if(!file.type.startsWith('image/')||file.size>15*1024*1024){toast('请选择 15MB 以内的图片');return;}if(imageURL)URL.revokeObjectURL(imageURL);imageURL=URL.createObjectURL(file);$('ambientImage').src=imageURL;$('ambientImage').hidden=false;$('ambientArt').hidden=true;toast('画作仅用于当前页面，刷新后需重新选择');});
+  $('ambientIdle').value=String(prefs.idle);$('ambientIdle').addEventListener('change',()=>{prefs.idle=Number($('ambientIdle').value);idleSince=Date.now();savePrefs();});
+  for(const event of ['pointerdown','keydown','wheel','touchstart','input'])document.addEventListener(event,()=>{idleSince=Date.now();},{passive:true});
+  document.addEventListener('visibilitychange',()=>{idleSince=Date.now();if(!document.hidden&&weatherPosition&&Date.now()-weatherAt>=900000)updateWeather();});
+  setInterval(()=>{clock();if(!document.hidden&&prefs.idle&&Date.now()-idleSince>=prefs.idle*60000&&audio.paused&&!$('neteaseFrame').getAttribute('src')&&!document.querySelector('dialog[open]')&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName||'')&&!document.documentElement.classList.contains('return-private')&&!document.querySelector('.calendar-panel.is-expanded'))enterAmbient();},1000);
+  setTheme(prefs.theme);clock();
+  // NOW PLAYING: official public NetEase iframe, or actual local HTML audio.
+  function neteaseURL(value){try{const u=new URL(value);if(u.protocol!=='https:'||!['music.163.com','y.music.163.com'].includes(u.hostname)||u.username||u.password)return null;const route=u.hash?u.hash.slice(1):u.pathname+u.search;const match=route.match(/\/(playlist|song|album)\?(?:[^#]*&)?id=(\d+)(?:&|$)/);if(!match)return null;const kind={playlist:0,song:2,album:1}[match[1]];return {href:'https://music.163.com/#/'+match[1]+'?id='+match[2],embed:'https://music.163.com/outchain/player?type='+kind+'&id='+match[2]+'&auto=0&height=430'};}catch{return null;}}
+  function mode(which){mediaMode=which;$('neteasePanel').hidden=which!=='netease';$('localAudioPanel').hidden=which!=='local';$('showNetease').setAttribute('aria-pressed',String(which==='netease'));$('showLocalAudio').setAttribute('aria-pressed',String(which==='local'));}
+  $('expandMedia').addEventListener('click',()=>showDialog('mediaDialog'));
+  $('showNetease').addEventListener('click',()=>mode('netease'));$('showLocalAudio').addEventListener('click',()=>mode('local'));
+  $('neteaseLink').value=prefs.netease;
+  if(prefs.netease){$('neteaseOriginal').href=prefs.netease;$('mediaStatus').textContent='已保存网易云链接 · 点播放器载入';}
+  $('neteaseForm').addEventListener('submit',e=>{e.preventDefault();const url=neteaseURL($('neteaseLink').value.trim());if(!url){$('neteaseFeedback').textContent='请输入网易云 HTTPS 歌单、歌曲或专辑链接；短链接请先在网易云中展开。';return;}prefs.netease=url.href;savePrefs();audio.pause();$('neteaseFrame').src=url.embed;$('neteaseFrame').hidden=false;$('unloadNetease').hidden=false;$('neteaseOriginal').href=url.href;$('neteaseFeedback').textContent='官方播放器已载入请求。播放请用下方原生控件；版权、登录或嵌入限制时，可在网易云打开。';$('mediaTitle').textContent='网易云音乐';$('mediaStatus').textContent='官方播放器 · 播放状态由网易云管理';});
+  $('unloadNetease').addEventListener('click',()=>{$('neteaseFrame').removeAttribute('src');$('neteaseFrame').hidden=true;$('unloadNetease').hidden=true;$('mediaStatus').textContent='网易云播放器已关闭';});
+  function syncAudio(){if(!playlist.length||$('neteaseFrame').getAttribute('src'))return;$('mediaTitle').textContent=playlist[trackIndex].name;$('localMediaName').textContent=playlist[trackIndex].name;$('mediaStatus').textContent=(audio.paused?'本地音频 · 已暂停':'本地音频 · 播放中')+' · '+(trackIndex+1)+' / '+playlist.length;$('mediaQuickPlay').textContent=audio.paused?'播放':'暂停';}
+  function chooseTrack(index){trackIndex=(index+playlist.length)%playlist.length;audio.src=playlist[trackIndex].url;audio.load();syncAudio();}
+  async function playAudio(){if(!playlist.length)return;$('neteaseFrame').removeAttribute('src');$('neteaseFrame').hidden=true;$('unloadNetease').hidden=true;if(!audio.paused){audio.pause();return;}try{await audio.play();}catch{toast('未能播放，请在播放器中重试或换一种音频格式');}}
+  $('audioFiles').addEventListener('change',e=>{const files=[...e.target.files].filter(f=>f.type.startsWith('audio/')||/\.(mp3|m4a|aac|wav|ogg|flac)$/i.test(f.name));if(!files.length){toast('没有可播放的音频文件');return;}audio.pause();playlist.forEach(t=>URL.revokeObjectURL(t.url));playlist=files.map(f=>({name:f.name,url:URL.createObjectURL(f)}));$('neteaseFrame').removeAttribute('src');$('neteaseFrame').hidden=true;$('unloadNetease').hidden=true;chooseTrack(0);$('mediaQuickPlay').disabled=false;$('nextAudio').disabled=$('previousAudio').disabled=playlist.length<2;});
+  $('mediaQuickPlay').addEventListener('click',playAudio);
+  for(const [id,direction]of [['previousAudio',-1],['nextAudio',1]])$(id).addEventListener('click',()=>{const wasPlaying=!audio.paused;chooseTrack(trackIndex+direction);if(wasPlaying)playAudio();});
+  audio.addEventListener('ended',()=>{if(trackIndex+1<playlist.length){chooseTrack(trackIndex+1);playAudio();}else syncAudio();});
+  for(const event of ['play','pause','loadedmetadata'])audio.addEventListener(event,syncAudio);
+  audio.addEventListener('error',()=>{$('mediaStatus').textContent='音频无法解码，请更换文件格式';});
+  mode(mediaMode);
+  // Editable local records, including legacy notes without IDs.
+  function editRecord(kind,key){const item=kind==='task'?state.tasks.find(t=>t.id===key):state.notes[Number(key)];if(!item)return;editor={kind,key};$('recordEditorTitle').textContent=kind==='task'?'编辑待办':'编辑记录';$('recordText').value=item.text;$('recordImportantLabel').hidden=kind!=='task';$('recordImportant').checked=!!item.important;$('deleteRecord').textContent='删除';$('deleteRecord').dataset.confirm='';$('recordEditorFeedback').textContent='';showDialog('recordEditor');}
+  $('taskList').addEventListener('click',e=>{const b=e.target.closest('[data-edit-task]');if(b)editRecord('task',b.dataset.editTask);});
+  $('noteList').addEventListener('click',e=>{const b=e.target.closest('[data-edit-note]');if(b)editRecord('note',b.dataset.editNote);});
+  $('recordEditorForm').addEventListener('submit',e=>{e.preventDefault();if(!editor)return;const text=$('recordText').value.trim();if(!text){$('recordEditorFeedback').textContent='请填写内容。';return;}const item=editor.kind==='task'?state.tasks.find(t=>t.id===editor.key):state.notes[Number(editor.key)];if(item){item.text=text;if(editor.kind==='task')item.important=$('recordImportant').checked;persist();renderTasks();renderNotes();}closeDialog('recordEditor');toast('已保存修改');});
+  $('deleteRecord').addEventListener('click',()=>{if(!editor)return;if($('deleteRecord').dataset.confirm!=='yes'){$('deleteRecord').dataset.confirm='yes';$('deleteRecord').textContent='确认删除';return;}if(editor.kind==='task')state.tasks=state.tasks.filter(t=>t.id!==editor.key);else state.notes.splice(Number(editor.key),1);persist();renderTasks();renderNotes();closeDialog('recordEditor');toast('记录已删除');});
+  // A local rules brief, never labelled as AI-generated or newly collected news.
+  function brief(){const now=Date.now(),day=new Date();day.setHours(0,0,0,0);const tomorrow=new Date(day);tomorrow.setDate(tomorrow.getDate()+1);
+    const tasks=state.tasks.filter(t=>!t.done).slice().sort((a,b)=>Number(!!b.important)-Number(!!a.important));
+    const events=(window.deskCalendarEvents?.()||[]).filter(e=>!e.extendedProps?.sample&&e.extendedProps?.status!=='done'&&Date.parse(e.end)>now&&Date.parse(e.start)<+tomorrow).sort((a,b)=>Date.parse(a.start)-Date.parse(b.start));
+    const top=tasks.slice(0,3),text=events.length?'今天还有 '+events.length+' 项日程。': '今天暂无后续真实日程。';$('dailySummary').textContent=text+(tasks.length?' '+tasks.length+' 项待办未完成'+(tasks.some(t=>t.important)?'，优先处理标记的重点。':'。'):' 暂无未完成待办。');
+    const box=$('briefDetails');box.replaceChildren();for(const headingText of ['接下来','最多三项待办']){const h=document.createElement('h3');h.textContent=headingText;box.append(h);const list=headingText==='接下来'?events.slice(0,3).map(e=>new Date(e.start).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',hour12:false})+' · '+e.title):top.map(t=>(t.important?'重点 · ':'')+t.text);for(const line of list.length?list:['暂无']){const p=document.createElement('p');p.textContent=line;box.append(p);}}
+    const note=document.createElement('p');note.className='companion-note';note.textContent='AI 热点请查看已确认的 AI RADAR。自动采集、更新检测与模型简报尚未接入。';box.append(note);
+  }
+  $('reviewPriorities').addEventListener('click',()=>{brief();showDialog('briefDialog');});$('briefOpenDesk').addEventListener('click',()=>{closeDialog('briefDialog');switchPage('today');});window.addEventListener('desk-data-change',brief);$('eventDialog').addEventListener('close',brief);setInterval(brief,30000);brief();
+  // Location stays in memory. No location request happens before explicit action.
+  function weatherText(text){$('weatherChip').textContent=text;$('ambientWeather').textContent=text;}
+  function weatherName(code){if(code===0)return '晴';if([1,2,3].includes(code))return '多云';if([45,48].includes(code))return '雾';if([51,53,55,56,57].includes(code))return '毛毛雨';if([61,63,65,66,67,80,81,82].includes(code))return '雨';if([71,73,75,77,85,86].includes(code))return '雪';if([95,96,99].includes(code))return '雷雨';return '天气';}
+  async function updateWeather(){if(!weatherPosition)return;const request=++weatherRequest;weatherAbort?.abort();weatherAbort=new AbortController();const controller=weatherAbort;const timer=setTimeout(()=>controller.abort(),12000);try{const params=new URLSearchParams({latitude:weatherPosition.lat,longitude:weatherPosition.lon,current:'temperature_2m,weather_code',timezone:'auto',forecast_days:'1'});const res=await fetch('https://api.open-meteo.com/v1/forecast?'+params,{signal:controller.signal,cache:'no-store',credentials:'omit',referrerPolicy:'no-referrer'});if(!res.ok)throw Error('天气服务 HTTP '+res.status);const data=await res.json();if(request!==weatherRequest)return;if(!Number.isFinite(data.current?.temperature_2m)||!Number.isFinite(data.current?.weather_code)||typeof data.current?.time!=='string')throw Error('天气数据不完整');weatherAt=Date.now();const time=data.current.time.slice(11,16);weatherText(Math.round(data.current.temperature_2m)+'°C · '+weatherName(data.current.weather_code)+' · '+time);$('weatherStatus').textContent='当前位置天气 · 数据时间 '+data.current.time.replace('T',' ')+'。页面前台每15分钟重新定位查询；当前天气来自气象模型。';}catch(e){if(request!==weatherRequest)return;weatherText('天气暂不可用 · 点击重试');$('weatherStatus').textContent='天气请求失败，请检查网络后重试。';}finally{clearTimeout(timer);}}
+  function locateWeather(){if(!navigator.geolocation){$('weatherStatus').textContent='当前浏览器不支持定位。';return;}if(!window.isSecureContext){$('weatherStatus').textContent='定位需要 HTTPS 或 localhost 安全环境。';return;}$('weatherStatus').textContent='正在请求当前位置…';const request=++weatherRequest;navigator.geolocation.getCurrentPosition(position=>{if(request!==weatherRequest)return;weatherPosition={lat:Number(position.coords.latitude.toFixed(2)),lon:Number(position.coords.longitude.toFixed(2))};updateWeather();},error=>{if(request!==weatherRequest)return;weatherPosition=null;weatherAbort?.abort();weatherText('定位未完成 · 点击重试');$('weatherStatus').textContent=error.code===1?'定位被拒绝。请在浏览器的网站权限中允许位置后重试。':'定位超时或不可用，请稍后重试。';},{enableHighAccuracy:false,timeout:10000,maximumAge:60000});}
+  $('weatherChip').addEventListener('click',()=>showDialog('deskSettings'));$('enableWeather').addEventListener('click',locateWeather);
+  $('disableWeather').addEventListener('click',()=>{weatherPosition=null;weatherAt=0;weatherRequest++;weatherAbort?.abort();weatherText('启用定位天气');$('weatherStatus').textContent='已停止更新并清除本页天气和位置；未保存坐标。';});
+  setInterval(()=>{if(!document.hidden&&weatherPosition&&Date.now()-weatherAt>=900000)locateWeather();},900000);
+})();
