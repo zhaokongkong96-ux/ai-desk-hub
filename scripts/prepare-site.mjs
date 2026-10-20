@@ -1,6 +1,6 @@
 import {mkdir,copyFile,rm,readFile} from 'node:fs/promises';
 import vm from 'node:vm';
-const files=['index.html','manifest.webmanifest','projects-seed.json','sw.js','icon-192.png','icon-512.png','.nojekyll','workspace.css','calendar.js','return.js','return.css','vendor/fullcalendar-6.1.19.min.js','vendor/fullcalendar-LICENSE.md'];
+const files=['index.html','manifest.webmanifest','projects-seed.json','sw.js','icon-192.png','icon-512.png','.nojekyll','workspace.css','calendar.js','return.js','return.css','radar.css','vendor/fullcalendar-6.1.19.min.js','vendor/fullcalendar-LICENSE.md'];
 const html=await readFile('index.html','utf8');
 for(const match of html.matchAll(/<script>([\s\S]*?)<\/script>/g))new vm.Script(match[1]);
 for(const path of ['sw.js','calendar.js','return.js','vendor/fullcalendar-6.1.19.min.js'])new vm.Script(await readFile(path,'utf8'));
