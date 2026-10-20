@@ -1,6 +1,6 @@
 // Scope-specific caches keep project sites on the same GitHub Pages origin separate.
 const CACHE_PREFIX = 'ai-desk-hub:' + self.registration.scope + ':';
-const CACHE_NAME = CACHE_PREFIX + 'v0.3.1';
+const CACHE_NAME = CACHE_PREFIX + 'v0.3.2';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './projects-seed.json', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));
