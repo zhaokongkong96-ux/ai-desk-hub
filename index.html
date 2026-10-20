@@ -24,17 +24,17 @@ button,.project-actions a{min-height:44px;min-width:44px}.project-card h3,.note-
 @media(max-width:400px){.hero{flex-wrap:wrap}.hero-date{text-align:left}.nav button{padding:11px 8px}}
 .brief-placeholder{font-size:12px;line-height:1.8;color:#bdc4b8;margin:0}.note-item{align-items:flex-start}
 </style>
-<link rel="stylesheet" href="./workspace.css">
-<link rel="stylesheet" href="./return.css">
-<link rel="stylesheet" href="./radar.css">
-<link rel="stylesheet" href="./timeline.css">
+<link rel="stylesheet" href="./workspace.css?v=0.5.3">
+<link rel="stylesheet" href="./return.css?v=0.5.3">
+<link rel="stylesheet" href="./radar.css?v=0.5.3">
+<link rel="stylesheet" href="./timeline.css?v=0.5.3">
 <script>try{if(JSON.parse(localStorage.getItem('ai-desk-hub-return-v04')||'null')?.privacyHidden===true)document.documentElement.classList.add('return-private');}catch(e){}</script>
-<script src="./vendor/fullcalendar-6.1.19.min.js"></script>
+<script src="./vendor/fullcalendar-6.1.19.min.js?v=0.5.3"></script>
 </head>
 <body>
 <div class="app">
   <header class="topbar">
-    <div class="brand"><div class="brand-mark">AI.</div><div><div class="brand-title">AI Desk Hub</div><div class="brand-sub">PERSONAL WORK SYSTEM</div></div></div>
+    <div class="brand"><div class="brand-mark">AI.</div><div><div class="brand-title">AI Desk Hub <span id="appVersion" style="font-size:10px;color:#8090a3;font-weight:400">v0.5.3</span></div><div class="brand-sub">PERSONAL WORK SYSTEM</div></div></div>
     <nav class="nav" aria-label="主导航">
       <button class="active" data-page="today">工作台 <span>01</span></button>
       <button data-page="radar">AI RADAR <span>02</span></button>
@@ -217,7 +217,7 @@ document.getElementById('focusReset').addEventListener('click',()=>{stopTimer();
 document.getElementById('focusShort').addEventListener('click',()=>{stopTimer();remaining=5*60;showTimer();saveFocus();toast('已切换为 5 分钟休息计时');});
 try{const saved=JSON.parse(localStorage.getItem('ai-desk-hub-focus')||'null');if(saved&&Number.isFinite(saved.remaining)&&saved.remaining>=0){remaining=saved.remaining;if(Number.isFinite(saved.deadline)){focusDeadline=saved.deadline;document.getElementById('focusStart').textContent='暂停';focusInterval=setInterval(tickTimer,1000);tickTimer();}}}catch(e){}
 function updateClock(){const now=new Date();document.getElementById('clock').textContent=now.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',hour12:false});document.getElementById('dateText').textContent=now.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});}setInterval(updateClock,1000);updateClock();renderTasks();renderNotes();renderProjects();loadCuratedProjects(false);showTimer();
-if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')){navigator.serviceWorker.register('./sw.js').catch(()=>{console.warn('离线缓存注册失败，请检查 HTTPS 与 sw.js 路径。');});}
+if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')){navigator.serviceWorker.register('./sw.js?v=0.5.3',{updateViaCache:'none'}).catch(()=>{console.warn('离线缓存注册失败，请检查 HTTPS 与 sw.js 路径。');});}
 </script>
 <dialog id="eventDialog" aria-labelledby="eventDialogTitle">
   <form id="eventForm">
@@ -230,8 +230,8 @@ if('serviceWorker' in navigator && (location.protocol==='https:' || location.hos
     <div class="dialog-actions"><button type="button" class="btn btn-danger" id="deleteEvent" hidden>删除日程</button><button type="button" class="btn btn-soft" id="cancelEvent">取消</button><button type="submit" class="btn btn-primary">保存日程</button></div>
   </form>
 </dialog>
-<script src="./calendar.js"></script>
+<script src="./calendar.js?v=0.5.3"></script>
 <dialog id="returnPrivacy" aria-labelledby="returnPrivacyTitle"><div class="privacy-content"><div class="eyebrow accent-cyan">RETURN / 隐私画面演示</div><h2 id="returnPrivacyTitle">你好，欢迎回来。</h2><p>身份不确定，已遮住当前应用内容。</p><p class="return-note">这是手动模拟，不是真实身份认证。停止演示后会重新显示本机数据。</p><button class="btn btn-primary" id="endPrivacyDemo">结束模拟，返回应用</button></div></dialog>
-<script src="./return.js"></script>
+<script src="./return.js?v=0.5.3"></script>
 </body>
 </html>
