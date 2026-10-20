@@ -27,6 +27,7 @@ button,.project-actions a{min-height:44px;min-width:44px}.project-card h3,.note-
 <link rel="stylesheet" href="./workspace.css">
 <link rel="stylesheet" href="./return.css">
 <link rel="stylesheet" href="./radar.css">
+<link rel="stylesheet" href="./timeline.css">
 <script>try{if(JSON.parse(localStorage.getItem('ai-desk-hub-return-v04')||'null')?.privacyHidden===true)document.documentElement.classList.add('return-private');}catch(e){}</script>
 <script src="./vendor/fullcalendar-6.1.19.min.js"></script>
 </head>
@@ -48,7 +49,8 @@ button,.project-actions a{min-height:44px;min-width:44px}.project-card h3,.note-
       <section class="panel calendar-panel">
         <div class="panel-head"><div><div class="eyebrow accent-cyan">SCHEDULE</div><h1 class="panel-title">日程</h1></div><div class="panel-tools"><span class="panel-sub" id="calendarSource">本机日历 · 含示例</span><button class="btn btn-light" id="expandCalendar" aria-expanded="false">放大日历</button><button class="btn btn-light" id="addEvent">新增日程</button></div></div>
         <div id="calendar" aria-label="可交互日历"></div>
-        <div class="event-legend" aria-label="日程分类颜色"><span style="--event-color:#00bfd3"><i class="legend-dot"></i>工作</span><span style="--event-color:#b489ed"><i class="legend-dot"></i>研究</span><span style="--event-color:#00c68d"><i class="legend-dot"></i>个人</span><span style="--event-color:#e769a7"><i class="legend-dot"></i>会议</span><span style="--event-color:#ef9a42"><i class="legend-dot"></i>截止</span><span>虚线框：重要 · 划线：已完成</span></div><div class="calendar-hint">点选空白时段新增 · 点日程编辑 · 长按拖动调整时间</div>
+        <div id="dayTimeline" hidden aria-label="当天横向全天日程"></div>
+        <div class="event-legend" aria-label="日程分类颜色"><span style="--event-color:#00bfd3"><i class="legend-dot"></i>工作</span><span style="--event-color:#b489ed"><i class="legend-dot"></i>研究</span><span style="--event-color:#00c68d"><i class="legend-dot"></i>个人</span><span style="--event-color:#e769a7"><i class="legend-dot"></i>会议</span><span style="--event-color:#ef9a42"><i class="legend-dot"></i>截止</span><span>虚线框：重要 · 划线：已完成</span></div><div class="calendar-hint">点选日程编辑 · 横向拖动调整时间 · 点“新增日程”安排</div>
       </section>
       <section class="panel clock-panel">
         <div class="eyebrow">YOUR DAILY DESK</div><div class="time" id="clock">09:00</div><div class="date" id="dateText"></div>

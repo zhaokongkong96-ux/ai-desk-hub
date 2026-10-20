@@ -52,6 +52,7 @@
     try { localStorage.setItem(KEY,JSON.stringify(events)); }
     catch(e) { document.getElementById('storageWarning').hidden=false; }
     renderNext();
+    renderTimeline();
   }
   function renderNext() {
     const now = Date.now();
@@ -84,6 +85,92 @@
     title.focus();
   }
   function closeEditor() { dialog.close(); if(returnFocus?.isConnected)returnFocus.focus(); }
+  // Share the existing FullCalendar store/editor; no premium timeline dependency.
+  const timeline = document.getElementById('dayTimeline');
+  const panel = document.querySelector('.calendar-panel');
+  const timeText = date => date.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',hour12:false});
+  function renderTimeline() {
+    const visible = calendar.view.type === 'timeGridDay';
+    panel.classList.toggle('horizontal-day',visible);
+    timeline.hidden = !visible;
+    if (!visible) return;
+    const day = new Date(calendar.getDate()); day.setHours(0,0,0,0);
+    const tomorrow = new Date(day); tomorrow.setDate(tomorrow.getDate()+1);
+    const span = tomorrow-day;
+    timeline.dataset.dayStart=String(+day);timeline.dataset.dayEnd=String(+tomorrow);
+    const ratio = date => Math.max(0,Math.min(1,(date-day)/span));
+    const items = calendar.getEvents().filter(e=>e.start<tomorrow && (e.end||new Date(+e.start+1800000))>day)
+      .sort((a,b)=>a.start-b.start || a.id.localeCompare(b.id));
+    timeline.replaceChildren();
+    const graph = document.createElement('div'); graph.className='timeline-graph';
+    const hours = document.createElement('div'); hours.className='timeline-hours';
+    for(let hour=0;hour<=24;hour++) {
+      const label=document.createElement('span');label.textContent=String(hour).padStart(2,'0');
+      label.style.left=(hour/24*100)+'%';hours.append(label);
+    }
+    graph.append(hours);
+    const scroll=document.createElement('div');scroll.className='timeline-scroll';
+    const track=document.createElement('div');track.className='timeline-track';
+    const lanes=[];
+    const agenda=document.createElement('div');agenda.className='timeline-agenda';
+    const heading=document.createElement('div');heading.className='timeline-agenda-heading';heading.textContent='全天安排 · '+items.length;agenda.append(heading);
+    scroll.append(track);graph.append(scroll);timeline.append(graph,agenda);
+    const minimumWidth=28/Math.max(1,track.clientWidth)*100;
+    items.forEach(event=>{
+      const finish=event.end||new Date(+event.start+1800000);
+      const left=ratio(event.start)*100;
+      const width=(ratio(finish)-ratio(event.start))*100;
+      // Reserve a minimum hit area when assigning lanes, including short events.
+      const right=Math.min(100,left+Math.max(width,minimumWidth));
+      let lane=lanes.findIndex(edge=>edge<=left);if(lane<0)lane=lanes.length;lanes[lane]=right;
+      const paint=colors[event.extendedProps.category]||colors.work;
+      const state=event.extendedProps.status||'normal';
+      const period=event.allDay?'全天':(event.start<day?'前日 ': '')+timeText(event.start)+' – '+(finish>=tomorrow?'次日 ':'')+timeText(finish);
+      const label=period+' · '+event.title+(state==='normal'?'':' · '+statusNames[state]);
+      const button=document.createElement('button');button.type='button';button.className='timeline-event event-'+state;
+      button.style.cssText='left:'+left+'%;width:'+width+'%;max-width:'+(100-left)+'%;top:'+(lane*52+12)+'px;--event-fill:'+paint.fill+';--event-line:'+paint.line+';--event-text:'+paint.text;
+      button.setAttribute('aria-label',label+'，点击编辑');button.title=label;
+      const name=document.createElement('span');name.textContent=event.title;button.append(name);
+      const row=document.createElement('button');row.type='button';row.className='timeline-agenda-item event-'+state;
+      row.style.setProperty('--event-text',paint.text);row.setAttribute('aria-label',label+'，点击编辑');
+      const rowTime=document.createElement('small');rowTime.textContent=period;
+      const rowName=document.createElement('span');rowName.textContent=event.title+(state==='normal'?'':' ['+statusNames[state]+']');row.append(rowTime,rowName);
+      row.addEventListener('click',()=>openEditor(event));agenda.append(row);
+      let drag=null,suppressClick=false;
+      button.addEventListener('pointerdown',e=>{
+        if(e.button!==0 || event.allDay || event.start<day || finish>tomorrow)return;
+        drag={x:e.clientX,start:+event.start,end:+finish,moved:false};button.setPointerCapture(e.pointerId);
+      });
+      button.addEventListener('pointermove',e=>{
+        if(!drag)return;
+        const delta=e.clientX-drag.x;if(Math.abs(delta)<6&&!drag.moved)return;
+        drag.moved=true;
+        const step=900000;
+        const shift=Math.round(delta/track.getBoundingClientRect().width*span/step)*step;
+        drag.shift=Math.max(+day-drag.start,Math.min(+tomorrow-drag.end,shift));
+        button.style.left=((drag.start+drag.shift-day)/span*100)+'%';button.classList.add('is-dragging');
+      });
+      button.addEventListener('pointerup',()=>{
+        if(!drag)return;
+        const moved=drag.moved,change=drag.shift||0,from=drag.start,to=drag.end;drag=null;
+        if(moved){suppressClick=true;event.setDates(new Date(from+change),new Date(to+change));persistCalendar();toast('日程时间已更新');}
+      });
+      button.addEventListener('pointercancel',()=>{drag=null;renderTimeline();});
+      button.addEventListener('click',e=>{e.stopPropagation();if(suppressClick){suppressClick=false;return;}openEditor(event);});
+      track.append(button);
+    });
+    track.style.minHeight=Math.max(144,lanes.length*52+24)+'px';
+    updateTimelineNow();
+    if(!items.length){const empty=document.createElement('p');empty.className='timeline-empty';empty.textContent='今天还没有安排，点击“新增日程”开始。';track.append(empty);}
+  }
+  function updateTimelineNow(){
+    const track=timeline.querySelector('.timeline-track');if(!track)return;
+    const now=new Date(),from=Number(timeline.dataset.dayStart),to=Number(timeline.dataset.dayEnd);
+    let line=track.querySelector('.timeline-now');
+    if(now<from||now>=to){line?.remove();return;}
+    if(!line){line=document.createElement('div');line.className='timeline-now';track.append(line);}
+    line.style.left=((now-from)/(to-from)*100)+'%';line.setAttribute('aria-label','当前时间 '+timeText(now));
+  }
   const calendar = new FullCalendar.Calendar(calendarElement, {
     initialView:'timeGridDay',height:'100%',locale:'zh-cn',firstDay:1,
     buttonText:{today:'今天',day:'日',week:'周',month:'月'},
@@ -94,6 +181,7 @@
     editable:true,selectable:true,selectMirror:true,longPressDelay:450,eventLongPressDelay:450,selectLongPressDelay:450,
     dayMaxEvents:2,eventMinHeight:28,eventShortHeight:44,expandRows:false,
     events:events.map(e=>({...e,...eventPaint(e.extendedProps?.category)})),
+    datesSet() { renderTimeline(); },
     dateClick(info) { openEditor({start:info.date,end:new Date(info.date.getTime()+3600000)}); },
     select(info) { openEditor({start:info.start,end:info.end}); calendar.unselect(); },
     eventClick(info) { info.jsEvent.preventDefault();openEditor(info.event); },
@@ -111,7 +199,7 @@
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!dialog.open)expandCalendar(false);});
   document.querySelectorAll('.nav button').forEach(button=>button.addEventListener('click',()=>expandCalendar(false)));
   persistCalendar();
-  setInterval(renderNext,30000);
+  setInterval(()=>{renderNext();updateTimelineNow();},30000);
   document.getElementById('addEvent').addEventListener('click',()=>openEditor());
   document.getElementById('quickTask').addEventListener('click',()=>{document.getElementById('captureType').value='待办';document.getElementById('captureInput').focus();});
   for(const id of ['closeEvent','cancelEvent'])document.getElementById(id).addEventListener('click',closeEditor);
