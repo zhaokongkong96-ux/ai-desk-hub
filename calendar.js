@@ -10,7 +10,10 @@
   const category = document.getElementById('eventCategory');
   const error = document.getElementById('eventError');
   const deleteButton = document.getElementById('deleteEvent');
-  const colors = {work:'#285969', research:'#534071', personal:'#3b6456'};
+  const colors={work:{fill:'#00242c',line:'#008ca0',text:'#39d5e5'},research:{fill:'#25172f',line:'#8152a2',text:'#c89aee'},personal:{fill:'#06271d',line:'#14805c',text:'#4bd3a0'},meeting:{fill:'#2d1726',line:'#a34479',text:'#ee8dbe'},deadline:{fill:'#2d2011',line:'#a4712c',text:'#efb76f'}};
+  const status=document.getElementById('eventStatus');
+  const statusNames={normal:'正常',important:'重要',done:'已完成'};
+  function eventPaint(key){const c=colors[key]||colors.work;return {backgroundColor:c.fill,borderColor:c.line,textColor:c.text};}
   let selectedId = null;
   function localValue(date) {
     const d = new Date(date);
@@ -41,7 +44,7 @@
     return;
   }
   function serialize() {
-    return calendar.getEvents().map(e => ({id:e.id,title:e.title,start:e.start.toISOString(),end:(e.end || new Date(e.start.getTime()+1800000)).toISOString(),allDay:e.allDay,extendedProps:{category:e.extendedProps.category || 'work',sample:!!e.extendedProps.sample}}));
+    return calendar.getEvents().map(e => ({id:e.id,title:e.title,start:e.start.toISOString(),end:(e.end || new Date(e.start.getTime()+1800000)).toISOString(),allDay:e.allDay,extendedProps:{category:e.extendedProps.category || 'work',sample:!!e.extendedProps.sample,status:e.extendedProps.status||'normal'}}));
   }
   function persistCalendar() {
     events = serialize();
@@ -52,7 +55,7 @@
   }
   function renderNext() {
     const now = Date.now();
-    const ordered = events.filter(e=>Date.parse(e.end)>now).sort((a,b)=>Date.parse(a.start)-Date.parse(b.start));
+    const ordered = events.filter(e=>Date.parse(e.end)>now&&e.extendedProps?.status!=='done').sort((a,b)=>Date.parse(a.start)-Date.parse(b.start));
     const next = ordered[0];
     document.getElementById('nextEventTitle').textContent = next ? next.title : '今天，留一点自由时间';
     const node = document.getElementById('nextEventTime');
@@ -70,6 +73,7 @@
     start.value = localValue(initial);
     end.value = localValue(data.end || new Date(initial.getTime()+3600000));
     category.value = data.extendedProps?.category || 'work';
+    status.value=data.extendedProps?.status||'normal';
     document.getElementById('eventDialogTitle').textContent = selectedId ? '编辑日程' : '新增日程';
     document.getElementById('eventSource').textContent = data.extendedProps?.sample ? '这是一条示例日程。保存后成为你的本机日程。' : '仅保存在本机浏览器，尚未连接外部日历。';
     deleteButton.hidden = !selectedId;
@@ -89,13 +93,14 @@
     slotLabelFormat:{hour:'2-digit',minute:'2-digit',hour12:false},eventTimeFormat:{hour:'2-digit',minute:'2-digit',hour12:false},
     editable:true,selectable:true,selectMirror:true,longPressDelay:450,eventLongPressDelay:450,selectLongPressDelay:450,
     dayMaxEvents:2,eventMinHeight:28,eventShortHeight:44,expandRows:false,
-    events:events.map(e=>({...e,backgroundColor:colors[e.extendedProps?.category] || colors.work,borderColor:'#6094a8'})),
+    events:events.map(e=>({...e,...eventPaint(e.extendedProps?.category)})),
     dateClick(info) { openEditor({start:info.date,end:new Date(info.date.getTime()+3600000)}); },
     select(info) { openEditor({start:info.start,end:info.end}); calendar.unselect(); },
     eventClick(info) { info.jsEvent.preventDefault();openEditor(info.event); },
     eventDrop() {persistCalendar();toast('日程时间已更新');},
     eventResize() {persistCalendar();toast('日程时长已更新');},
-    eventDidMount(info) {info.el.setAttribute('aria-label',info.event.title+'，点击编辑');info.el.setAttribute('tabindex','0');info.el.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();openEditor(info.event);}});}
+    eventClassNames(info){return ['event-'+(info.event.extendedProps.status||'normal')];},
+    eventDidMount(info) {const state=info.event.extendedProps.status||'normal';info.el.setAttribute('aria-label',info.event.title+'，'+(statusNames[state]||'正常')+'，点击编辑');if(state!=='normal'){const badge=document.createElement('span');badge.className='event-state';badge.textContent='['+(statusNames[state]||'正常')+'] ';info.el.querySelector('.fc-event-title')?.prepend(badge);}info.el.setAttribute('tabindex','0');info.el.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();openEditor(info.event);}});}
   });
   window.deskCalendar = calendar;
   window.deskCalendarEvents = () => serialize();
@@ -116,7 +121,7 @@
     const from = new Date(start.value); const to = new Date(end.value);
     if(!eventTitle){error.textContent='请填写日程名称。';return;}
     if(!Number.isFinite(+from)||!Number.isFinite(+to)||to<=from){error.textContent='结束时间需要晚于开始时间。';return;}
-    const data = {id:selectedId || 'event-'+Date.now()+'-'+Math.random().toString(16).slice(2),title:eventTitle,start:from,end:to,allDay:false,backgroundColor:colors[category.value],borderColor:'#6094a8',extendedProps:{category:category.value,sample:false}};
+    const data = {id:selectedId || 'event-'+Date.now()+'-'+Math.random().toString(16).slice(2),title:eventTitle,start:from,end:to,allDay:false,...eventPaint(category.value),extendedProps:{category:category.value,sample:false,status:status.value}};
     if(selectedId)calendar.getEventById(selectedId)?.remove();
     calendar.addEvent(data);
     persistCalendar();closeEditor();toast('日程已保存到本机');
