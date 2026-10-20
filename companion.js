@@ -3,10 +3,10 @@
   'use strict';
   const $=id=>document.getElementById(id), KEY='ai-desk-hub-companion-v1';
   const themes=['gallery','nature','digital'];
-  let prefs={theme:'gallery',idle:0,netease:''}, idleSince=Date.now(),imageURL='',weatherPosition=null,weatherAt=0,weatherRequest=0;
+  let prefs={theme:'gallery',idle:0,netease:'',reminders:false,reminded:[]}, idleSince=Date.now(),imageURL='',weatherPosition=null,weatherAt=0,weatherRequest=0;
   let weatherAbort=null, mediaMode='netease',playlist=[],trackIndex=0,editor=null,returnFocus=null;
   const audio=$('deskAudio');
-  try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved){if(themes.includes(saved.theme))prefs.theme=saved.theme;if([0,2,5,15].includes(saved.idle))prefs.idle=saved.idle;if(typeof saved.netease==='string'&&neteaseURL(saved.netease))prefs.netease=saved.netease;}}catch{}
+  try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved){if(themes.includes(saved.theme))prefs.theme=saved.theme;if([0,2,5,15].includes(saved.idle))prefs.idle=saved.idle;if(typeof saved.reminders==='boolean')prefs.reminders=saved.reminders;if(Array.isArray(saved.reminded))prefs.reminded=saved.reminded.filter(v=>typeof v==='string'&&v.length<300).slice(-100);if(typeof saved.netease==='string'&&neteaseURL(saved.netease))prefs.netease=saved.netease;}}catch{}
   function savePrefs(){try{localStorage.setItem(KEY,JSON.stringify(prefs));}catch{$('storageWarning').hidden=false;}}
   function showDialog(id){const d=$(id);if(d.open)return;returnFocus=document.activeElement;d.showModal();}
   function closeDialog(id){$(id).close();if(returnFocus?.isConnected)returnFocus.focus();idleSince=Date.now();}
@@ -25,7 +25,7 @@
   $('ambientImageFile').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;if(!file.type.startsWith('image/')||file.size>15*1024*1024){toast('请选择 15MB 以内的图片');return;}if(imageURL)URL.revokeObjectURL(imageURL);imageURL=URL.createObjectURL(file);$('ambientImage').src=imageURL;$('ambientImage').hidden=false;$('ambientArt').hidden=true;toast('画作仅用于当前页面，刷新后需重新选择');});
   $('ambientIdle').value=String(prefs.idle);$('ambientIdle').addEventListener('change',()=>{prefs.idle=Number($('ambientIdle').value);idleSince=Date.now();savePrefs();});
   for(const event of ['pointerdown','keydown','wheel','touchstart','input'])document.addEventListener(event,()=>{idleSince=Date.now();},{passive:true});
-  document.addEventListener('visibilitychange',()=>{idleSince=Date.now();if(!document.hidden&&weatherPosition&&Date.now()-weatherAt>=900000)updateWeather();});
+  document.addEventListener('visibilitychange',()=>{idleSince=Date.now();if(!document.hidden&&weatherPosition&&Date.now()-weatherAt>=900000)locateWeather();});
   setInterval(()=>{clock();if(!document.hidden&&prefs.idle&&Date.now()-idleSince>=prefs.idle*60000&&audio.paused&&!$('neteaseFrame').getAttribute('src')&&!document.querySelector('dialog[open]')&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName||'')&&!document.documentElement.classList.contains('return-private')&&!document.querySelector('.calendar-panel.is-expanded'))enterAmbient();},1000);
   setTheme(prefs.theme);clock();
   // NOW PLAYING: official public NetEase iframe, or actual local HTML audio.
@@ -51,8 +51,8 @@
   function editRecord(kind,key){const item=kind==='task'?state.tasks.find(t=>t.id===key):state.notes[Number(key)];if(!item)return;editor={kind,key};$('recordEditorTitle').textContent=kind==='task'?'编辑待办':'编辑记录';$('recordText').value=item.text;$('recordImportantLabel').hidden=kind!=='task';$('recordImportant').checked=!!item.important;$('deleteRecord').textContent='删除';$('deleteRecord').dataset.confirm='';$('recordEditorFeedback').textContent='';showDialog('recordEditor');}
   $('taskList').addEventListener('click',e=>{const b=e.target.closest('[data-edit-task]');if(b)editRecord('task',b.dataset.editTask);});
   $('noteList').addEventListener('click',e=>{const b=e.target.closest('[data-edit-note]');if(b)editRecord('note',b.dataset.editNote);});
-  $('recordEditorForm').addEventListener('submit',e=>{e.preventDefault();if(!editor)return;const text=$('recordText').value.trim();if(!text){$('recordEditorFeedback').textContent='请填写内容。';return;}const item=editor.kind==='task'?state.tasks.find(t=>t.id===editor.key):state.notes[Number(editor.key)];if(item){item.text=text;if(editor.kind==='task')item.important=$('recordImportant').checked;persist();renderTasks();renderNotes();}closeDialog('recordEditor');toast('已保存修改');});
-  $('deleteRecord').addEventListener('click',()=>{if(!editor)return;if($('deleteRecord').dataset.confirm!=='yes'){$('deleteRecord').dataset.confirm='yes';$('deleteRecord').textContent='确认删除';return;}if(editor.kind==='task')state.tasks=state.tasks.filter(t=>t.id!==editor.key);else state.notes.splice(Number(editor.key),1);persist();renderTasks();renderNotes();closeDialog('recordEditor');toast('记录已删除');});
+  $('recordEditorForm').addEventListener('submit',e=>{e.preventDefault();if(!editor)return;const text=$('recordText').value.trim();if(!text){$('recordEditorFeedback').textContent='请填写内容。';return;}const item=editor.kind==='task'?state.tasks.find(t=>t.id===editor.key):state.notes[Number(editor.key)];if(item){item.text=text;if(editor.kind==='task')item.important=$('recordImportant').checked;const saved=persist();renderTasks();renderNotes();if(!saved){$('recordEditorFeedback').textContent='保存失败，修改仅保留在当前页面，请立即导出备份或重试保存。';return;}}closeDialog('recordEditor');toast('已保存修改');});
+  $('deleteRecord').addEventListener('click',()=>{if(!editor)return;if($('deleteRecord').dataset.confirm!=='yes'){$('deleteRecord').dataset.confirm='yes';$('deleteRecord').textContent='确认删除';return;}if(editor.kind==='task')state.tasks=state.tasks.filter(t=>t.id!==editor.key);else state.notes.splice(Number(editor.key),1);const saved=persist();renderTasks();renderNotes();closeDialog('recordEditor');toast(saved?'记录已删除':'删除未保存到本机，刷新可能恢复原记录，请先导出当前数据');});
   // A local rules brief, never labelled as AI-generated or newly collected news.
   function brief(){const now=Date.now(),day=new Date();day.setHours(0,0,0,0);const tomorrow=new Date(day);tomorrow.setDate(tomorrow.getDate()+1);
     const tasks=state.tasks.filter(t=>!t.done).slice().sort((a,b)=>Number(!!b.important)-Number(!!a.important));
@@ -62,6 +62,19 @@
     const note=document.createElement('p');note.className='companion-note';note.textContent='AI 热点请查看已确认的 AI RADAR。自动采集、更新检测与模型简报尚未接入。';box.append(note);
   }
   $('reviewPriorities').addEventListener('click',()=>{brief();showDialog('briefDialog');});$('briefOpenDesk').addEventListener('click',()=>{closeDialog('briefDialog');switchPage('today');});window.addEventListener('desk-data-change',brief);$('eventDialog').addEventListener('close',brief);setInterval(brief,30000);brief();
+  // Optional foreground reminder: one generic nudge per important event/start.
+  $('importantReminders').checked=prefs.reminders;
+  $('importantReminders').addEventListener('change',()=>{prefs.reminders=$('importantReminders').checked;savePrefs();remindImportant();});
+  function remindImportant(){
+    if(!prefs.reminders||document.hidden||document.documentElement.classList.contains('return-private')||document.querySelector('dialog[open]')||/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName||'')||$('toast').classList.contains('show'))return;
+    try{const rules=JSON.parse(localStorage.getItem('ai-desk-hub-return-v04')||'null');if(rules?.quiet)return;}catch{return;}
+    const now=Date.now();
+    const due=(window.deskCalendarEvents?.()||[]).filter(e=>!e.allDay&&!e.extendedProps?.sample&&e.extendedProps?.status==='important'&&Date.parse(e.start)>now&&Date.parse(e.start)-now<=600000).sort((a,b)=>Date.parse(a.start)-Date.parse(b.start));
+    const event=due.find(e=>!prefs.reminded.includes(e.id+'@'+e.start));if(!event)return;
+    prefs.reminded.push(event.id+'@'+event.start);prefs.reminded=prefs.reminded.slice(-100);savePrefs();
+    toast('10 分钟内有重要日程开始，可点“查看重点”了解安排');
+  }
+  $('deskSettings').addEventListener('close',remindImportant);$('eventDialog').addEventListener('close',remindImportant);window.addEventListener('desk-data-change',remindImportant);setInterval(remindImportant,15000);
   // Location stays in memory. No location request happens before explicit action.
   function weatherText(text){$('weatherChip').textContent=text;$('ambientWeather').textContent=text;}
   function weatherName(code){if(code===0)return '晴';if([1,2,3].includes(code))return '多云';if([45,48].includes(code))return '雾';if([51,53,55,56,57].includes(code))return '毛毛雨';if([61,63,65,66,67,80,81,82].includes(code))return '雨';if([71,73,75,77,85,86].includes(code))return '雪';if([95,96,99].includes(code))return '雷雨';return '天气';}

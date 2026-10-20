@@ -24,18 +24,18 @@ button,.project-actions a{min-height:44px;min-width:44px}.project-card h3,.note-
 @media(max-width:400px){.hero{flex-wrap:wrap}.hero-date{text-align:left}.nav button{padding:11px 8px}}
 .brief-placeholder{font-size:12px;line-height:1.8;color:#bdc4b8;margin:0}.note-item{align-items:flex-start}
 </style>
-<link rel="stylesheet" href="./workspace.css?v=0.6.0">
-<link rel="stylesheet" href="./return.css?v=0.6.0">
-<link rel="stylesheet" href="./radar.css?v=0.6.0">
-<link rel="stylesheet" href="./timeline.css?v=0.6.0">
-<link rel="stylesheet" href="./companion.css?v=0.6.0">
+<link rel="stylesheet" href="./workspace.css?v=0.6.1">
+<link rel="stylesheet" href="./return.css?v=0.6.1">
+<link rel="stylesheet" href="./radar.css?v=0.6.1">
+<link rel="stylesheet" href="./timeline.css?v=0.6.1">
+<link rel="stylesheet" href="./companion.css?v=0.6.1">
 <script>try{if(JSON.parse(localStorage.getItem('ai-desk-hub-return-v04')||'null')?.privacyHidden===true)document.documentElement.classList.add('return-private');}catch(e){}</script>
-<script src="./vendor/fullcalendar-6.1.19.min.js?v=0.6.0"></script>
+<script src="./vendor/fullcalendar-6.1.19.min.js?v=0.6.1"></script>
 </head>
 <body>
 <div class="app">
   <header class="topbar">
-    <div class="brand"><div class="brand-mark">AI.</div><div><div class="brand-title">AI Desk Hub <span id="appVersion" style="font-size:10px;color:#8090a3;font-weight:400">v0.6.0</span></div><div class="brand-sub">PERSONAL WORK SYSTEM</div></div></div>
+    <div class="brand"><div class="brand-mark">AI.</div><div><div class="brand-title">AI Desk Hub <span id="appVersion" style="font-size:10px;color:#8090a3;font-weight:400">v0.6.1</span></div><div class="brand-sub">PERSONAL WORK SYSTEM</div></div></div>
     <nav class="nav" aria-label="主导航">
       <button class="active" data-page="today">工作台 <span>01</span></button>
       <button data-page="radar">AI RADAR <span>02</span></button>
@@ -44,7 +44,7 @@ button,.project-actions a{min-height:44px;min-width:44px}.project-card h3,.note-
     <div class="top-actions"><div class="status-pill"><span class="status-dot"></span>本机保存 · 外部日历未连接</div><button class="icon-btn" id="openAmbient">环境屏</button><button class="icon-btn" id="openDeskSettings" aria-label="打开体验设置">设置</button><button class="icon-btn" id="exportBtn" title="导出本地记录">导出记录 ↗</button></div>
   </header>
 
-  <p id="storageWarning" role="alert" hidden>本地保存失败：记录目前只在此页面内，请立即导出备份。</p>
+  <p id="storageWarning" role="alert" hidden>曾出现本地保存失败，请导出备份；未保存的修改刷新后可能丢失。</p>
   <main id="page-today" class="page active">
     <div class="desk-grid">
       <section class="panel calendar-panel">
@@ -136,7 +136,7 @@ let projects=[
 ];
 let state={tasks:initialTasks.slice(),notes:[]};
 try{const saved=localStorage.getItem(STORAGE_KEY);if(saved){const parsed=JSON.parse(saved);if(parsed&&Array.isArray(parsed.tasks)&&Array.isArray(parsed.notes)){state={tasks:parsed.tasks.filter(t=>t&&typeof t.id==='string'&&typeof t.text==='string'),notes:parsed.notes.filter(n=>n&&typeof n.text==='string')};}}}catch(e){}
-function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));window.dispatchEvent(new Event('desk-data-change'));}catch(e){document.getElementById('storageWarning').hidden=false;}}
+function persist(){let saved=true;try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){saved=false;document.getElementById('storageWarning').hidden=false;}window.dispatchEvent(new Event('desk-data-change'));return saved;}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 let toastTimer;function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2600)}
 function renderTasks(){const box=document.getElementById('taskList');const open=state.tasks.filter(t=>!t.done).length;document.getElementById('taskCount').textContent=`${open} 未完成 / ${state.tasks.length} 总计`;if(!state.tasks.length){box.innerHTML='<div class="empty-state">还没有待办。用底部快速记录添加第一项。</div>';return;}box.innerHTML=state.tasks.slice().sort((a,b)=>Number(!!a.done)-Number(!!b.done)||Number(!!b.important)-Number(!!a.important)).map(t=>`<div class="task-row ${t.done?'done':''}" data-task="${esc(t.id)}"><label class="task-toggle"><input class="task-check" type="checkbox" ${t.done?'checked':''} aria-label="完成任务"></label><button class="task-text record-open" data-edit-task="${esc(t.id)}">${t.important?'<span class="priority-label">重点</span> ':''}${esc(t.text)}</button><span class="task-category">${esc(t.category||'待办')}</span><button class="delete-task" aria-label="删除任务" title="删除任务">×</button></div>`).join('');}
@@ -198,8 +198,8 @@ function switchPage(name){document.querySelectorAll('.page').forEach(p=>p.classL
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>switchPage(b.dataset.page)));
 document.getElementById('taskList').addEventListener('change',e=>{if(!e.target.matches('.task-check'))return;const row=e.target.closest('[data-task]');const task=state.tasks.find(t=>t.id===row.dataset.task);if(task){task.done=e.target.checked;persist();renderTasks();}});
 document.getElementById('taskList').addEventListener('click',e=>{if(!e.target.matches('.delete-task'))return;const row=e.target.closest('[data-task]');state.tasks=state.tasks.filter(t=>t.id!==row.dataset.task);persist();renderTasks();toast('待办已删除');});
-function addTask(text,category='待办'){state.tasks.push({id:'t'+Date.now()+Math.random().toString(16).slice(2,6),text,category,done:false});persist();renderTasks();}
-function capture(){const input=document.getElementById('captureInput');const text=input.value.trim();if(!text){input.focus();toast('先写下一句话，再保存。');return;}const type=document.getElementById('captureType').value;const now=new Date();const time=now.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});if(type==='待办'){addTask(text,'快速记录');toast('已加入待办');}else{state.notes.push({id:'n'+Date.now(),text,type,time});persist();renderNotes();toast(type==='灵感'?'灵感已保存':'研究线索已保存');}input.value='';}
+function addTask(text,category='待办'){state.tasks.push({id:'t'+Date.now()+Math.random().toString(16).slice(2,6),text,category,done:false});const saved=persist();renderTasks();return saved;}
+function capture(){const input=document.getElementById('captureInput');const text=input.value.trim();if(!text){input.focus();toast('先写下一句话，再保存。');return;}const type=document.getElementById('captureType').value;const now=new Date();const time=now.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});let saved;if(type==='待办'){saved=addTask(text,'快速记录');if(saved)toast('已加入待办');}else{state.notes.push({id:'n'+Date.now(),text,type,time});saved=persist();renderNotes();if(saved)toast(type==='灵感'?'灵感已保存':'研究线索已保存');}if(!saved)toast('保存失败，内容仅留在当前页面，请立即导出备份');input.value='';}
 document.getElementById('captureSave').addEventListener('click',capture);document.getElementById('captureInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing&&e.keyCode!==229){e.preventDefault();capture();}});
 document.getElementById('filters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;document.querySelectorAll('.filter-btn').forEach(x=>x.classList.toggle('active',x===b));renderProjects();});document.getElementById('radarSearch').addEventListener('input',renderProjects);document.getElementById('radarSearch').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing&&e.keyCode!==229){e.preventDefault();if(radarSource==='live')searchGithub();else renderProjects();}});document.querySelectorAll('[data-radar-source]').forEach(b=>b.addEventListener('click',()=>switchRadarSource(b.dataset.radarSource)));document.getElementById('discoverGithub').addEventListener('click',searchGithub);document.getElementById('refreshCurated').addEventListener('click',()=>loadCuratedProjects(true));
 document.getElementById('page-radar').addEventListener('click',e=>{const b=e.target.closest('[data-add-project]');if(!b)return;const p=currentProjects().find(x=>x.id===b.dataset.addProject)||projects.find(x=>x.id===b.dataset.addProject)||liveProjects.find(x=>x.id===b.dataset.addProject);if(p){addTask('研究项目：'+p.name,'AI Radar');toast('已加入待办：'+p.name);}});
@@ -207,7 +207,7 @@ document.getElementById('radarSavedOnly').addEventListener('change',renderProjec
 document.getElementById('page-radar').addEventListener('click',e=>{const saveButton=e.target.closest('[data-save-project]');if(saveButton){const id=saveButton.dataset.saveProject;const saved=!radarSaved.has(id);if(saved)radarSaved.add(id);else radarSaved.delete(id);try{localStorage.setItem(RADAR_SAVED_KEY,JSON.stringify([...radarSaved]));}catch(error){document.getElementById('storageWarning').hidden=false;}if(document.getElementById('radarSavedOnly').checked&&!saved){renderProjects();}else{document.querySelectorAll('[data-save-project]').forEach(button=>{if(button.dataset.saveProject===id){button.textContent=saved?'已收藏':'收藏';button.setAttribute('aria-pressed',String(saved));button.setAttribute('aria-label',(saved?'取消收藏 ':'收藏 ')+(currentProjects().find(p=>p.id===id)?.name||''));}});document.getElementById('radarSavedCount').textContent=radarSaved.size;}return;}const topic=e.target.closest('[data-topic]');if(topic){const filter=[...document.querySelectorAll('[data-filter]')].find(b=>b.dataset.filter===topic.dataset.topic);if(filter)filter.click();}});
 document.getElementById('exportBtn').addEventListener('click',()=>{const payload={exportedAt:new Date().toISOString(),tasks:state.tasks,notes:state.notes,calendarEvents:window.deskCalendarEvents?window.deskCalendarEvents():[]};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='ai-desk-hub-records.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('已导出本地任务与记录');});
 function updateClock(){const now=new Date();document.getElementById('clock').textContent=now.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',hour12:false});document.getElementById('dateText').textContent=now.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});}setInterval(updateClock,1000);updateClock();renderTasks();renderNotes();renderProjects();loadCuratedProjects(false);
-if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')){navigator.serviceWorker.register('./sw.js?v=0.6.0',{updateViaCache:'none'}).catch(()=>{console.warn('离线缓存注册失败，请检查 HTTPS 与 sw.js 路径。');});}
+if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')){navigator.serviceWorker.register('./sw.js?v=0.6.1',{updateViaCache:'none'}).catch(()=>{console.warn('离线缓存注册失败，请检查 HTTPS 与 sw.js 路径。');});}
 </script>
 <dialog id="eventDialog" aria-labelledby="eventDialogTitle">
   <form id="eventForm">
@@ -220,9 +220,9 @@ if('serviceWorker' in navigator && (location.protocol==='https:' || location.hos
     <div class="dialog-actions"><button type="button" class="btn btn-danger" id="deleteEvent" hidden>删除日程</button><button type="button" class="btn btn-soft" id="cancelEvent">取消</button><button type="submit" class="btn btn-primary">保存日程</button></div>
   </form>
 </dialog>
-<script src="./calendar.js?v=0.6.0"></script>
+<script src="./calendar.js?v=0.6.1"></script>
 <dialog id="returnPrivacy" aria-labelledby="returnPrivacyTitle"><div class="privacy-content"><div class="eyebrow accent-cyan">RETURN / 隐私画面演示</div><h2 id="returnPrivacyTitle">你好，欢迎回来。</h2><p>身份不确定，已遮住当前应用内容。</p><p class="return-note">这是手动模拟，不是真实身份认证。停止演示后会重新显示本机数据。</p><button class="btn btn-primary" id="endPrivacyDemo">结束模拟，返回应用</button></div></dialog>
-<script src="./return.js?v=0.6.0"></script>
+<script src="./return.js?v=0.6.1"></script>
 
 
 <dialog id="ambientDialog" aria-labelledby="ambientTitle">
@@ -237,13 +237,14 @@ if('serviceWorker' in navigator && (location.protocol==='https:' || location.hos
 </dialog>
 <dialog id="deskSettings" aria-labelledby="deskSettingsTitle"><div class="dialog-head"><h2 id="deskSettingsTitle">体验与接入</h2><button class="icon-btn" data-close-dialog="deskSettings">关闭</button></div>
  <label class="companion-field">闲置时进入环境屏<select id="ambientIdle"><option value="0">仅手动开启</option><option value="2">2 分钟</option><option value="5">5 分钟</option><option value="15">15 分钟</option></select></label><p class="companion-note">仅在页面前台、没有编辑或本地播放时切换；网易云播放器载入后不自动切换。不会唤醒锁屏，也不表示检测到无人。</p>
+ <label class="companion-toggle"><input id="importantReminders" type="checkbox"><span>重要日程开始前 10 分钟提醒</span></label><p class="companion-note">仅在前台、未编辑时轻提示一次，不显示私人标题；遵守 RETURN 的免打扰。不会发送系统通知或保证锁屏提醒。</p>
  <section class="connection-row"><strong>飞书日历 · 待授权</strong><p>下一步接入只读日历，保持现在的横向排版。需要飞书应用与可用的服务端授权回调，密钥不填在网页内。</p><a href="https://open.feishu.cn/app" target="_blank" rel="noopener noreferrer">飞书开放平台 ↗</a></section>
  <section class="connection-row"><strong>当前位置天气</strong><p id="weatherStatus" role="status">点击启用后请求浏览器定位，将约 1 公里精度的坐标发送至 Open-Meteo 查询当前天气。位置仅在本次页面内使用。</p><button class="btn btn-primary" id="enableWeather">启用／刷新定位天气</button><button class="btn btn-light" id="disableWeather">停止并清除天气</button><a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">天气数据：Open-Meteo ↗</a></section>
  <p class="companion-note">摄像头、麦克风、后台感知与外部通知均未启用。RETURN 中可设置免打扰与模拟问候时段。</p>
 </dialog>
 <dialog id="recordEditor" aria-labelledby="recordEditorTitle"><form id="recordEditorForm"><div class="dialog-head"><h2 id="recordEditorTitle">编辑记录</h2><button type="button" class="icon-btn" data-close-dialog="recordEditor">关闭</button></div><label class="companion-field">内容<textarea id="recordText" maxlength="2000" rows="5" required></textarea></label><label id="recordImportantLabel"><input id="recordImportant" type="checkbox"> 标为今日重点</label><div class="media-modes"><button class="btn btn-primary" type="submit">保存</button><button class="btn btn-danger" type="button" id="deleteRecord">删除</button></div><p id="recordEditorFeedback" class="companion-note" role="status"></p></form></dialog>
 <dialog id="briefDialog" aria-labelledby="briefDialogTitle"><div class="dialog-head"><h2 id="briefDialogTitle">今日重点</h2><button class="icon-btn" data-close-dialog="briefDialog">关闭</button></div><p class="companion-note">来自本机日程与待办的规则摘要，不是 AI 生成。示例日程不会计入。</p><div id="briefDetails"></div><button class="btn btn-primary" id="briefOpenDesk">回到工作台</button></dialog>
-<script src="./companion.js?v=0.6.0"></script>
+<script src="./companion.js?v=0.6.1"></script>
 
 </body>
 </html>

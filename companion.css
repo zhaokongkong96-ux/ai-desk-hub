@@ -3,3 +3,5 @@
 @media(min-width:1100px) and (orientation:landscape){.clock-panel .time{font-size:70px}.clock-panel .date{font-size:11px}.clock-panel{padding:12px 18px}.clock-panel .weather-chip{min-height:30px}.clock-panel #nextEventTitle{font-size:14px}.clock-panel #nextEventTime{font-size:11px}.clock-panel .next-event{padding-top:6px}.media-card .panel-title{font-size:17px}.briefing{min-height:145px}}
 @media(max-width:1099px){.topbar{flex-wrap:wrap}.top-actions{flex-wrap:wrap}.status-pill{display:none}.brand{min-width:0}.brand-title{font-size:16px}}
 @media(max-width:700px){.top-actions .icon-btn{font-size:11px;padding:8px}.ambient-bottom{flex-direction:column;align-items:flex-start}.ambient-clock{top:25%;left:8%}.ambient-top{letter-spacing:0}.ambient-top .btn{font-size:12px}}
+
+.companion-toggle{display:flex;align-items:center;gap:10px;min-height:44px;font-size:13px;color:#a6b8ca}.companion-toggle input{width:22px;height:22px;accent-color:#00bdc9}
