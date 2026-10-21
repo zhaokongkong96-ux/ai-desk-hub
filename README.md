@@ -64,11 +64,10 @@
 ## 本地启动与发布产物
 
 ```sh
-node scripts/prepare-site.mjs
-python3 -m http.server 8766 --bind 127.0.0.1 --directory _site
+node scripts/preview.mjs
 ```
 
-使用 `http://localhost:8766/`，不要用file://检查PWA。应用无需npm安装；FullCalendar 6.1.19本地分发文件和MIT许可随项目提供，无运行时CDN依赖。详见 `THIRD_PARTY_NOTICES.md`。
+使用 `http://localhost:8765/ai-desk-hub/`，保持进程运行。启动脚本会先重新构建，只监听本机并只提供`_site`内的公开静态文件，不提供源码/交接包/目录列表。可用`--port 8766`选择其他本机端口（端口改变会变成另一浏览器数据来源）；原端口保持不变可继续使用已有记录。不要用file://检查PWA。应用无需npm安装；FullCalendar 6.1.19本地分发文件和MIT许可随项目提供，无运行时CDN依赖。详见 `THIRD_PARTY_NOTICES.md`。
 
 构建脚本校验JS/manifest/种子结构/图标尺寸，只复制白名单资源。兼容GitHub Pages仓库子路径。更新资源时需修改sw.js缓存版本。
 
