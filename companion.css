@@ -8,3 +8,5 @@
 
 /* Fit the standalone 12.9-inch canvas without moving the approved calendar. */
 @media(min-width:1100px) and (orientation:landscape){body:has(#page-today.active) .app{padding-bottom:90px}}
+
+.media-card-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.media-app-launch{display:inline-flex;align-items:center;text-decoration:none;justify-content:center}.media-card .panel-head .btn{max-width:96px}
