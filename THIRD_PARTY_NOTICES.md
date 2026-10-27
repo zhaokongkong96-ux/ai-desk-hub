@@ -31,3 +31,10 @@ Public RSS metadata only (headline, publisher, publication date and report link)
 ## Daily AI Radar metadata
 
 The daily catalog combines the existing Awesome AI Hardware directory (https://github.com/s87343472/awesome-ai-hardware, data/projects.json) with the official GitHub repository search API (https://docs.github.com/en/rest/search/search#search-repositories). Repository names, descriptions, declared licenses, timestamps and links are metadata, not a certification of reproducibility, safety, popularity or licensing compliance. New discovery is keyword filtered and remains unreviewed. The GitHub runner token is never included in the public output.
+
+## MediaPipe Tasks Vision / BlazeFace
+
+- MediaPipe Tasks Vision 0.10.21: pinned npm distribution `https://registry.npmjs.org/@mediapipe/tasks-vision/-/tasks-vision-0.10.21.tgz`, Apache-2.0. Local runtime and WASM files under `vendor/mediapipe-0.10.21/`; full license included there.
+- BlazeFace short-range float16 model v1: `https://storage.googleapis.com/mediapipe-models/face_detector/blaze_face_short_range/float16/1/blaze_face_short_range.tflite`, Apache-2.0 per its model card https://storage.googleapis.com/mediapipe-assets/MediaPipe%20BlazeFace%20Model%20Card%20(Short%20Range).pdf, linked from Google's official MediaPipe Face Detector model documentation. Detects face presence, not identity or liveness. Loaded locally only when the user enables camera detection.
+- Documentation: https://developers.google.com/edge/mediapipe/solutions/vision/face_detector
+- Public sample used for development QA only, not shipped: https://storage.googleapis.com/mediapipe-assets/portrait.jpg . No user camera image or face template is included in the app or tests.

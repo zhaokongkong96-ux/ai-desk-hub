@@ -1,9 +1,13 @@
+import {createHash} from 'node:crypto';
 import {mkdir,copyFile,rm,readFile} from 'node:fs/promises';
 import vm from 'node:vm';
-const files=['index.html','manifest.webmanifest','projects-seed.json','sw.js','icon-192.png','icon-512.png','.nojekyll','workspace.css','desk-layout.css','calendar.js','return.js','return.css','radar.css','timeline.css','companion.css','companion.js','wallpapers.js','desk-media.js','desk-media.css','attention.js','attention.css','push-config.json','feishu.js','feishu-config.json','topics.js','topics.css','topics-feed.json','radar-feed.json','THIRD_PARTY_NOTICES.md','vendor/fullcalendar-6.1.19.min.js','vendor/fullcalendar-LICENSE.md'];
+const files=['index.html','manifest.webmanifest','projects-seed.json','sw.js','icon-192.png','icon-512.png','.nojekyll','workspace.css','desk-layout.css','calendar.js','return.js','return.css','radar.css','timeline.css','companion.css','companion.js','wallpapers.js','desk-media.js','desk-media.css','presence-core.js','camera-presence.js','camera-presence.css','attention.js','attention.css','push-config.json','feishu.js','feishu-config.json','topics.js','topics.css','topics-feed.json','radar-feed.json','THIRD_PARTY_NOTICES.md','vendor/fullcalendar-6.1.19.min.js','vendor/fullcalendar-LICENSE.md'];
+files.push(...["vendor/mediapipe-0.10.21/vision_bundle.mjs","vendor/mediapipe-0.10.21/wasm/vision_wasm_internal.js","vendor/mediapipe-0.10.21/wasm/vision_wasm_internal.wasm","vendor/mediapipe-0.10.21/wasm/vision_wasm_nosimd_internal.js","vendor/mediapipe-0.10.21/wasm/vision_wasm_nosimd_internal.wasm","vendor/mediapipe-0.10.21/blaze_face_short_range.tflite","vendor/mediapipe-0.10.21/LICENSE","vendor/mediapipe-0.10.21/README.md"]);
+const visionHashes=JSON.parse(await readFile('vendor/mediapipe-0.10.21/SHA256.json','utf8'));
+for(const [file,expected] of Object.entries(visionHashes)){const actual=createHash('sha256').update(await readFile('vendor/mediapipe-0.10.21/'+file)).digest('hex');if(actual!==expected)throw Error('Pinned camera asset checksum mismatch: '+file);}
 const html=await readFile('index.html','utf8');
 for(const match of html.matchAll(/<script>([\s\S]*?)<\/script>/g))new vm.Script(match[1]);
-for(const path of ['sw.js','calendar.js','return.js','companion.js','wallpapers.js','topics.js','attention.js','desk-media.js','feishu.js','vendor/fullcalendar-6.1.19.min.js'])new vm.Script(await readFile(path,'utf8'));
+for(const path of ['sw.js','calendar.js','return.js','companion.js','wallpapers.js','topics.js','presence-core.js','camera-presence.js','attention.js','desk-media.js','feishu.js','vendor/fullcalendar-6.1.19.min.js'])new vm.Script(await readFile(path,'utf8'));
 const wallpaperContext={window:{}};
 vm.runInNewContext(await readFile('wallpapers.js','utf8'),wallpaperContext);
 function jpegDimensions(bytes){
