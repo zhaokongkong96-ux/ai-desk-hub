@@ -1,4 +1,4 @@
-/* FullCalendar is vendored locally under its MIT license. All events stay in this browser. */
+/* FullCalendar is vendored locally under its MIT license. Local events stay in this browser; Feishu events are a read-only, in-memory overlay. */
 (() => {
   'use strict';
   const KEY = 'ai-desk-hub-calendar-v1';
@@ -28,13 +28,15 @@
     ];
   }
   let events = [];
+  let marks={};try{marks=JSON.parse(localStorage.getItem('ai-desk-hub-feishu-marks')||'{}');}catch{}
+  const remote=e=>e.extendedProps?.source==='feishu';
   try {
     const raw = localStorage.getItem(KEY);
     if (raw === null) events = seedEvents();
     else {
       const parsed = JSON.parse(raw);
       if (!Array.isArray(parsed)) throw new Error('日程数据格式异常');
-      events = parsed.filter(e => e && typeof e.id==='string' && typeof e.title==='string' && Number.isFinite(Date.parse(e.start)) && Number.isFinite(Date.parse(e.end)) && Date.parse(e.end)>Date.parse(e.start));
+      events = parsed.filter(e => e && e.extendedProps?.source!=='feishu' && typeof e.id==='string' && typeof e.title==='string' && Number.isFinite(Date.parse(e.start)) && Number.isFinite(Date.parse(e.end)) && Date.parse(e.end)>Date.parse(e.start));
     }
   } catch (e) { document.getElementById('storageWarning').hidden=false; }
   const calendarElement = document.getElementById('calendar');
@@ -44,12 +46,12 @@
     return;
   }
   function serialize() {
-    return calendar.getEvents().map(e => ({id:e.id,title:e.title,start:e.start.toISOString(),end:(e.end || new Date(e.start.getTime()+1800000)).toISOString(),allDay:e.allDay,extendedProps:{category:e.extendedProps.category || 'work',sample:!!e.extendedProps.sample,status:e.extendedProps.status||'normal'}}));
+    return calendar.getEvents().map(e => ({id:e.id,title:e.title,start:e.start.toISOString(),end:(e.end || new Date(e.start.getTime()+1800000)).toISOString(),allDay:e.allDay,extendedProps:{category:e.extendedProps.category || 'work',sample:!!e.extendedProps.sample,status:e.extendedProps.status||'normal',...(remote(e)?{source:'feishu'}:{})}}));
   }
   function persistCalendar() {
     events = serialize();
-    document.getElementById('calendarSource').textContent=events.some(e=>e.extendedProps.sample)?'本机日历 · 含示例':'本机日历';
-    try { localStorage.setItem(KEY,JSON.stringify(events)); }
+    document.getElementById('calendarSource').textContent=(events.some(remote)?'本机 + 飞书只读':'本机日历')+(events.some(e=>e.extendedProps.sample)?' · 含示例':'');
+    try { localStorage.setItem(KEY,JSON.stringify(events.filter(e=>!remote(e)))); }
     catch(e) { document.getElementById('storageWarning').hidden=false; }
     renderNext();
     renderTimeline();
@@ -77,8 +79,11 @@
     category.value = data.extendedProps?.category || 'work';
     status.value=data.extendedProps?.status||'normal';
     document.getElementById('eventDialogTitle').textContent = selectedId ? '编辑日程' : '新增日程';
-    document.getElementById('eventSource').textContent = data.extendedProps?.sample ? '这是一条示例日程。保存后成为你的本机日程。' : '仅保存在本机浏览器，尚未连接外部日历。';
-    deleteButton.hidden = !selectedId;
+    const isRemote=remote(data);
+    for(const input of [title,start,end,category])input.disabled=isRemote;
+    document.querySelector('#eventForm button[type=submit]').textContent=isRemote?'保存本机提醒标记':'保存日程';
+    document.getElementById('eventSource').textContent = isRemote?'飞书只读日程；标题和时间请在飞书修改。此处状态仅用于本机显示和提醒，不回写飞书。':data.extendedProps?.sample ? '这是一条示例日程。保存后成为你的本机日程。' : '本机日程，仅保存在当前浏览器，不回写飞书。';
+    deleteButton.hidden = !selectedId||isRemote;
     deleteButton.textContent = '删除日程';
     deleteButton.dataset.confirm = '';
     error.textContent = '';
@@ -130,16 +135,16 @@
       const label=period+' · '+event.title+(state==='normal'?'':' · '+statusNames[state]);
       const button=document.createElement('button');button.type='button';button.className='timeline-event event-'+state;
       button.style.cssText='left:'+left+'%;width:'+width+'%;max-width:'+(100-left)+'%;top:'+(lane*52+12)+'px;--event-fill:'+paint.fill+';--event-line:'+paint.line+';--event-text:'+paint.text;
-      button.setAttribute('aria-label',label+'，点击编辑');button.title=label;
+      button.setAttribute('aria-label',label+(remote(event)?'，飞书只读，点击查看':'，点击编辑'));button.title=label;
       const name=document.createElement('span');name.textContent=event.title;button.append(name);
       const row=document.createElement('button');row.type='button';row.className='timeline-agenda-item event-'+state;
-      row.style.setProperty('--event-text',paint.text);row.setAttribute('aria-label',label+'，点击编辑');
+      row.style.setProperty('--event-text',paint.text);row.setAttribute('aria-label',label+(remote(event)?'，飞书只读，点击查看':'，点击编辑'));
       const rowTime=document.createElement('small');rowTime.textContent=period;
       const rowName=document.createElement('span');rowName.textContent=event.title+(state==='normal'?'':' ['+statusNames[state]+']');row.append(rowTime,rowName);
       row.addEventListener('click',()=>openEditor(event));agenda.append(row);
       let drag=null,suppressClick=false;
       button.addEventListener('pointerdown',e=>{
-        if(e.button!==0 || event.allDay || event.start<day || finish>tomorrow)return;
+        if(remote(event)||e.button!==0 || event.allDay || event.start<day || finish>tomorrow)return;
         drag={x:e.clientX,start:+event.start,end:+finish,moved:false};button.setPointerCapture(e.pointerId);
       });
       button.addEventListener('pointermove',e=>{
@@ -182,17 +187,23 @@
     editable:true,selectable:true,selectMirror:true,longPressDelay:450,eventLongPressDelay:450,selectLongPressDelay:450,
     dayMaxEvents:2,eventMinHeight:28,eventShortHeight:44,expandRows:false,
     events:events.map(e=>({...e,...eventPaint(e.extendedProps?.category)})),
-    datesSet() { renderTimeline(); },
+    datesSet(info) { renderTimeline();window.dispatchEvent(new CustomEvent('desk-calendar-range',{detail:{start:info.start.toISOString(),end:info.end.toISOString()}})); },
     dateClick(info) { openEditor({start:info.date,end:new Date(info.date.getTime()+3600000)}); },
     select(info) { openEditor({start:info.start,end:info.end}); calendar.unselect(); },
     eventClick(info) { info.jsEvent.preventDefault();openEditor(info.event); },
     eventDrop() {persistCalendar();toast('日程时间已更新');},
     eventResize() {persistCalendar();toast('日程时长已更新');},
     eventClassNames(info){return ['event-'+(info.event.extendedProps.status||'normal')];},
-    eventDidMount(info) {const state=info.event.extendedProps.status||'normal';info.el.setAttribute('aria-label',info.event.title+'，'+(statusNames[state]||'正常')+'，点击编辑');if(state!=='normal'){const badge=document.createElement('span');badge.className='event-state';badge.textContent='['+(statusNames[state]||'正常')+'] ';info.el.querySelector('.fc-event-title')?.prepend(badge);}info.el.setAttribute('tabindex','0');info.el.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();openEditor(info.event);}});}
+    eventDidMount(info) {const state=info.event.extendedProps.status||'normal';info.el.setAttribute('aria-label',info.event.title+'，'+(statusNames[state]||'正常')+(remote(info.event)?'，飞书只读，点击查看':'，点击编辑'));if(state!=='normal'){const badge=document.createElement('span');badge.className='event-state';badge.textContent='['+(statusNames[state]||'正常')+'] ';info.el.querySelector('.fc-event-title')?.prepend(badge);}info.el.setAttribute('tabindex','0');info.el.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing){e.preventDefault();openEditor(info.event);}});}
   });
   window.deskCalendar = calendar;
   window.deskCalendarEvents = () => serialize();
+  window.deskSetFeishuEvents=(items,syncedAt)=>{
+    if(!Array.isArray(items))return;
+    calendar.batchRendering(()=>{for(const e of calendar.getEvents())if(remote(e))e.remove();for(const e of items){if(e?.extendedProps?.source!=='feishu'||!e.id?.startsWith('feishu-')||!Number.isFinite(Date.parse(e.start))||Date.parse(e.end)<=Date.parse(e.start))continue;calendar.addEvent({...e,editable:false,startEditable:false,durationEditable:false,...eventPaint(e.extendedProps.category),extendedProps:{...e.extendedProps,status:marks[e.id]||'normal'}});}});
+    persistCalendar();
+  };
+
   calendar.render();
   const expandButton=document.getElementById('expandCalendar');
   function expandCalendar(force){const panel=document.querySelector('.calendar-panel');const expanded=typeof force==='boolean'?force:!panel.classList.contains('is-expanded');panel.classList.toggle('is-expanded',expanded);expandButton.textContent=expanded?'收起日历':'放大日历';expandButton.setAttribute('aria-expanded',String(expanded));requestAnimationFrame(()=>calendar.updateSize());}
@@ -206,6 +217,12 @@
   for(const id of ['closeEvent','cancelEvent'])document.getElementById(id).addEventListener('click',closeEditor);
   form.addEventListener('submit',event=>{
     event.preventDefault();
+    const selected=selectedId&&calendar.getEventById(selectedId);
+    if(selected&&remote(selected)){
+      if(!['normal','important','done'].includes(status.value))return;
+      marks[selectedId]=status.value;try{localStorage.setItem('ai-desk-hub-feishu-marks',JSON.stringify(marks));}catch{document.getElementById('storageWarning').hidden=false;}
+      selected.setExtendedProp('status',status.value);persistCalendar();closeEditor();toast('本机提醒标记已保存，未修改飞书日程');return;
+    }
     const eventTitle = title.value.trim();
     const from = new Date(start.value); const to = new Date(end.value);
     if(!eventTitle){error.textContent='请填写日程名称。';return;}
@@ -216,6 +233,7 @@
     persistCalendar();closeEditor();toast('日程已保存到本机');
   });
   deleteButton.addEventListener('click',()=>{
+    if(selectedId&&remote(calendar.getEventById(selectedId)))return;
     if(deleteButton.dataset.confirm!=='yes'){deleteButton.dataset.confirm='yes';deleteButton.textContent='确认删除';return;}
     calendar.getEventById(selectedId)?.remove();persistCalendar();closeEditor();toast('日程已删除');
   });

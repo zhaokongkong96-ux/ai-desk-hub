@@ -46,7 +46,7 @@ export function createService({env=process.env,dbPath,send=webpush.sendNotificat
       const match=path.match(/^\/api\/push\/devices\/([a-f0-9]{32})(?:\/(reminders|test))?$/);if(!match){json(res,404,{error:'not_found'});return;}
       const device=authorized(req,match[1]);if(!device){json(res,401,{error:'device_auth_required'});return;}
       if(!match[2]&&req.method==='DELETE'){db.prepare('DELETE FROM devices WHERE id=?').run(device.id);json(res,200,{removed:true});return;}
-      if(!match[2]&&req.method==='GET'){json(res,200,{active:true,paused:!!device.paused,syncedAt:device.updated_at});return;}
+      if(!match[2]&&req.method==='GET'){const counts={pending:0,sent:0,failed:0};for(const row of db.prepare('SELECT state,count(*) n FROM reminders WHERE device_id=? AND expires>? GROUP BY state').all(device.id,stamp))if(row.state in counts)counts[row.state]=row.n;json(res,200,{active:true,paused:!!device.paused,syncedAt:device.updated_at,reminders:counts});return;}
       if(match[2]==='reminders'&&req.method==='PUT'){
         const data=await body(req);if(!Array.isArray(data.events)||data.events.length>100||typeof data.paused!=='boolean'){json(res,400,{error:'invalid_reminders'});return;}
         const events=data.events.filter(e=>e&&/^[a-f0-9]{64}$/.test(e.key)&&Number.isFinite(e.at)&&Number.isFinite(e.expiresAt)&&e.expiresAt>stamp&&e.expiresAt<=stamp+31*86400000&&e.at<=e.expiresAt&&e.expiresAt-e.at<=600000&&e.at>=stamp-600000);

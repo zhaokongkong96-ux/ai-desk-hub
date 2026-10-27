@@ -18,6 +18,7 @@ test('pairing, authentication, private schedule, pause, cancellation, deduplicat
  assert.equal((await call(route)).status,401);
  const event={key:'a'.repeat(64),at:stamp+1000,expiresAt:stamp+601000};
  assert.equal((await call(route+'/reminders','PUT',{events:[event],paused:true},token)).status,200);
+ assert.equal((await call(route,'GET',null,token)).body.reminders.pending,1);
  stamp+=1001;await app.tick();assert.equal(sent.length,0);
  await call(route+'/reminders','PUT',{events:[event],paused:false},token);await app.tick();await app.tick();assert.equal(sent.length,1);assert.deepEqual(Object.keys(sent[0]).sort(),['expiresAt','key','type']);
  await call(route+'/reminders','PUT',{events:[event],paused:false},token);await app.tick();assert.equal(sent.length,1);
