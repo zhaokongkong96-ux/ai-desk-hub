@@ -2,11 +2,12 @@
 (() => {
   'use strict';
   const $=id=>document.getElementById(id), KEY='ai-desk-hub-companion-v1';
-  const themes=['gallery','nature','digital'];
-  let prefs={theme:'gallery',idle:0,netease:'',reminders:false,reminded:[]}, idleSince=Date.now(),imageURL='',weatherPosition=null,weatherAt=0,weatherRequest=0;
+  const themes=['gallery','nature','digital'], wallpapers=window.DeskWallpapers||[];
+  let wallpaperRequest=0;
+  let prefs={theme:'gallery',wallpapers:{},idle:0,netease:'',reminders:false,reminded:[]}, idleSince=Date.now(),imageURL='',weatherPosition=null,weatherAt=0,weatherRequest=0;
   let weatherAbort=null, mediaMode='netease',playlist=[],trackIndex=0,nativeLaunchRequested=false,editor=null,returnFocus=null;
   const audio=$('deskAudio');
-  try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved){if(themes.includes(saved.theme))prefs.theme=saved.theme;if([0,2,5,15].includes(saved.idle))prefs.idle=saved.idle;if(typeof saved.reminders==='boolean')prefs.reminders=saved.reminders;if(Array.isArray(saved.reminded))prefs.reminded=saved.reminded.filter(v=>typeof v==='string'&&v.length<300).slice(-100);if(typeof saved.netease==='string'&&neteaseURL(saved.netease))prefs.netease=saved.netease;}}catch{}
+  try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved){if(saved.wallpapers&&typeof saved.wallpapers==='object')for(const theme of ['gallery','nature'])if(wallpapers.some(w=>w.theme===theme&&w.id===saved.wallpapers[theme]))prefs.wallpapers[theme]=saved.wallpapers[theme];if(themes.includes(saved.theme))prefs.theme=saved.theme;if([0,2,5,15].includes(saved.idle))prefs.idle=saved.idle;if(typeof saved.reminders==='boolean')prefs.reminders=saved.reminders;if(Array.isArray(saved.reminded))prefs.reminded=saved.reminded.filter(v=>typeof v==='string'&&v.length<300).slice(-100);if(typeof saved.netease==='string'&&neteaseURL(saved.netease))prefs.netease=saved.netease;}}catch{}
   function savePrefs(){try{localStorage.setItem(KEY,JSON.stringify(prefs));}catch{$('storageWarning').hidden=false;}}
   function showDialog(id){const d=$(id);if(d.open)return;returnFocus=document.activeElement;d.showModal();}
   function closeDialog(id){$(id).close();if(returnFocus?.isConnected)returnFocus.focus();idleSince=Date.now();}
@@ -15,14 +16,38 @@
   $('openDeskSettings').addEventListener('click',()=>showDialog('deskSettings'));
   // AMBIENT deliberately has no task, note or calendar content.
   function clock(){const now=new Date();$('ambientClock').textContent=now.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',hour12:false});$('ambientDate').textContent=now.toLocaleDateString('zh-CN',{month:'long',day:'numeric',weekday:'long'});}
-  function setTheme(theme){prefs.theme=theme;savePrefs();$('ambientArt').dataset.theme=theme;$('ambientImage').hidden=true;$('ambientArt').hidden=false;document.querySelectorAll('[data-theme]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.theme===theme)));}
+  function displayWallpaper(src,alt,fit){
+    const request=++wallpaperRequest, probe=new Image();
+    $('wallpaperStatus').textContent='图片载入中…';
+    probe.onload=()=>{if(request!==wallpaperRequest)return;$('ambientImage').src=src;$('ambientImage').alt=alt;$('ambientImage').style.objectFit=fit;$('ambientImage').hidden=false;$('ambientArt').hidden=true;$('wallpaperStatus').textContent='';};
+    probe.onerror=()=>{if(request!==wallpaperRequest)return;$('ambientImage').hidden=true;$('ambientArt').hidden=false;$('wallpaperStatus').textContent='图片未能载入，请切换另一张。';};
+    probe.src=src;
+  }
+  function setTheme(theme){
+    if(!themes.includes(theme))return;
+    prefs.theme=theme;$('ambientArt').dataset.theme=theme;
+    document.querySelectorAll('button[data-theme]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.theme===theme)));
+    const group=wallpapers.filter(w=>w.theme===theme), chosen=group.find(w=>w.id===prefs.wallpapers[theme])||group[0];
+    $('ambientWallpaper').hidden=!chosen;$('wallpaperPrev').disabled=false;$('wallpaperNext').disabled=false;
+    if(chosen){
+      prefs.wallpapers[theme]=chosen.id;
+      $('wallpaperCount').textContent=(group.indexOf(chosen)+1)+' / '+group.length;
+      $('wallpaperCredit').textContent=chosen.title+' · '+chosen.artist+' · '+chosen.source+' ↗';
+      $('wallpaperCredit').href=chosen.sourceURL;$('wallpaperCredit').title=chosen.license;
+      displayWallpaper(chosen.file,chosen.title+' — '+chosen.artist,theme==='gallery'?'contain':'cover');
+    }else{++wallpaperRequest;$('ambientImage').hidden=true;$('ambientArt').hidden=false;$('wallpaperStatus').textContent='';}
+    savePrefs();
+  }
+  function stepWallpaper(delta){const group=wallpapers.filter(w=>w.theme===prefs.theme);if(!group.length)return;const at=group.findIndex(w=>w.id===prefs.wallpapers[prefs.theme]);prefs.wallpapers[prefs.theme]=group[(at+delta+group.length)%group.length].id;setTheme(prefs.theme);}
+  $('wallpaperPrev').addEventListener('click',()=>stepWallpaper(-1));
+  $('wallpaperNext').addEventListener('click',()=>stepWallpaper(1));
   function enterAmbient(){if(document.querySelector('dialog[open]'))return;clock();showDialog('ambientDialog');}
   $('openAmbient').addEventListener('click',enterAmbient);$('leaveAmbient').addEventListener('click',()=>{closeDialog('ambientDialog');switchPage('today');});
   $('ambientReturn').addEventListener('click',()=>{closeDialog('ambientDialog');switchPage('return');});
   $('ambientMusic').addEventListener('click',()=>{closeDialog('ambientDialog');showDialog('mediaDialog');});
   $('ambientCapture').addEventListener('click',()=>{closeDialog('ambientDialog');$('captureInput').focus();});
-  document.querySelectorAll('[data-theme]').forEach(b=>b.addEventListener('click',()=>setTheme(b.dataset.theme)));
-  $('ambientImageFile').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;if(!file.type.startsWith('image/')||file.size>15*1024*1024){toast('请选择 15MB 以内的图片');return;}if(imageURL)URL.revokeObjectURL(imageURL);imageURL=URL.createObjectURL(file);$('ambientImage').src=imageURL;$('ambientImage').hidden=false;$('ambientArt').hidden=true;toast('画作仅用于当前页面，刷新后需重新选择');});
+  document.querySelectorAll('button[data-theme]').forEach(b=>b.addEventListener('click',()=>setTheme(b.dataset.theme)));
+  $('ambientImageFile').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;if(!file.type.startsWith('image/')||file.size>15*1024*1024){toast('请选择 15MB 以内的图片');return;}if(imageURL)URL.revokeObjectURL(imageURL);imageURL=URL.createObjectURL(file);$('ambientWallpaper').hidden=false;document.querySelectorAll('button[data-theme]').forEach(b=>b.setAttribute('aria-pressed','false'));$('wallpaperPrev').disabled=true;$('wallpaperNext').disabled=true;$('wallpaperCount').textContent='本机图片';$('wallpaperCredit').textContent='自己的画作 · 仅本次页面';$('wallpaperCredit').removeAttribute('href');$('wallpaperCredit').removeAttribute('title');displayWallpaper(imageURL,'你选择的环境画作','contain');toast('画作仅用于当前页面，刷新后需重新选择');});
   $('ambientIdle').value=String(prefs.idle);$('ambientIdle').addEventListener('change',()=>{prefs.idle=Number($('ambientIdle').value);idleSince=Date.now();savePrefs();});
   for(const event of ['pointerdown','keydown','wheel','touchstart','input'])document.addEventListener(event,()=>{idleSince=Date.now();},{passive:true});
   document.addEventListener('visibilitychange',()=>{idleSince=Date.now();if(!document.hidden&&weatherPosition&&Date.now()-weatherAt>=900000)locateWeather();});

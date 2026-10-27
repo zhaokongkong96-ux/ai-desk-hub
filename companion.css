@@ -10,3 +10,17 @@
 @media(min-width:1100px) and (orientation:landscape){body:has(#page-today.active) .app{padding-bottom:90px}}
 
 .media-card-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.media-app-launch{display:inline-flex;align-items:center;text-decoration:none;justify-content:center}.media-card .panel-head .btn{max-width:96px}
+
+/* Real wallpapers keep artwork composition and controls readable on light images. */
+#ambientImage[hidden],.ambient-art[hidden],#ambientWallpaper[hidden]{display:none}
+.ambient-scrim{position:absolute;inset:0;pointer-events:none;background:linear-gradient(#0008,transparent 18%,transparent 62%,#000b)}
+.ambient-clock{padding:12px 24px 18px;background:#0005;border-radius:18px;text-shadow:0 2px 8px #000,0 0 24px #0008}
+.ambient-clock p{color:#edf1f2}.ambient-top>span{text-shadow:0 2px 6px #000}
+.ambient-wallpaper{position:absolute;z-index:1;left:28px;right:28px;bottom:96px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.wallpaper-switch{display:flex;align-items:center;gap:8px}.wallpaper-switch .btn{min-width:48px;min-height:44px;padding:10px;background:#050b10df;color:#edf1f2}
+#wallpaperCount{min-width:44px;text-align:center;font-size:12px;color:#fff;text-shadow:0 1px 5px #000}
+#wallpaperCredit{color:#f0f2f3;font-size:12px;line-height:1.5;text-shadow:0 1px 6px #000;background:#0009;padding:10px 12px;border-radius:8px;text-decoration:none;overflow-wrap:anywhere}
+#wallpaperCredit[href]:hover{text-decoration:underline}#wallpaperStatus{font-size:12px;color:#fff;background:#0009;border-radius:8px}#wallpaperStatus:empty{display:none}
+.ambient-bottom .btn,.ambient-themes>button{background:#050b10df;color:#d5dfe8}
+@media(max-width:700px){.ambient-wallpaper{bottom:156px;left:20px;right:20px;gap:6px}.ambient-bottom{bottom:20px;left:20px;right:20px;gap:8px}.ambient-clock{left:6%;padding:12px 16px}.ambient-themes,.ambient-actions{gap:6px}#wallpaperCredit{font-size:11px}}
+@media(max-height:540px){.ambient-clock{top:20%;padding:8px 16px}.ambient-clock time{font-size:70px}.ambient-clock p{font-size:12px;margin:4px 0}.ambient-wallpaper{bottom:84px}.ambient-bottom{bottom:20px}}
