@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const $=id=>document.getElementById(id), KEY='ai-desk-hub-companion-v1';
-  const themes=['gallery','nature','digital'], wallpapers=window.DeskWallpapers||[];
+  const themes=['gallery','nature'], wallpapers=window.DeskWallpapers||[];
   let wallpaperRequest=0;
   let prefs={theme:'gallery',wallpapers:{},idle:0,netease:'',reminders:false,reminded:[]}, idleSince=Date.now(),imageURL='',weatherPosition=null,weatherAt=0,weatherRequest=0;
   let weatherAbort=null, mediaMode='netease',playlist=[],trackIndex=0,nativeLaunchRequested=false,editor=null,returnFocus=null;

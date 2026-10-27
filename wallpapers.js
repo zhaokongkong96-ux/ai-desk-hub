@@ -1,4 +1,4 @@
-/* Bundled wallpapers: source and license are retained with each image. */
+/* Ten original landscape wallpapers; source and license retained per image. */
 window.DeskWallpapers = [
   {
     "id": "wheat-field",
@@ -11,7 +11,9 @@ window.DeskWallpapers = [
     "downloadURL": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/436535/2383011/main-image",
     "license": "Public Domain · The Met Open Access",
     "file": "./assets/wallpapers/wheat-field.jpg",
-    "retrieved": "2026-10-27"
+    "retrieved": "2026-10-27",
+    "width": 1200,
+    "height": 955
   },
   {
     "id": "montmartre",
@@ -24,20 +26,54 @@ window.DeskWallpapers = [
     "downloadURL": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/437310/2035868/main-image",
     "license": "Public Domain · The Met Open Access",
     "file": "./assets/wallpapers/montmartre.jpg",
-    "retrieved": "2026-10-27"
+    "retrieved": "2026-10-27",
+    "width": 1200,
+    "height": 969
   },
   {
-    "id": "roses",
+    "id": "jalais-hill",
     "theme": "gallery",
-    "title": "玫瑰",
-    "artist": "Vincent van Gogh",
-    "year": "1890",
+    "title": "蓬图瓦兹的雅莱山",
+    "artist": "Camille Pissarro",
+    "year": "1867",
     "source": "The Met",
-    "sourceURL": "https://www.metmuseum.org/art/collection/search/436534",
-    "downloadURL": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/436534/1447064/main-image",
+    "sourceURL": "https://www.metmuseum.org/art/collection/search/437299",
+    "downloadURL": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/437299/796094/main-image",
     "license": "Public Domain · The Met Open Access",
-    "file": "./assets/wallpapers/roses.jpg",
-    "retrieved": "2026-10-27"
+    "file": "./assets/wallpapers/jalais-hill.jpg",
+    "retrieved": "2026-10-27",
+    "width": 1200,
+    "height": 915
+  },
+  {
+    "id": "heart-andes",
+    "theme": "gallery",
+    "title": "安第斯之心",
+    "artist": "Frederic Edwin Church",
+    "year": "1859",
+    "source": "The Met",
+    "sourceURL": "https://www.metmuseum.org/art/collection/search/10481",
+    "downloadURL": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/10481/33835/main-image",
+    "license": "Public Domain · The Met Open Access",
+    "file": "./assets/wallpapers/heart-andes.jpg",
+    "retrieved": "2026-10-27",
+    "width": 1200,
+    "height": 661
+  },
+  {
+    "id": "rocky-mountains",
+    "theme": "gallery",
+    "title": "落基山脉：兰德峰",
+    "artist": "Albert Bierstadt",
+    "year": "1863",
+    "source": "The Met",
+    "sourceURL": "https://www.metmuseum.org/art/collection/search/10154",
+    "downloadURL": "https://collectionapi.metmuseum.org/api/collection/v1/iiif/10154/34358/main-image",
+    "license": "Public Domain · The Met Open Access",
+    "file": "./assets/wallpapers/rocky-mountains.jpg",
+    "retrieved": "2026-10-27",
+    "width": 1200,
+    "height": 719
   },
   {
     "id": "forest",
@@ -49,30 +85,64 @@ window.DeskWallpapers = [
     "downloadURL": "https://images.unsplash.com/photo-1549895058-8e633ba2f27f?fm=jpg&fit=max&w=2048&q=82",
     "license": "Unsplash License",
     "file": "./assets/wallpapers/forest.jpg",
-    "retrieved": "2026-10-27"
+    "retrieved": "2026-10-27",
+    "width": 2048,
+    "height": 1536
   },
   {
-    "id": "moraine-lake",
+    "id": "alpine-lake",
     "theme": "nature",
-    "title": "冰碛湖晨光",
-    "artist": "ConfinedRiley",
+    "title": "高山湖镜",
+    "artist": "Ales Krivec",
     "source": "Unsplash",
-    "sourceURL": "https://unsplash.com/photos/a-lake-surrounded-by-mountains-mIj8Cn3oNDg",
-    "downloadURL": "https://images.unsplash.com/photo-1669604120699-eeba651ac235?fm=jpg&fit=max&w=2048&q=82",
+    "sourceURL": "https://unsplash.com/photos/landscape-photography-of-lake-surrounded-by-mountains-8aSs7QejvSw",
+    "downloadURL": "https://images.unsplash.com/photo-1433275328929-69941e862d61?fm=jpg&fit=max&w=2048&q=82",
     "license": "Unsplash License",
-    "file": "./assets/wallpapers/moraine-lake.jpg",
-    "retrieved": "2026-10-27"
+    "file": "./assets/wallpapers/alpine-lake.jpg",
+    "retrieved": "2026-10-27",
+    "width": 2048,
+    "height": 1367
   },
   {
-    "id": "misty-forest",
+    "id": "misty-hills",
     "theme": "nature",
-    "title": "林间晨雾",
-    "artist": "Fabrice Villard",
+    "title": "雨后雾山",
+    "artist": "Ricardo Gomez Angel",
     "source": "Unsplash",
-    "sourceURL": "https://unsplash.com/photos/misty-forest-landscape-with-soft-golden-light-tkoA1sWwHUg",
-    "downloadURL": "https://images.unsplash.com/photo-1768808520785-a4ce8c12c335?fm=jpg&fit=max&w=2048&q=82",
+    "sourceURL": "https://unsplash.com/photos/high-angle-of-mountain-range-covered-with-mists-qfcBVgqJ_1E",
+    "downloadURL": "https://images.unsplash.com/photo-1527749561912-77dfac6274db?fm=jpg&fit=max&w=2048&q=82",
     "license": "Unsplash License",
-    "file": "./assets/wallpapers/misty-forest.jpg",
-    "retrieved": "2026-10-27"
+    "file": "./assets/wallpapers/misty-hills.jpg",
+    "retrieved": "2026-10-27",
+    "width": 2048,
+    "height": 1377
+  },
+  {
+    "id": "sand-dunes",
+    "theme": "nature",
+    "title": "沙丘光影",
+    "artist": "Matt Artz",
+    "source": "Unsplash",
+    "sourceURL": "https://unsplash.com/photos/sand-dunes-at-daytime-ShQbbBBvoPM",
+    "downloadURL": "https://images.unsplash.com/photo-1509223397999-28fd1c5f11f5?fm=jpg&fit=max&w=2048&q=82",
+    "license": "Unsplash License",
+    "file": "./assets/wallpapers/sand-dunes.jpg",
+    "retrieved": "2026-10-27",
+    "width": 2048,
+    "height": 1362
+  },
+  {
+    "id": "ocean",
+    "theme": "nature",
+    "title": "海浪与云",
+    "artist": "Tim Marshall",
+    "source": "Unsplash",
+    "sourceURL": "https://unsplash.com/photos/landscape-photography-of-ocean-qKlD2QlK-CY",
+    "downloadURL": "https://images.unsplash.com/photo-1474267119072-677dd7959e96?fm=jpg&fit=max&w=2048&q=82",
+    "license": "Unsplash License",
+    "file": "./assets/wallpapers/ocean.jpg",
+    "retrieved": "2026-10-27",
+    "width": 2048,
+    "height": 1365
   }
 ];

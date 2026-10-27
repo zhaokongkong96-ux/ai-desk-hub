@@ -6,12 +6,24 @@ for(const match of html.matchAll(/<script>([\s\S]*?)<\/script>/g))new vm.Script(
 for(const path of ['sw.js','calendar.js','return.js','companion.js','wallpapers.js','vendor/fullcalendar-6.1.19.min.js'])new vm.Script(await readFile(path,'utf8'));
 const wallpaperContext={window:{}};
 vm.runInNewContext(await readFile('wallpapers.js','utf8'),wallpaperContext);
-const wallpaperIDs=new Set();
+function jpegDimensions(bytes){
+  for(let pos=2;pos+8<bytes.length;){
+    if(bytes[pos]!==255)break;
+    const marker=bytes[pos+1],length=bytes.readUInt16BE(pos+2);
+    if([192,193,194,195,197,198,199,201,202,203,205,206,207].includes(marker))return {width:bytes.readUInt16BE(pos+7),height:bytes.readUInt16BE(pos+5)};
+    if(length<2)break;pos+=length+2;
+  }
+  throw Error('Invalid wallpaper JPEG dimensions');
+}
+const wallpaperIDs=new Set(), wallpaperCounts={gallery:0,nature:0},swSource=await readFile('sw.js','utf8');
 for(const w of wallpaperContext.window.DeskWallpapers){
   if(wallpaperIDs.has(w.id)||!['gallery','nature'].includes(w.theme)||!/^\.\/assets\/wallpapers\/[a-z-]+\.jpg$/.test(w.file)||!w.sourceURL.startsWith('https://')||!w.license||!w.artist)throw Error('Invalid wallpaper metadata');
-  wallpaperIDs.add(w.id);const image=await readFile(w.file);if(image[0]!==255||image[1]!==216)throw Error('Invalid wallpaper JPEG: '+w.file);files.push(w.file.slice(2));
+  wallpaperIDs.add(w.id);const image=await readFile(w.file);if(image[0]!==255||image[1]!==216)throw Error('Invalid wallpaper JPEG: '+w.file);
+  const size=jpegDimensions(image);if(size.width<=size.height||size.width!==w.width||size.height!==w.height)throw Error('Wallpaper must use its original landscape composition: '+w.file);
+  if(!swSource.includes("'"+w.file+"'"))throw Error('Wallpaper missing from offline cache: '+w.file);
+  wallpaperCounts[w.theme]++;files.push(w.file.slice(2));
 }
-if(wallpaperIDs.size!==6)throw Error('Expected six bundled wallpapers');
+if(wallpaperIDs.size!==10||wallpaperCounts.gallery!==5||wallpaperCounts.nature!==5)throw Error('Expected five landscape wallpapers per category');
 const manifest=JSON.parse(await readFile('manifest.webmanifest','utf8'));
 if(manifest.scope!=='./'||manifest.start_url!=='./index.html')throw Error('Expected project-relative PWA URLs');
 const seed=JSON.parse(await readFile('projects-seed.json','utf8'));
