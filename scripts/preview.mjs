@@ -14,7 +14,7 @@ const port=args.length?Number(args[1]):8765;
 if(!Number.isInteger(port)||port<1024||port>65535)throw Error('Port must be an integer from 1024 through 65535');
 await import('./prepare-site.mjs');
 const site=path.join(root,'_site'),prefix='/ai-desk-hub/';
-const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.wasm':'application/wasm','.tflite':'application/octet-stream','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.webmanifest':'application/manifest+json; charset=utf-8','.png':'image/png','.jpg':'image/jpeg','.md':'text/plain; charset=utf-8'};
+const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.webmanifest':'application/manifest+json; charset=utf-8','.png':'image/png','.jpg':'image/jpeg','.md':'text/plain; charset=utf-8'};
 const run=promisify(execFile);
 let topicsCache=null,topicsPending=null;
 async function publicTopics(){

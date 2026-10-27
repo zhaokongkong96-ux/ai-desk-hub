@@ -36,11 +36,7 @@
   if(due&&show(reminderText(due),true,false,true)){prefs.seen=[...prefs.seen,due.id+'@'+due.start].slice(-200);save();}
  }
  function reminderText(e){return prefs.readContent?new Date(e.start).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})+'，'+String(e.title||'重要日程').slice(0,200)+'即将开始。':'10 分钟内有重要日程开始，请查看全天安排。';}
- window.deskAttention={remindImportant,
-  stopPresenceVoice:stopSpeech,
-  enablePresenceVoice(){prefs.voice=true;speechReady=true;$('voiceEnabled').checked=true;save();diagnostics();speak('正在准备到桌检测，请允许摄像头。',true,true);},
-  presenceWelcome(voice){return show('欢迎回来。点击「确认并查看重点」了解接下来的安排。',!!voice,false,true);}
- };
+ window.deskAttention={remindImportant};
  for(const [id,prop]of [['autoGreeting','auto'],['voiceEnabled','voice'],['readReminderContent','readContent'],['greetStart','start'],['greetEnd','end'],['greetCooldown','cooldown']]){
   const input=$(id);if(input.type==='checkbox')input.checked=!!prefs[prop];else input.value=prefs[prop];
   input.addEventListener('change',()=>{prefs[prop]=input.type==='checkbox'?input.checked:input.type==='select-one'?Number(input.value):input.value;if((prop==='start'||prop==='end')&&!/^([01]\d|2[0-3]):[0-5]\d$/.test(prefs[prop]))prefs[prop]=prop==='start'?'08:00':'23:00';save();diagnostics();if(!prefs.voice)stopSpeech();});

@@ -1,8 +1,7 @@
 // Scope-specific caches keep project sites on the same GitHub Pages origin separate.
 const CACHE_PREFIX = 'ai-desk-hub:' + self.registration.scope + ':';
-const CACHE_NAME = CACHE_PREFIX + 'v0.10.0';
-const ASSETS = ['./', './index.html', './manifest.webmanifest', './projects-seed.json', './icon-192.png', './icon-512.png','./workspace.css','./desk-layout.css','./calendar.js','./return.js','./return.css','./radar.css','./timeline.css','./companion.css','./companion.js','./desk-media.js','./desk-media.css','./presence-core.js','./camera-presence.js','./camera-presence.css','./attention.js','./attention.css','./push-config.json','./feishu.js','./feishu-config.json','./topics.js','./topics.css','./topics-feed.json','./radar-feed.json','./wallpapers.js','./assets/wallpapers/wheat-field.jpg','./assets/wallpapers/montmartre.jpg','./assets/wallpapers/jalais-hill.jpg','./assets/wallpapers/heart-andes.jpg','./assets/wallpapers/rocky-mountains.jpg','./assets/wallpapers/forest.jpg','./assets/wallpapers/alpine-lake.jpg','./assets/wallpapers/misty-hills.jpg','./assets/wallpapers/sand-dunes.jpg','./assets/wallpapers/ocean.jpg','./THIRD_PARTY_NOTICES.md','./vendor/fullcalendar-6.1.19.min.js'];
-const CAMERA_ASSETS=["./vendor/mediapipe-0.10.21/vision_bundle.mjs","./vendor/mediapipe-0.10.21/wasm/vision_wasm_internal.js","./vendor/mediapipe-0.10.21/wasm/vision_wasm_internal.wasm","./vendor/mediapipe-0.10.21/wasm/vision_wasm_nosimd_internal.js","./vendor/mediapipe-0.10.21/wasm/vision_wasm_nosimd_internal.wasm","./vendor/mediapipe-0.10.21/blaze_face_short_range.tflite","./vendor/mediapipe-0.10.21/LICENSE","./vendor/mediapipe-0.10.21/README.md"];
+const CACHE_NAME = CACHE_PREFIX + 'v0.10.1';
+const ASSETS = ['./', './index.html', './manifest.webmanifest', './projects-seed.json', './icon-192.png', './icon-512.png','./workspace.css','./desk-layout.css','./calendar.js','./return.js','./return.css','./radar.css','./timeline.css','./companion.css','./companion.js','./desk-media.js','./desk-media.css','./attention.js','./attention.css','./push-config.json','./feishu.js','./feishu-config.json','./topics.js','./topics.css','./topics-feed.json','./radar-feed.json','./wallpapers.js','./assets/wallpapers/wheat-field.jpg','./assets/wallpapers/montmartre.jpg','./assets/wallpapers/jalais-hill.jpg','./assets/wallpapers/heart-andes.jpg','./assets/wallpapers/rocky-mountains.jpg','./assets/wallpapers/forest.jpg','./assets/wallpapers/alpine-lake.jpg','./assets/wallpapers/misty-hills.jpg','./assets/wallpapers/sand-dunes.jpg','./assets/wallpapers/ocean.jpg','./THIRD_PARTY_NOTICES.md','./vendor/fullcalendar-6.1.19.min.js'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS.map(path => new Request(new URL(path,self.registration.scope),{cache:'reload'})))).then(() => self.skipWaiting()));
 });
@@ -18,7 +17,7 @@ self.addEventListener('fetch', event => {
   // A release query bypasses the browser HTTP cache, but shares the offline shell key.
   const canonical = new URL(url);
   canonical.searchParams.delete('v');
-  const asset = [...ASSETS,...CAMERA_ASSETS].find(path => new URL(path, self.registration.scope).href === canonical.href);
+  const asset = ASSETS.find(path => new URL(path, self.registration.scope).href === canonical.href);
   if (!asset) return;
   event.respondWith((async () => {
     const cache = await caches.open(CACHE_NAME);
