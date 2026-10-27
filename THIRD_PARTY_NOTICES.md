@@ -27,3 +27,7 @@ Public RSS metadata only (headline, publisher, publication date and report link)
 - Google News Chinese RSS: https://news.google.com/rss?hl=zh-CN&gl=CN&ceid=CN:zh-Hans ; topic searches use the same RSS service.
 - 少数派 official RSS: https://sspai.com/feed ; subscription guide: https://sspai.com/post/24194 .
 - IT之家 official RSS: https://www.ithome.com/rss/ ; announcement: https://www.ithome.com/0/000/037.htm .
+
+## Daily AI Radar metadata
+
+The daily catalog combines the existing Awesome AI Hardware directory (https://github.com/s87343472/awesome-ai-hardware, data/projects.json) with the official GitHub repository search API (https://docs.github.com/en/rest/search/search#search-repositories). Repository names, descriptions, declared licenses, timestamps and links are metadata, not a certification of reproducibility, safety, popularity or licensing compliance. New discovery is keyword filtered and remains unreviewed. The GitHub runner token is never included in the public output.
