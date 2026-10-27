@@ -53,6 +53,7 @@
     catch(e) { document.getElementById('storageWarning').hidden=false; }
     renderNext();
     renderTimeline();
+    window.dispatchEvent(new Event('desk-calendar-change'));
   }
   function renderNext() {
     const now = Date.now();

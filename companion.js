@@ -98,6 +98,7 @@
   $('importantReminders').checked=prefs.reminders;
   $('importantReminders').addEventListener('change',()=>{prefs.reminders=$('importantReminders').checked;savePrefs();remindImportant();});
   function remindImportant(){
+    if(window.deskAttention){window.deskAttention.remindImportant();return;}
     if(!prefs.reminders||document.hidden||document.documentElement.classList.contains('return-private')||document.querySelector('dialog[open]')||/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName||'')||$('toast').classList.contains('show'))return;
     try{const rules=JSON.parse(localStorage.getItem('ai-desk-hub-return-v04')||'null');if(rules?.quiet)return;}catch{return;}
     const now=Date.now();

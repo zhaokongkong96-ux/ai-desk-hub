@@ -3,3 +3,9 @@ node_modules/
 .DS_Store
 
 design-qa.md
+
+.env*
+.railway/
+*.sqlite*
+notification-service/data/
+artifacts/

@@ -1,0 +1,1 @@
+{"name":"ai-desk-hub-notifications","private":true,"version":"0.8.0","type":"module","engines":{"node":">=24"},"scripts":{"start":"node server.mjs","test":"node --test server.test.mjs"},"dependencies":{"web-push":"3.6.7"}}
