@@ -1,0 +1,49 @@
+/* Approved reference: music/notes left, clock centre, tasks right, full day below. */
+#page-today .desk-next-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+#page-today .desk-next-heading .brief-link{margin:0;flex-shrink:0;padding:4px 0}
+#page-today .notes-panel .note-list,#page-today .tasks-panel .task-list{flex:1;min-height:0;max-height:none}
+#page-today .notes-panel{min-height:0;max-height:none}
+#page-today .media-card{min-height:0;overflow:auto}
+@media(min-width:1100px) and (orientation:landscape){
+  #page-today .desk-grid{grid-template-columns:minmax(245px,.75fr) minmax(0,1.45fr) minmax(280px,.95fr);grid-template-rows:minmax(200px,.30fr) minmax(120px,.18fr) minmax(280px,.52fr);gap:10px;height:calc(100vh - 158px);height:calc(100dvh - 158px);min-height:620px}
+  #page-today .media-card{grid-column:1;grid-row:1;padding:18px 16px}
+  #page-today .notes-panel{grid-column:1;grid-row:2;padding:14px 16px}
+  #page-today .clock-panel{grid-column:2;grid-row:1/3;align-items:center;justify-content:center;padding:26px}
+  #page-today .tasks-panel{grid-column:3;grid-row:1/3;padding:20px}
+  #page-today .calendar-panel{grid-column:1/-1;grid-row:3;padding:18px}
+  #page-today .clock-panel .eyebrow{font-size:12px}
+  #page-today .clock-panel .time{font-size:clamp(92px,8.5vw,140px);margin:16px 0 12px;letter-spacing:-6px;line-height:1.1}
+  #page-today .clock-panel .date{font-size:14px}
+  #page-today .clock-panel .weather-chip{font-size:14px;min-height:44px;margin:6px 0 0}
+  #page-today .clock-panel .next-event{margin-top:12px;padding-top:14px}
+  #page-today .clock-panel #nextEventTitle{font-size:20px;margin:8px 0}
+  #page-today .clock-panel #nextEventTime{font-size:14px}
+  #page-today .media-preview{gap:12px;margin:14px 0 18px}
+  #page-today .media-art{width:56px;height:56px;font-size:26px}
+  #page-today .media-card .panel-head{gap:8px}
+  #page-today .media-card .panel-title{font-size:17px}
+  #page-today .media-card .panel-head .btn{min-width:76px;font-size:10px;padding:8px}
+  #page-today .notes-panel .panel-head{margin-bottom:6px}
+  #page-today .notes-panel .panel-title{font-size:17px}
+  #page-today .note-item{font-size:13px;padding:9px 2px}
+  #page-today .calendar-panel.is-expanded{grid-column:auto;grid-row:auto;padding:20px}
+}
+@media(min-width:701px) and (max-width:1099px),(min-width:1100px) and (orientation:portrait){
+  #page-today .desk-grid{height:auto;min-height:0;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);grid-template-rows:250px 190px 290px 440px;gap:12px}
+  #page-today .media-card{grid-column:1;grid-row:1;padding:18px;min-height:0}
+  #page-today .notes-panel{grid-column:1;grid-row:2}
+  #page-today .clock-panel{grid-column:2;grid-row:1/3;padding:24px;align-items:center;justify-content:center}
+  #page-today .clock-panel .time{font-size:clamp(76px,9vw,120px)}
+  #page-today .clock-panel .next-event{padding-top:16px;margin-top:14px}
+  #page-today .tasks-panel{grid-column:1/-1;grid-row:3}
+  #page-today .calendar-panel{grid-column:1/-1;grid-row:4}
+  #page-today .calendar-panel.is-expanded{grid-column:auto;grid-row:auto}
+}
+@media(max-width:700px){
+  #page-today .desk-grid{display:flex;height:auto;min-height:0;flex-direction:column;gap:12px}
+  #page-today .clock-panel{order:0;min-height:320px}
+  #page-today .media-card{order:1;min-height:230px}
+  #page-today .notes-panel{order:2;min-height:180px;max-height:280px}
+  #page-today .tasks-panel{order:3;min-height:250px;max-height:400px}
+  #page-today .calendar-panel{order:4;height:440px;flex:none}
+}
