@@ -1,7 +1,7 @@
 // Scope-specific caches keep project sites on the same GitHub Pages origin separate.
 const CACHE_PREFIX = 'ai-desk-hub:' + self.registration.scope + ':';
-const CACHE_NAME = CACHE_PREFIX + 'v0.6.5';
-const ASSETS = ['./', './index.html', './manifest.webmanifest', './projects-seed.json', './icon-192.png', './icon-512.png','./workspace.css','./calendar.js','./return.js','./return.css','./radar.css','./timeline.css','./companion.css','./companion.js','./wallpapers.js','./assets/wallpapers/wheat-field.jpg','./assets/wallpapers/montmartre.jpg','./assets/wallpapers/jalais-hill.jpg','./assets/wallpapers/heart-andes.jpg','./assets/wallpapers/rocky-mountains.jpg','./assets/wallpapers/forest.jpg','./assets/wallpapers/alpine-lake.jpg','./assets/wallpapers/misty-hills.jpg','./assets/wallpapers/sand-dunes.jpg','./assets/wallpapers/ocean.jpg','./THIRD_PARTY_NOTICES.md','./vendor/fullcalendar-6.1.19.min.js'];
+const CACHE_NAME = CACHE_PREFIX + 'v0.7.0';
+const ASSETS = ['./', './index.html', './manifest.webmanifest', './projects-seed.json', './icon-192.png', './icon-512.png','./workspace.css','./calendar.js','./return.js','./return.css','./radar.css','./timeline.css','./companion.css','./companion.js','./topics.js','./topics.css','./topics-feed.json','./wallpapers.js','./assets/wallpapers/wheat-field.jpg','./assets/wallpapers/montmartre.jpg','./assets/wallpapers/jalais-hill.jpg','./assets/wallpapers/heart-andes.jpg','./assets/wallpapers/rocky-mountains.jpg','./assets/wallpapers/forest.jpg','./assets/wallpapers/alpine-lake.jpg','./assets/wallpapers/misty-hills.jpg','./assets/wallpapers/sand-dunes.jpg','./assets/wallpapers/ocean.jpg','./THIRD_PARTY_NOTICES.md','./vendor/fullcalendar-6.1.19.min.js'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS.map(path => new Request(new URL(path,self.registration.scope),{cache:'reload'})))).then(() => self.skipWaiting()));
 });
@@ -28,7 +28,10 @@ self.addEventListener('fetch', event => {
       return response;
     } catch (error) {
       const cached = await cache.match(canonical.href);
-      if (cached) return cached;
+      if (cached) {
+        if(asset==='./topics-feed.json'){const headers=new Headers(cached.headers);headers.set('X-Desk-Cache','offline');return new Response(cached.body,{status:cached.status,headers});}
+        return cached;
+      }
       throw error;
     }
   })());

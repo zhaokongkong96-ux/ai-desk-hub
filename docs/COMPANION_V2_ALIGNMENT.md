@@ -83,3 +83,7 @@
 用户希望直接使用平板上已经安装的网易云音乐。音乐卡主入口改为普通`orpheus://`协议链接，“更多播放方式”保留网页/本地播放器。无需为主入口再索要歌单链接或网易云密码。只能请求系统启动App，不能把App界面嵌入本网页，也没有读取/控制App当前播放的能力。
 
 官方协议证据：[网易云移动页面](https://music.163.com/m/song?id=25727660)含`orpheus://song/…`唤起链接；该页面引用的[官方移动JS](https://s3.music.126.net/mobile-new/app.665f3835.js)声明`ORPHEUS_SCHEME="orpheus://"`。URL Scheme的系统机制见[Apple文档](https://developer.apple.com/documentation/Xcode/defining-a-custom-url-scheme-for-your-app)。具体已安装App版本及iPadOS16.7.16 Safari/PWA唤起仍待实机验收。
+
+## 2026-10-27 知识与观点创作者入口
+
+用户明确新增博主身份，选择综合四类：社会观察、职场成长、科技生活、文化知识。v0.7.0在工作台与AI RADAR之间新增今日话题，沿用纯黑与语义色，不改日历/Radar主体。RSS读取真实来源与时间，配规则选题角度、收藏和现有待办/笔记联动。本地预览具备前台每30分钟检查与离线回看；公网静态部署的定时采集未启用，未接模型、浏览器通知或系统推送。

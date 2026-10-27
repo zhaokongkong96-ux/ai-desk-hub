@@ -1,0 +1,406 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-27T10:08:12.797882+08:00",
+  "date": "2026-10-27",
+  "timezone": "Asia/Shanghai",
+  "sources": [
+    {
+      "id": "google-social",
+      "name": "Google 新闻 · 综合",
+      "url": "https://news.google.com/rss?hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+      "ok": true,
+      "count": 26
+    },
+    {
+      "id": "google-career",
+      "name": "Google 新闻 · 职场",
+      "url": "https://news.google.com/rss/search?q=%E8%81%8C%E5%9C%BA+OR+%E5%B0%B1%E4%B8%9A+OR+%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F+OR+%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF+when%3A1d&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+      "ok": true,
+      "count": 80
+    },
+    {
+      "id": "google-culture",
+      "name": "Google 新闻 · 文化",
+      "url": "https://news.google.com/rss/search?q=%E6%96%87%E5%8C%96+OR+%E9%98%85%E8%AF%BB+OR+%E5%8E%86%E5%8F%B2+OR+%E7%A7%91%E6%99%AE+when%3A1d&hl=zh-CN&gl=CN&ceid=CN:zh-Hans",
+      "ok": true,
+      "count": 76
+    },
+    {
+      "id": "sspai",
+      "name": "少数派",
+      "url": "https://sspai.com/feed",
+      "ok": true,
+      "count": 10
+    },
+    {
+      "id": "ithome",
+      "name": "IT之家",
+      "url": "https://www.ithome.com/rss/",
+      "ok": true,
+      "count": 60
+    }
+  ],
+  "items": [
+    {
+      "id": "a0860b309d9bf50bd0d1",
+      "title": "泽连斯基签署法案 延长国家战时状态和总动员令90天",
+      "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE5yS0phMDhmMnVQYmRDbjQ2WWl1dFJ1bnZkZnlFTmZ6ODMyR1FoRk9sb2p3a3lnUVh1U3ZYMGxJV2txOE51Q19JSDQzMGNZX1VrYkkyTWtEMHR3MVJja01aZng4Z1dtSmRBU0Nj?oc=5",
+      "source": "中国网新闻中心",
+      "feed": "Google 新闻 · 综合",
+      "category": "社会观察",
+      "publishedAt": "2026-10-27T09:51:00+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "06e0e8b070cef68ccce0",
+      "title": "特写：当才旺康西从帐篷搬进了板房",
+      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTFBmMUhncThWNWl4aWtfT2loazZlLTVuWEotWE44SmoxQXluU2Fyc0tYbkNpVDF0dWxyVWZQUkdTM2dnV2drejhVcFdWUTBtZ3lieUlFU3BBN2pDSFNVRUVwQ0FvcjJBTWh1TE5UaklIRGVIa1JxYzFvazJxX3I?oc=5",
+      "source": "中青在线",
+      "feed": "Google 新闻 · 综合",
+      "category": "社会观察",
+      "publishedAt": "2026-10-27T09:50:00+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "1e22ff40bd2a01cd55a7",
+      "title": "敢于熔断 让安全为热爱护航",
+      "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBOSHNPUGFMT180Wl8wdFZDSjJ4bXUzYnVfZ2c4TzNjYWZMa3IzWl9ldWVBRUhlY3lBNUYyT0FOV1JISnlLb3JvcWdicFNZZEJEZHRGZkJtajJFS2oy?oc=5",
+      "source": "华奥星空",
+      "feed": "Google 新闻 · 综合",
+      "category": "社会观察",
+      "publishedAt": "2026-10-27T09:34:14+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "bcb0108cbf198f7ff940",
+      "title": "巴西副总统驳斥特朗普有关巴选举“被操纵”言论",
+      "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5Ja0otUzNSZVVsSjdqX0xISXhoRnZjSGMxNXZWLTJTNnRWQ2RCSXlpTGVRbmJYUUt1cVlHUzFOa3BQcHVLck1XTlF3c1hOMWVtREFScHJEZzNtWFRjSm5nQzZFbkZMdUlY?oc=5",
+      "source": "央广网",
+      "feed": "Google 新闻 · 综合",
+      "category": "社会观察",
+      "publishedAt": "2026-10-27T09:19:01+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "1a05b620842b2ee62382",
+      "title": "首批展品进馆 第九届进博会布展全面启动",
+      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTFBBUnQ0aExtQjBDMTl0MDlUbHU2WFB2elVScThTdVNoYXJnMzEzS1BDQkJRVDYtbFpuR0VhMnpSU1d2azhsZlV0a0R3LUcwN3FZMkNJT1dXMGRHT2JmNkJJMjhCZ0lxQ3dHN25JcWRnQl9sSkhnZzdZTV9LNk8?oc=5",
+      "source": "央广网",
+      "feed": "Google 新闻 · 综合",
+      "category": "社会观察",
+      "publishedAt": "2026-10-27T09:03:15+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "19d2fc4b44bc99fa0c6f",
+      "title": "纪念东京审判开庭80周年图片展在纽约联合国总部开展",
+      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQRFVuR3ZXUkVzRTNVa1NNdVJGc1hyUEpITTQ3b1dqUjZYdy1GZzhkVHBGZW5JY2xUS2xweUNnOTFYVVdMMDBuaDloMjlCeWV5c3dfNmNqM3ZqNG1pT2FmOEVnSkgtNFM0Nk9lQzQ4ajBkOUhmMm5PWV9kYjBOY05VaQ?oc=5",
+      "source": "新华网",
+      "feed": "Google 新闻 · 综合",
+      "category": "社会观察",
+      "publishedAt": "2026-10-27T08:56:58+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "7b9e0a9c384c335cbfc5",
+      "title": "做伟大长征精神的传承者、传播者、践行者",
+      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTFBXYWkyT1lTeGt1QmNFV0EzenJtQThJNUhwZ2ZZUkpzQ2VhTEs4RFVOS1FUY1EybEk5dnVRSEk4NnktcjNpRnZhd3lYY1NNdGpOeGFQRXJfRnV0YkZzbEE5cDVmT2xSbTY0OHFEY25YM0VLNnc?oc=5",
+      "source": "湖北省人民政府",
+      "feed": "Google 新闻 · 综合",
+      "category": "社会观察",
+      "publishedAt": "2026-10-27T08:56:00+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "ec7a497fc06d31be6280",
+      "title": "“广交世界70年”主题展：全景呈现广交会发展历程",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQMDhLdkRhWUozcDNlT3hZSmJBS1ZtUkFHQXBLanVqV0YtQndPdzY2SWVXSWdlWlphMVhmX1BfWG90LUtiTXpNdEQxWHBpbGtRV3pUTzVkSVAwLUd0U3hpdVVaVTlQSEtTSTVxMm0wSnc2WGZUZWpyWnFTVDFiYktZeDlMUDF3NThLR2ZmajQ5SzlJc1d5Rjd2Mmxn?oc=5",
+      "source": "新华网客户端",
+      "feed": "Google 新闻 · 综合",
+      "category": "社会观察",
+      "publishedAt": "2026-10-27T08:51:37+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "930086b650ecef18fecd",
+      "title": "宣传 AI 降本，别忘了人还在车间",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOb1NnZ1FPLUo0SUxtalFpVzl6YzFJQTJYN3RwTWppUG1IVHdZRHI3UWtpUUxXT09UVGVhczRVZm1tVDJxNEE4dEk2bXhiTEtLQ0x2QTg0UWxvQnhUaEpUeFZhZVNHTVBLMXRhUllmbU9qeE5RMmxTOElCR2lZdDVoelM5U1FpRUJ5eThVZkZB?oc=5",
+      "source": "手机新浪网",
+      "feed": "Google 新闻 · 职场",
+      "category": "职场成长",
+      "publishedAt": "2026-10-27T10:04:00+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "8fc4a6d7c6ad67bd5a0e",
+      "title": "甘肃广河：强工业稳就业 产业兴百姓富",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQbWtDMmVlSFdreWtxeXBnYlpjNy1CUkJjeGptVS1TcTRqYVZhNVFlVHdodG9hb29ZVzJTZ1lYc3VYTllaUTUyTHRfelJzUUhZOTBEU1o0Zm1waGN3QzJqcWdVS3NBUE9VNmw2QW5iWjVMS1FUQ3JFMEZ6RjN3aDR6a0dTZ3pXVDRm?oc=5",
+      "source": "搜狐网",
+      "feed": "Google 新闻 · 职场",
+      "category": "职场成长",
+      "publishedAt": "2026-10-27T09:58:00+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "89b2cef39279890c2c7b",
+      "title": "“想先干点什么，却只能做合同工”……韩国青年群体难积累技能，转职之路受阻: 财经新闻",
+      "url": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE8wR0xCb0Z3U2NPWHB3ZGNmMzAyMUpXU05zN0FWMHc4eFJMRWxaZGRyWTVMM2RNVEZTNWNzaFE1MnpYSlhVRHVJdEVjS2RvR0dienNYbE5mSXdRdlVa?oc=5",
+      "source": "韩民族日报",
+      "feed": "Google 新闻 · 职场",
+      "category": "职场成长",
+      "publishedAt": "2026-10-27T09:44:00+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "5b79bbfa993d417f5274",
+      "title": "英语和高级翻译学院召开2027届毕业生大会",
+      "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE9PVEdWbmtmQnpGVzFyT3FxYjlUQVJxZGNyTGZZYlFTOTVTZXB1S0hBaHVYbXZRMU9Ua2E1Y2ZoS05weVZyclhnWEZfaVctUk16UU5DTEF6UQ?oc=5",
+      "source": "北京语言大学新闻网",
+      "feed": "Google 新闻 · 职场",
+      "category": "职场成长",
+      "publishedAt": "2026-10-27T09:32:37+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "a08cad8621dff4197210",
+      "title": "热点追击丨人工智能助力就业友好型发展意见印发",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5NTld5RnNoRUFjUC10Q1VQakVOS3NkdTctMWp6eWlyaU80Rzd3WlJqcUlXMGhHMm5UeE5Pc1htMTQ1LWNuXzFBTzJoTW1CcW5wVDNGZnp4dDlldjJVcC1WbEZmTF9pZjI2WDNwYmJGdFkyZFhFNlI5S1Z6MUV1VFk?oc=5",
+      "source": "手机新浪网",
+      "feed": "Google 新闻 · 职场",
+      "category": "职场成长",
+      "publishedAt": "2026-10-27T09:25:00+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "17673adc8f03a9a937d8",
+      "title": "人工智能时代 如何减缓岗位替代 构建就业友好型发展方式",
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1kUzdnaEFPdTNuZmFoUkRkM09vU2oyTVdHM2hRUU9JX0dIV1FjRUpWYTJ4VnRzRFR2YTlWN19PdWVXR3FMYnJabkNDeldJUzMtX1Rvb2M4WV9GQl8wTUdHRDR1bndyV01ncUYzc0VURXg?oc=5",
+      "source": "中华网",
+      "feed": "Google 新闻 · 职场",
+      "category": "职场成长",
+      "publishedAt": "2026-10-27T09:11:50+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "8c888155ad845392faf2",
+      "title": "小驿站大民生：乐东服务新就业群体的",
+      "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTFBkVHB4NFlEQXVPRS1CRXNoRWxBbEJZeEc2VDNOeG1oXy0wUlJ3VmVxb3FBYVFDbS1fQVl4RXVjTS1yOEU2VzR0TXFjQ1Z1VmRaWUlMaVZ1WG4tX01aVy1lOEtYSldOZkltWG8welM1NFlvdkE?oc=5",
+      "source": "潮新闻客户端",
+      "feed": "Google 新闻 · 职场",
+      "category": "职场成长",
+      "publishedAt": "2026-10-27T08:53:57+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "584f80ac4cec47206631",
+      "title": "为更多新就业形态人员提供保障",
+      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE9oZVRZbnE4R3ZoWXY0X01PQnppS3BHV0Vaak5OZ3d0YXN0T200aGt3Z2VtS1BGYUVDb2ZNNXdYR2FOcHNDRC1ZamFPWjlYSmlmYklMNXFBTUF2VUVKRlBFZ0dIM05IUTRBY0E?oc=5",
+      "source": "人民网",
+      "feed": "Google 新闻 · 职场",
+      "category": "职场成长",
+      "publishedAt": "2026-10-27T08:50:00+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "298586e81478a727879f",
+      "title": "全球首台私人空间望远镜将观测 27 颗系外行星，计划 2029 年前发射",
+      "url": "https://www.ithome.com/1/018/248.htm",
+      "source": "IT之家",
+      "feed": "IT之家",
+      "category": "科技生活",
+      "publishedAt": "2026-10-27T09:55:36+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "8ea29baf99a2c0dbdf61",
+      "title": "反向创造历史：2026 英雄联盟全球总决赛 LPL“一号种子”AL 战队一场未胜被淘汰，官方发文致歉",
+      "url": "https://www.ithome.com/1/018/247.htm",
+      "source": "IT之家",
+      "feed": "IT之家",
+      "category": "科技生活",
+      "publishedAt": "2026-10-27T09:53:49+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "47c9968192e702a2b9e2",
+      "title": "塔塔通讯将在印度布设 1 万千米 AI 就绪型长途光纤，连接主要 AI 数据中心",
+      "url": "https://www.ithome.com/1/018/246.htm",
+      "source": "IT之家",
+      "feed": "IT之家",
+      "category": "科技生活",
+      "publishedAt": "2026-10-27T09:53:31+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "fc601ca7595fff753abe",
+      "title": "Arrowhead 确认《绝地潜兵 3》暂无开发计划：它最大的对手就是《绝地潜兵 2》",
+      "url": "https://www.ithome.com/1/018/245.htm",
+      "source": "IT之家",
+      "feed": "IT之家",
+      "category": "科技生活",
+      "publishedAt": "2026-10-27T09:50:10+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "194ca9c0a4b9027bab6f",
+      "title": "扩展稳定版微软 Edge 浏览器明年登陆苹果 macOS：最长 8 周延后部署更新",
+      "url": "https://www.ithome.com/1/018/243.htm",
+      "source": "IT之家",
+      "feed": "IT之家",
+      "category": "科技生活",
+      "publishedAt": "2026-10-27T09:46:16+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "74293a9b77e33fd4e082",
+      "title": "苹果 iOS 27.2 正式版国行“最重要专属功能”，可禁止 App 摇一摇跳转",
+      "url": "https://www.ithome.com/1/018/241.htm",
+      "source": "IT之家",
+      "feed": "IT之家",
+      "category": "科技生活",
+      "publishedAt": "2026-10-27T09:41:37+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "c0aae12f0b7505fe57e2",
+      "title": "“拯救《质量效应》”请愿书签名人数突破 20 万，粉丝请求延续系列游戏生命",
+      "url": "https://www.ithome.com/1/018/239.htm",
+      "source": "IT之家",
+      "feed": "IT之家",
+      "category": "科技生活",
+      "publishedAt": "2026-10-27T09:38:49+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "9f3b12d09b5f38fab37b",
+      "title": "苹果首款折叠 iPhone Duo 确认缺失 FaceTime“眼神交流”功能",
+      "url": "https://www.ithome.com/1/018/238.htm",
+      "source": "IT之家",
+      "feed": "IT之家",
+      "category": "科技生活",
+      "publishedAt": "2026-10-27T09:34:11+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "60a173c7d456cbee1b82",
+      "title": "派早报：Apple 发布 iPad mini (A20 Pro) 等",
+      "url": "https://sspai.com/post/117600",
+      "source": "少数派",
+      "feed": "少数派",
+      "category": "科技生活",
+      "publishedAt": "2026-10-27T08:27:58+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "de37cbe39a3c9b32c1e4",
+      "title": "派评 | 近期值得关注的 App",
+      "url": "https://sspai.com/post/117529",
+      "source": "少数派",
+      "feed": "少数派",
+      "category": "科技生活",
+      "publishedAt": "2026-10-26T18:17:46+08:00",
+      "date": "2026-10-26"
+    },
+    {
+      "id": "b6555366cc841c28bf46",
+      "title": "秋冬换季护肤买什么，双 11 选购推荐",
+      "url": "https://sspai.com/post/117414",
+      "source": "少数派",
+      "feed": "少数派",
+      "category": "科技生活",
+      "publishedAt": "2026-10-26T15:00:00+08:00",
+      "date": "2026-10-26"
+    },
+    {
+      "id": "46e5cbfac61dc17200b8",
+      "title": "曲高和寡、终成绝唱：傲腾 P5800X 测试报告",
+      "url": "https://sspai.com/post/115074",
+      "source": "少数派",
+      "feed": "少数派",
+      "category": "科技生活",
+      "publishedAt": "2026-10-26T11:26:35+08:00",
+      "date": "2026-10-26"
+    },
+    {
+      "id": "3924da3154c8426ea1b1",
+      "title": "交警“蜀黍”的“硬核科普”。网友：画风迷之好笑",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPNDhjR0k1WlZDeXZJa3MyTzVXY2dqQUhRdk9WQ0hGODRTYTRFOXdZakhqMXVSQmJKN3NKRkl3UC12MmptelBkUlBSeDRsQjdtSmV1VEhuRnlZODZaYUxIRHdrV2drbWg5emdHLWVQOEF1eDNURE90OFBWS3VlU0ZLM0w0aC1OQUty?oc=5",
+      "source": "搜狐网",
+      "feed": "Google 新闻 · 文化",
+      "category": "文化知识",
+      "publishedAt": "2026-10-27T10:04:50+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "8975df19874dc2ac47e7",
+      "title": "齐家文化博物馆获评2023年-2025年度甘肃省科普绩效考评优秀",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNRjBMU3FuTzlaazNhUjdGR2lqU2trT1VoUmgtNmlaVGtkdy1MUG03RVpwU0t6a1A5MUNramFfSzBLZUZrZGlkdEJqZ3pEY2JSZ1Q1SFppVmtwc1RsNFg3TFhHUTluSXRXX3E1eTJRVHNjUGVNZWd4MlA5cXYyeDdfcjJUYVZoWHRB?oc=5",
+      "source": "搜狐网",
+      "feed": "Google 新闻 · 文化",
+      "category": "文化知识",
+      "publishedAt": "2026-10-27T09:57:00+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "02281312f0f99caffc6e",
+      "title": "香港故宫文化博物馆与荷兰国家博物馆达成合作 明年将联合办展",
+      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE5QcVhsRXV5WHV1V2trVWpZUmtnUEdNVVZibWo4dE9FUlZNaWw2al8tNUVuTGJiSUdUM3JHRHlrOXNCVko0amg1TjlCYjFPZ3UtNWtGcA?oc=5",
+      "source": "香港新聞社",
+      "feed": "Google 新闻 · 文化",
+      "category": "文化知识",
+      "publishedAt": "2026-10-27T09:52:00+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "04667892a07c47a7dec7",
+      "title": "从历史深处寻找青春答案",
+      "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxNSWpQZ2k5M3NuTVJ0YVdacjF3eXczb3oxenVHODM2Vi10M2RSN3NvRFh0bENEbzFjaVVEcElwNmUzNHdQOG5sWmtxdXJ3RDVBSG5lelFjZWNrMGxVOV9KaE5ZazRZYlQweU1EcGU5Nnd5Tzd2TU1xXy04UE1LZVltcmVhZFNyUElYRTQ5NTNBdFNQaTdGT0g3RkhVYXR3SjNsUlE3TzFQSFBsNU5PSkdleGZtSTdZYVhEdy1ObWxYOFF3MGVudzRFa085ZXBDRGdDb0tmYnU4bjVBZw?oc=5",
+      "source": "finance.sina.com.cn",
+      "feed": "Google 新闻 · 文化",
+      "category": "文化知识",
+      "publishedAt": "2026-10-27T09:51:34+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "a86be0d7d755c1643a67",
+      "title": "土地里“长”出文化之美（文艺赋美乡村）",
+      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOeTJ2MjU3SEx5ZlEyWU1yV1U0b0dsMllLeEROWGVyeElNX1VCNF9PbDJ2dWpHVGFpWi04bDVIMzRYMHJtMDRsNFlXNTZRbk1xV0JoaU5MeTZkUHB1RFotd3RtLVBxUWNDMlpqMFFIX1hCRkNoUHdHb05zcm9fUlVIZFdHSVdhWDdGSjJsLQ?oc=5",
+      "source": "搜狐网",
+      "feed": "Google 新闻 · 文化",
+      "category": "文化知识",
+      "publishedAt": "2026-10-27T09:48:00+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "fa3cdd5645e81a725975",
+      "title": "跨越5000公里，2026沪疆文化交流周在新疆喀什启动",
+      "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE0zR0xtbE93MmxITnZvcHFRSTA3LWJ3TDlpR2c4clRHZHRYVVh2WTl6cnd1NHoxT04zUXk4ZXkzSnI1QW1sRlg0cDZuenVrd1ZDUDhhNE9FaklNU0dJQ29LRmo5YUUzb0U5emNGWmlqZE9YT2pocU5Ubw?oc=5",
+      "source": "新浪财经",
+      "feed": "Google 新闻 · 文化",
+      "category": "文化知识",
+      "publishedAt": "2026-10-27T09:48:00+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "15db5614494c498896a6",
+      "title": "文化传媒板块拉升，粤传媒涨停",
+      "url": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFBBMHJNRXhEckhFR3ZNc0djOFlRRDZONjEwdTJ4OHlYTHl2ZXZTZ0dhNmVPS1hYa2ZqUmZtcHl0Q0dtS2t2dFlIRXVmZw?oc=5",
+      "source": "手机新浪网",
+      "feed": "Google 新闻 · 文化",
+      "category": "文化知识",
+      "publishedAt": "2026-10-27T09:47:48+08:00",
+      "date": "2026-10-27"
+    },
+    {
+      "id": "b9129cc3409081827f26",
+      "title": "共促大保护 同守文脉魂（人民时评）",
+      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1mM1FnNEVNWFBpS251TEpNMUZzbFVYRlJPQkFBOHZRTnNPWDRyNS1HQzVaSUpLaWp1cnJUZERiN1ctTTRFR091VlNJcUZhNHViNHZIOGllaWlfU1NpMUdsUjRUaU1kR1ZrekVWVldQYW84MlZneHJvd29lY0pLQkk?oc=5",
+      "source": "人民日报",
+      "feed": "Google 新闻 · 文化",
+      "category": "文化知识",
+      "publishedAt": "2026-10-27T09:39:40+08:00",
+      "date": "2026-10-27"
+    }
+  ],
+  "ranking": "媒体报道线索；不代表全网热搜排名"
+}

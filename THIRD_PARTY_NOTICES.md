@@ -19,3 +19,11 @@ Ten original landscape images: five oil paintings and five nature photos. Downlo
 - `assets/wallpapers/ocean.jpg`: **海浪与云**, Tim Marshall. [Source](https://unsplash.com/photos/landscape-photography-of-ocean-qKlD2QlK-CY). Unsplash License. 2048×1365.
 
 Unsplash License: https://unsplash.com/license (free commercial/noncommercial use; do not sell unmodified photos or replicate a competing image service). Met works are designated Public Domain on each collection page under its Open Access program. Oil paintings use contain to preserve the full composition; nature photos use cover for the display and may crop edges according to screen orientation.
+
+## Daily Topics headline sources
+
+Public RSS metadata only (headline, publisher, publication date and report link); no article text, source images, popularity scores or third-party RSS proxy copied. Media copyrights remain with their respective publishers. Each card links back to the report; Google News links may redirect to the publisher. Category/search feeds are discovery suggestions, not independently verified statements or a whole-web popularity ranking.
+
+- Google News Chinese RSS: https://news.google.com/rss?hl=zh-CN&gl=CN&ceid=CN:zh-Hans ; topic searches use the same RSS service.
+- 少数派 official RSS: https://sspai.com/feed ; subscription guide: https://sspai.com/post/24194 .
+- IT之家 official RSS: https://www.ithome.com/rss/ ; announcement: https://www.ithome.com/0/000/037.htm .

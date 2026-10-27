@@ -1,9 +1,9 @@
 import {mkdir,copyFile,rm,readFile} from 'node:fs/promises';
 import vm from 'node:vm';
-const files=['index.html','manifest.webmanifest','projects-seed.json','sw.js','icon-192.png','icon-512.png','.nojekyll','workspace.css','calendar.js','return.js','return.css','radar.css','timeline.css','companion.css','companion.js','wallpapers.js','THIRD_PARTY_NOTICES.md','vendor/fullcalendar-6.1.19.min.js','vendor/fullcalendar-LICENSE.md'];
+const files=['index.html','manifest.webmanifest','projects-seed.json','sw.js','icon-192.png','icon-512.png','.nojekyll','workspace.css','calendar.js','return.js','return.css','radar.css','timeline.css','companion.css','companion.js','wallpapers.js','topics.js','topics.css','topics-feed.json','THIRD_PARTY_NOTICES.md','vendor/fullcalendar-6.1.19.min.js','vendor/fullcalendar-LICENSE.md'];
 const html=await readFile('index.html','utf8');
 for(const match of html.matchAll(/<script>([\s\S]*?)<\/script>/g))new vm.Script(match[1]);
-for(const path of ['sw.js','calendar.js','return.js','companion.js','wallpapers.js','vendor/fullcalendar-6.1.19.min.js'])new vm.Script(await readFile(path,'utf8'));
+for(const path of ['sw.js','calendar.js','return.js','companion.js','wallpapers.js','topics.js','vendor/fullcalendar-6.1.19.min.js'])new vm.Script(await readFile(path,'utf8'));
 const wallpaperContext={window:{}};
 vm.runInNewContext(await readFile('wallpapers.js','utf8'),wallpaperContext);
 function jpegDimensions(bytes){
@@ -24,6 +24,9 @@ for(const w of wallpaperContext.window.DeskWallpapers){
   wallpaperCounts[w.theme]++;files.push(w.file.slice(2));
 }
 if(wallpaperIDs.size!==10||wallpaperCounts.gallery!==5||wallpaperCounts.nature!==5)throw Error('Expected five landscape wallpapers per category');
+const topics=JSON.parse(await readFile('topics-feed.json','utf8'));
+if(topics.schemaVersion!==1||!Array.isArray(topics.items)||!Number.isFinite(Date.parse(topics.generatedAt)))throw Error('Invalid topics snapshot');
+for(const item of topics.items)if(!item.id||!item.title||!item.url.startsWith('https://')||!Number.isFinite(Date.parse(item.publishedAt)))throw Error('Invalid topic item');
 const manifest=JSON.parse(await readFile('manifest.webmanifest','utf8'));
 if(manifest.scope!=='./'||manifest.start_url!=='./index.html')throw Error('Expected project-relative PWA URLs');
 const seed=JSON.parse(await readFile('projects-seed.json','utf8'));
