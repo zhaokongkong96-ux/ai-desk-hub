@@ -211,7 +211,11 @@
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!dialog.open)expandCalendar(false);});
   document.querySelectorAll('.nav button').forEach(button=>button.addEventListener('click',()=>expandCalendar(false)));
   persistCalendar();
-  setInterval(()=>{renderNext();updateTimelineNow();},30000);
+  let clockDay=new Date().toDateString();
+  function refreshCalendarDay(){const today=new Date(),next=today.toDateString();if(next!==clockDay){const wasFollowing=calendar.getDate().toDateString()===clockDay;if(!wasFollowing||!dialog.open){clockDay=next;if(wasFollowing)calendar.today();}}renderNext();updateTimelineNow();}
+  setInterval(refreshCalendarDay,30000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshCalendarDay();});
+  window.addEventListener('pageshow',refreshCalendarDay);
   document.getElementById('addEvent').addEventListener('click',()=>openEditor());
   document.getElementById('quickTask').addEventListener('click',()=>{document.getElementById('captureType').value='待办';document.getElementById('captureInput').focus();});
   for(const id of ['closeEvent','cancelEvent'])document.getElementById(id).addEventListener('click',closeEditor);
