@@ -1,0 +1,219 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-30T09:15:32.685931+08:00",
+  "attemptedAt": "2026-10-30T09:15:32.685931+08:00",
+  "items": [
+    {
+      "name": "milind-soni/OpenMausBot",
+      "url": "https://github.com/milind-soni/OpenMausBot",
+      "description": "Open-source Grok Bot alternative with a virtual machine that bots can use",
+      "stars": 7485,
+      "dailyStars": 1199,
+      "activeThreads": 525,
+      "discussionURL": "https://github.com/milind-soni/OpenMausBot/issues?q=updated%3A%3E%3D2026-10-23%20comments%3A%3E0",
+      "release": {
+        "tag": "v0.1.134",
+        "publishedAt": "2026-10-30T00:37:07Z",
+        "url": "https://github.com/milind-soni/OpenMausBot/releases/tag/v0.1.134"
+      },
+      "growth": {
+        "count": 1199,
+        "hours": 24,
+        "source": "GitHub Trending 今日新增",
+        "url": "https://github.com/trending?since=daily"
+      },
+      "label": "今日新上榜",
+      "shownDays7": 0,
+      "score": 33.801
+    },
+    {
+      "name": "pbakaus/impeccable",
+      "url": "https://github.com/pbakaus/impeccable",
+      "description": "The design vocabulary for your coding agent. Steer with polish and bolder, review with critique and audit, catch AI slop before it ships.",
+      "stars": 95360,
+      "dailyStars": 2870,
+      "activeThreads": 108,
+      "discussionURL": "https://github.com/pbakaus/impeccable/issues?q=updated%3A%3E%3D2026-10-23%20comments%3A%3E0",
+      "release": {
+        "tag": "cli-v4.8.0",
+        "publishedAt": "2026-10-26T23:41:55Z",
+        "url": "https://github.com/pbakaus/impeccable/releases/tag/cli-v4.8.0"
+      },
+      "growth": {
+        "count": 2870,
+        "hours": 24,
+        "source": "GitHub Trending 今日新增",
+        "url": "https://github.com/trending?since=daily"
+      },
+      "label": "今日新上榜",
+      "shownDays7": 0,
+      "score": 33.27
+    },
+    {
+      "name": "nightly-labs/openbot",
+      "url": "https://github.com/nightly-labs/openbot",
+      "description": "A local-first desktop workspace for persistent AI teammates. Run Codex, Claude, and Grok with dedicated workspaces, task queues, file sharing, browser control, and agent-to-agent collaboration.",
+      "stars": 3892,
+      "dailyStars": 709,
+      "activeThreads": 758,
+      "discussionURL": "https://github.com/nightly-labs/openbot/issues?q=updated%3A%3E%3D2026-10-23%20comments%3A%3E0",
+      "release": {
+        "tag": "v0.54.0",
+        "publishedAt": "2026-10-29T14:47:49Z",
+        "url": "https://github.com/nightly-labs/openbot/releases/tag/v0.54.0"
+      },
+      "growth": {
+        "count": 709,
+        "hours": 24,
+        "source": "GitHub Trending 今日新增",
+        "url": "https://github.com/trending?since=daily"
+      },
+      "label": "今日新上榜",
+      "shownDays7": 0,
+      "score": 32.96
+    },
+    {
+      "name": "JetBrains/thinkrail",
+      "url": "https://github.com/JetBrains/thinkrail",
+      "description": "Vibe code with pi in a lightweight, real IDE that customises itself around the way you work — The Vibe You Need",
+      "stars": 6023,
+      "dailyStars": 1117,
+      "activeThreads": 172,
+      "discussionURL": "https://github.com/JetBrains/thinkrail/issues?q=updated%3A%3E%3D2026-10-23%20comments%3A%3E0",
+      "release": {
+        "tag": "v0.3.0",
+        "publishedAt": "2026-10-29T18:26:41Z",
+        "url": "https://github.com/JetBrains/thinkrail/releases/tag/v0.3.0"
+      },
+      "growth": {
+        "count": 1117,
+        "hours": 24,
+        "source": "GitHub Trending 今日新增",
+        "url": "https://github.com/trending?since=daily"
+      },
+      "label": "今日新上榜",
+      "shownDays7": 0,
+      "score": 31.364
+    },
+    {
+      "name": "HKUDS/DeepTutor",
+      "url": "https://github.com/HKUDS/DeepTutor",
+      "description": "DeepTutor: Lifelong Personalized Tutoring. https://deeptutor.info/.",
+      "stars": 50093,
+      "dailyStars": 1930,
+      "activeThreads": 27,
+      "discussionURL": "https://github.com/HKUDS/DeepTutor/issues?q=updated%3A%3E%3D2026-10-23%20comments%3A%3E0",
+      "release": {
+        "tag": "v1.7.0",
+        "publishedAt": "2026-10-28T14:13:12Z",
+        "url": "https://github.com/HKUDS/DeepTutor/releases/tag/v1.7.0"
+      },
+      "growth": {
+        "count": 1930,
+        "hours": 24,
+        "source": "GitHub Trending 今日新增",
+        "url": "https://github.com/trending?since=daily"
+      },
+      "label": "今日新上榜",
+      "shownDays7": 0,
+      "score": 29.362
+    },
+    {
+      "name": "thedotmack/claude-mem",
+      "url": "https://github.com/thedotmack/claude-mem",
+      "description": "Persistent Context Across Sessions for Every Agent –  Captures everything your agent does during sessions, compresses it with AI, and injects relevant context back into future sessions. Works with Claude Code, OpenClaw, Codex, Gemini, Hermes, Copilot, OpenCode + More",
+      "stars": 104815,
+      "dailyStars": 336,
+      "activeThreads": 238,
+      "discussionURL": "https://github.com/thedotmack/claude-mem/issues?q=updated%3A%3E%3D2026-10-23%20comments%3A%3E0",
+      "release": {
+        "tag": "v15.6.0",
+        "publishedAt": "2026-10-29T17:01:29Z",
+        "url": "https://github.com/thedotmack/claude-mem/releases/tag/v15.6.0"
+      },
+      "growth": {
+        "count": 336,
+        "hours": 24,
+        "source": "GitHub Trending 今日新增",
+        "url": "https://github.com/trending?since=daily"
+      },
+      "label": "今日新上榜",
+      "shownDays7": 0,
+      "score": 28.413
+    }
+  ],
+  "history": [
+    {
+      "date": "2026-10-30",
+      "collectedAt": "2026-10-30T09:15:32.685931+08:00",
+      "shown": [
+        "milind-soni/openmausbot",
+        "pbakaus/impeccable",
+        "nightly-labs/openbot",
+        "jetbrains/thinkrail",
+        "hkuds/deeptutor",
+        "thedotmack/claude-mem"
+      ],
+      "metrics": {
+        "hkuds/deeptutor": {
+          "stars": 50093,
+          "release": "v1.7.0"
+        },
+        "obra/superpowers": {
+          "stars": 308566,
+          "release": "v7.0.1"
+        },
+        "pbakaus/impeccable": {
+          "stars": 95360,
+          "release": "cli-v4.8.0"
+        },
+        "jetbrains/thinkrail": {
+          "stars": 6023,
+          "release": "v0.3.0"
+        },
+        "milind-soni/openmausbot": {
+          "stars": 7485,
+          "release": "v0.1.134"
+        },
+        "nightly-labs/openbot": {
+          "stars": 3892,
+          "release": "v0.54.0"
+        },
+        "elayadesign/ai-design-skills": {
+          "stars": 12170,
+          "release": null
+        },
+        "thedotmack/claude-mem": {
+          "stars": 104815,
+          "release": "v15.6.0"
+        },
+        "copilotkit/openbot": {
+          "stars": 8159,
+          "release": "v0.2.0"
+        },
+        "donchitos/claude-code-game-studios": {
+          "stars": 29218,
+          "release": "v1.2.0"
+        },
+        "grwtsk/math": {
+          "stars": 0,
+          "release": null
+        },
+        "lostlight530/china-agentic-observatory": {
+          "stars": 1,
+          "release": "v2026.10-fourteen-day-evidence-checkpoint"
+        }
+      }
+    }
+  ],
+  "partial": false,
+  "errors": [],
+  "automation": {
+    "enabled": true,
+    "timezone": "Asia/Shanghai",
+    "scheduledAt": "08:17",
+    "platform": "GitHub Actions"
+  },
+  "delivery": "github-actions-daily",
+  "runId": "local-validation"
+}

@@ -1,9 +1,9 @@
 import {mkdir,copyFile,rm,readFile} from 'node:fs/promises';
 import vm from 'node:vm';
-const files=['index.html','manifest.webmanifest','projects-seed.json','sw.js','icon-192.png','icon-512.png','.nojekyll','workspace.css','desk-layout.css','calendar.js','return.js','return.css','radar.css','timeline.css','companion.css','companion.js','wallpapers.js','desk-media.js','desk-media.css','attention.js','attention.css','push-config.json','feishu.js','feishu-config.json','topics.js','topics.css','topics-feed.json','radar-feed.json','THIRD_PARTY_NOTICES.md','vendor/fullcalendar-6.1.19.min.js','vendor/fullcalendar-LICENSE.md'];
+const files=['hotlist.js','hotlist-feed.json','index.html','manifest.webmanifest','projects-seed.json','sw.js','icon-192.png','icon-512.png','.nojekyll','workspace.css','desk-layout.css','calendar.js','return.js','return.css','radar.css','timeline.css','companion.css','companion.js','wallpapers.js','desk-media.js','desk-media.css','attention.js','attention.css','push-config.json','feishu.js','feishu-config.json','topics.js','topics.css','topics-feed.json','radar-feed.json','THIRD_PARTY_NOTICES.md','vendor/fullcalendar-6.1.19.min.js','vendor/fullcalendar-LICENSE.md'];
 const html=await readFile('index.html','utf8');
 for(const match of html.matchAll(/<script>([\s\S]*?)<\/script>/g))new vm.Script(match[1]);
-for(const path of ['sw.js','calendar.js','return.js','companion.js','wallpapers.js','topics.js','attention.js','desk-media.js','feishu.js','vendor/fullcalendar-6.1.19.min.js'])new vm.Script(await readFile(path,'utf8'));
+for(const path of ['hotlist.js','sw.js','calendar.js','return.js','companion.js','wallpapers.js','topics.js','attention.js','desk-media.js','feishu.js','vendor/fullcalendar-6.1.19.min.js'])new vm.Script(await readFile(path,'utf8'));
 const wallpaperContext={window:{}};
 vm.runInNewContext(await readFile('wallpapers.js','utf8'),wallpaperContext);
 function jpegDimensions(bytes){
@@ -30,6 +30,9 @@ for(const item of topics.items)if(!item.id||!item.title||!item.url.startsWith('h
 const radar=JSON.parse(await readFile('radar-feed.json','utf8'));
 if(radar.schemaVersion!==1||!Number.isFinite(Date.parse(radar.generatedAt))||!Array.isArray(radar.projects)||!radar.projects.length)throw Error('Invalid daily radar snapshot');
 for(const p of radar.projects)if(!p.id||!p.name||!/^https:\/\/github\.com\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+\/?$/.test(p.repo_url))throw Error('Invalid daily project URL');
+const hot=JSON.parse(await readFile('hotlist-feed.json','utf8'));
+if(hot.schemaVersion!==1||!Array.isArray(hot.items)||!Array.isArray(hot.history))throw Error('Invalid hotlist');
+for(const p of hot.items)if(!/^https:\/\/github\.com\/[\w.-]+\/[\w.-]+$/.test(p.url)||!['今日新上榜','持续热门','重大更新'].includes(p.label))throw Error('Invalid hotlist item');
 const manifest=JSON.parse(await readFile('manifest.webmanifest','utf8'));
 if(manifest.scope!=='./'||manifest.start_url!=='./index.html')throw Error('Expected project-relative PWA URLs');
 const seed=JSON.parse(await readFile('projects-seed.json','utf8'));

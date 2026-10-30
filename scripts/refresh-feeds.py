@@ -1,4 +1,5 @@
 """Daily public feeds for Pages. Credentials are read only from the runner environment."""
+import hotlist
 import argparse, concurrent.futures, datetime as dt, importlib.util, json, os, re, urllib.parse, urllib.request
 from pathlib import Path
 ROOT=Path(__file__).resolve().parent.parent
@@ -93,15 +94,16 @@ def refresh_radar(previous):
     return data,fresh
 
 def refresh(restore=False):
-    with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
         topic_future=pool.submit(refresh_topics,load_previous('topics-feed.json',restore))
         radar_future=pool.submit(refresh_radar,load_previous('radar-feed.json',restore))
-        topics,t_ok=topic_future.result();radar,r_ok=radar_future.result()
-    if not t_ok and not r_ok:raise RuntimeError('All sources failed; keep the current published site')
-    for name,data in [('topics-feed.json',topics),('radar-feed.json',radar)]:
+        hot_future=pool.submit(hotlist.collect,load_previous('hotlist-feed.json',restore),fetch_json)
+        topics,t_ok=topic_future.result();radar,r_ok=radar_future.result();hot,h_ok=hot_future.result()
+    # Publish explicit failure metadata with original snapshot timestamps, including outages.
+    for name,data in [('topics-feed.json',topics),('radar-feed.json',radar),('hotlist-feed.json',hot)]:
         data.update(automation=AUTOMATION,delivery='github-actions-daily',runId=os.environ.get('GITHUB_RUN_ID','local-validation'))
         target=ROOT/name;temp=target.with_suffix('.tmp');temp.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n');temp.replace(target)
-    summary={'topics':len(topics['items']),'topicsFresh':t_ok,'radar':len(radar['projects']),'radarFresh':r_ok,'radarSources':radar['sources']}
+    summary={'topics':len(topics['items']),'topicsFresh':t_ok,'radar':len(radar['projects']),'radarFresh':r_ok,'radarSources':radar['sources'],'hotlist':len(hot['items']),'hotlistFresh':h_ok}
     print(json.dumps(summary,ensure_ascii=False))
     if os.environ.get('GITHUB_STEP_SUMMARY'):
         with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as out:out.write('## Daily public feeds\n\n'+json.dumps(summary,ensure_ascii=False,indent=2)+'\n')

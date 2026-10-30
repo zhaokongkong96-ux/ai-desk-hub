@@ -34,7 +34,9 @@ jobs:
         with:
           python-version: "3.12"
       - name: Test feed fallback and validation
-        run: python3 scripts/test-feeds.py
+        run: |
+          python3 scripts/test-feeds.py
+          python3 scripts/test-hotlist.py
       - name: Refresh daily topics and AI Radar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
