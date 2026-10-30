@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS vaults (id TEXT PRIMARY KEY, revision INTEGER NOT NULL DEFAULT 0, payload TEXT, updated_at INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS devices (id TEXT PRIMARY KEY, vault_id TEXT NOT NULL REFERENCES vaults(id), token_hash TEXT NOT NULL UNIQUE, name TEXT NOT NULL, created_at INTEGER NOT NULL);
+CREATE INDEX IF NOT EXISTS devices_vault ON devices(vault_id);
+CREATE TABLE IF NOT EXISTS pairings (code_hash TEXT PRIMARY KEY, vault_id TEXT NOT NULL REFERENCES vaults(id), issuer_id TEXT NOT NULL, expires_at INTEGER NOT NULL);

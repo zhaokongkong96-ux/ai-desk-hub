@@ -28,10 +28,11 @@
     ];
   }
   let events = [];
+  let savedCalendarText=null;
   let marks={};try{marks=JSON.parse(localStorage.getItem('ai-desk-hub-feishu-marks')||'{}');}catch{}
   const remote=e=>e.extendedProps?.source==='feishu';
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(KEY);savedCalendarText=raw;
     if (raw === null) events = seedEvents();
     else {
       const parsed = JSON.parse(raw);
@@ -46,13 +47,13 @@
     return;
   }
   function serialize() {
-    return calendar.getEvents().map(e => ({id:e.id,title:e.title,start:e.start.toISOString(),end:(e.end || new Date(e.start.getTime()+1800000)).toISOString(),allDay:e.allDay,extendedProps:{category:e.extendedProps.category || 'work',sample:!!e.extendedProps.sample,status:e.extendedProps.status||'normal',...(remote(e)?{source:'feishu'}:{})}}));
+    return calendar.getEvents().map(e => ({id:e.id,title:e.title,start:e.start.toISOString(),end:(e.end || new Date(e.start.getTime()+1800000)).toISOString(),allDay:e.allDay,extendedProps:{category:e.extendedProps.category || 'work',sample:!!e.extendedProps.sample,status:e.extendedProps.status||'normal',...(remote(e)?{source:'feishu'}:{...(e.extendedProps.captureSource?{captureSource:e.extendedProps.captureSource}:{}),...(typeof e.extendedProps.preparation==='string'?{preparation:e.extendedProps.preparation}:{})})}}));
   }
   function persistCalendar() {
     events = serialize();
     document.getElementById('calendarSource').textContent=(events.some(remote)?'本机 + 飞书只读':'本机日历')+(events.some(e=>e.extendedProps.sample)?' · 含示例':'');
-    try { localStorage.setItem(KEY,JSON.stringify(events.filter(e=>!remote(e)))); }
-    catch(e) { document.getElementById('storageWarning').hidden=false; }
+    try { const encoded=JSON.stringify(events.filter(e=>!remote(e)));localStorage.setItem(KEY,encoded);savedCalendarText=encoded;window.deskSyncLocalSuccess?.(); }
+    catch(e) { document.getElementById('storageWarning').hidden=false;window.deskSyncLocalFailure?.(); }
     renderNext();
     renderTimeline();
     window.dispatchEvent(new Event('desk-calendar-change'));
@@ -87,6 +88,7 @@
     deleteButton.textContent = '删除日程';
     deleteButton.dataset.confirm = '';
     error.textContent = '';
+    const provenance=document.getElementById('eventProvenance');provenance.hidden=!data.extendedProps?.captureSource;document.getElementById('eventProvenanceText').textContent=data.extendedProps?.captureSource?.fragment||'';
     dialog.showModal();
     title.focus();
   }
@@ -198,6 +200,24 @@
   });
   window.deskCalendar = calendar;
   window.deskCalendarEvents = () => serialize();
+  window.deskApplySyncedCalendar=items=>{
+    calendar.batchRendering(()=>{for(const e of calendar.getEvents())if(!remote(e))e.remove();for(const e of items)if(!remote(e))calendar.addEvent({...e,...eventPaint(e.extendedProps?.category)});});
+    events=serialize();savedCalendarText=localStorage.getItem(KEY);renderNext();renderTimeline();window.dispatchEvent(new Event('desk-calendar-change'));
+  };
+  // Confirmed intake writes first, then updates the in-memory calendar. Never writes Feishu.
+  window.deskImportLocalEvent=item=>{
+    if(window.deskDayStale)return {ok:false,error:'其他页面修改了记录，请刷新后再确认。'};
+    const list=serialize().filter(e=>!remote(e));
+    if(list.some(e=>e.id===item.id))return {ok:true,duplicate:true};
+    if(!item.id?.startsWith('intake-')||!item.title?.trim()||!Number.isFinite(Date.parse(item.start))||!Number.isFinite(Date.parse(item.end))||Date.parse(item.end)<=Date.parse(item.start))return {ok:false,error:'日程字段不完整。'};
+    try{
+      if(localStorage.getItem(KEY)!==savedCalendarText)return {ok:false,error:'其他页面修改了日历，请刷新后再确认。'};
+      const entry={id:item.id,title:item.title,start:item.start,end:item.end,allDay:false,extendedProps:{category:'meeting',sample:false,status:'normal',captureSource:item.captureSource,preparation:item.preparation||''}};
+      const encoded=JSON.stringify([...list,entry]);localStorage.setItem(KEY,encoded);savedCalendarText=encoded;
+      window.deskSyncLocalSuccess?.();calendar.addEvent({...entry,...eventPaint('meeting')});events=serialize();renderNext();renderTimeline();window.dispatchEvent(new Event('desk-calendar-change'));return {ok:true};
+    }catch{window.deskSyncLocalFailure?.();return {ok:false,error:'保存失败，草稿已保留，请释放空间后重试。'};}
+  };
+
   window.deskSetFeishuEvents=(items,syncedAt)=>{
     if(!Array.isArray(items))return;
     calendar.batchRendering(()=>{for(const e of calendar.getEvents())if(remote(e))e.remove();for(const e of items){if(e?.extendedProps?.source!=='feishu'||!e.id?.startsWith('feishu-')||!Number.isFinite(Date.parse(e.start))||Date.parse(e.end)<=Date.parse(e.start))continue;calendar.addEvent({...e,editable:false,startEditable:false,durationEditable:false,...eventPaint(e.extendedProps.category),extendedProps:{...e.extendedProps,status:marks[e.id]||'normal'}});}});
@@ -231,7 +251,7 @@
     const from = new Date(start.value); const to = new Date(end.value);
     if(!eventTitle){error.textContent='请填写日程名称。';return;}
     if(!Number.isFinite(+from)||!Number.isFinite(+to)||to<=from){error.textContent='结束时间需要晚于开始时间。';return;}
-    const data = {id:selectedId || 'event-'+Date.now()+'-'+Math.random().toString(16).slice(2),title:eventTitle,start:from,end:to,allDay:false,...eventPaint(category.value),extendedProps:{category:category.value,sample:false,status:status.value}};
+    const data = {id:selectedId || 'event-'+Date.now()+'-'+Math.random().toString(16).slice(2),title:eventTitle,start:from,end:to,allDay:false,...eventPaint(category.value),extendedProps:{...(selected?.extendedProps?.captureSource?{captureSource:selected.extendedProps.captureSource}:{}),...(typeof selected?.extendedProps?.preparation==='string'?{preparation:selected.extendedProps.preparation}:{}),category:category.value,sample:false,status:status.value}};
     if(selectedId)calendar.getEventById(selectedId)?.remove();
     calendar.addEvent(data);
     persistCalendar();closeEditor();toast('日程已保存到本机');

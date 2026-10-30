@@ -9,3 +9,7 @@ design-qa.md
 *.sqlite*
 notification-service/data/
 artifacts/
+
+sync-service/.wrangler/
+sync-service/.private/
+sync-service/wrangler.jsonc

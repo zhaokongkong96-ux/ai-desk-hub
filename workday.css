@@ -1,0 +1,9 @@
+#workdayDialog{width:min(740px,calc(100vw - 24px));max-height:85vh;overflow-y:auto}#briefDialog{width:min(740px,calc(100vw - 24px));max-height:85vh;overflow-y:auto}
+#workdayDialog section,#workdayDialog details,#tomorrowDetails section{margin:18px 0}#workdayDialog summary{padding:14px 0;cursor:pointer;font-size:17px}#workdayDialog h3,#tomorrowDetails h3{margin:16px 0 10px}
+.day-step{border-top:1px solid #ffffff26;padding:15px 0;overflow-wrap:anywhere}.day-current{border-left:2px solid #ddd;padding-left:14px}.day-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0}.day-actions input{flex:1;min-width:120px}.day-check{display:flex;align-items:center;gap:10px;padding:10px 0}.day-check input,.day-weekdays input{width:18px;height:18px;flex-shrink:0;accent-color:#aaa}
+.day-step>select{max-width:100%;width:100%;margin-top:10px}.day-weekdays{display:flex;gap:12px;flex-wrap:wrap;border:1px solid #ffffff26;border-radius:8px;margin:14px 0}.day-weekdays label{display:flex;gap:6px;align-items:center;padding:6px}#workdayFeedback{font-size:13px;line-height:1.6;color:#dfd4b6}#workdayDialog input,#workdayDialog textarea,#workdayDialog select,#tomorrowDetails textarea{max-width:100%}.day-actions [aria-pressed=true]{outline:1px solid #ddd}
+#page-today .desk-next-heading{flex-wrap:wrap;gap:8px}#page-today .desk-next-heading .brief-link{min-height:36px}
+@media(min-width:1100px) and (orientation:landscape) and (max-height:850px){#page-today .next-event .desk-next-heading{display:flex!important;justify-content:center}#page-today .desk-next-heading>.eyebrow{display:none}#page-today .desk-next-heading .brief-link{font-size:10px;min-height:28px;padding:4px}#page-today .next-event{gap:0}}
+#page-today #openWorkday{color:#ddd;background:none;font-size:10px;min-height:28px}
+#workdayDialog select{background:#25292b;color:#eee;border:1px solid #ffffff30;border-radius:8px;padding:8px;min-height:40px}
+#briefFeedback{font-size:13px;color:#dfd4b6}

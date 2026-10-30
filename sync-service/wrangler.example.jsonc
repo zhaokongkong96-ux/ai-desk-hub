@@ -1,0 +1,20 @@
+{
+  "name": "ai-desk-hub-sync",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-30",
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": {
+    "enabled": false
+  },
+  "vars": {
+    "ALLOWED_ORIGINS": "https://zhaokongkong96-ux.github.io,http://localhost:8771,http://127.0.0.1:8771"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ai-desk-hub-sync",
+      "database_id": "REPLACE_WITH_YOUR_DEDICATED_DATABASE_ID"
+    }
+  ]
+}

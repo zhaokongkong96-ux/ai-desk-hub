@@ -33,10 +33,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Test feed fallback and validation
+      - name: Test local rules and feed validation
         run: |
           python3 scripts/test-feeds.py
           python3 scripts/test-hotlist.py
+          node --test scripts/test-workday.cjs scripts/test-intake.cjs scripts/test-device-sync.cjs sync-service/worker.test.mjs
       - name: Refresh daily topics and AI Radar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
