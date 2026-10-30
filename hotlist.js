@@ -24,7 +24,7 @@
       node('small','近 7 天已展示 '+p.shownDays7+' 天 · 累计 '+p.stars+' Star（不参与排名）',card);link('原仓库 ↗',p.url,card);
     }
   }
-  async function refresh(){if(busy)return;busy=true;button.disabled=true;render();const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),15000);try{const r=await fetch('./hotlist-feed.json?v=0.10.3',{cache:'no-store',signal:controller.signal});if(!r.ok)throw Error();feed=clean(await r.json());failed=r.headers.get('X-Desk-Cache')==='offline';try{localStorage.setItem(KEY,JSON.stringify(feed));}catch{}}catch{failed=true;}finally{busy=false;last=Date.now();clearTimeout(timer);button.disabled=false;render();}}
+  async function refresh(){if(busy)return;busy=true;button.disabled=true;render();const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),15000);try{const r=await fetch('./hotlist-feed.json?v=0.11.1',{cache:'no-store',signal:controller.signal});if(!r.ok)throw Error();feed=clean(await r.json());failed=r.headers.get('X-Desk-Cache')==='offline';try{localStorage.setItem(KEY,JSON.stringify(feed));}catch{}}catch{failed=true;}finally{busy=false;last=Date.now();clearTimeout(timer);button.disabled=false;render();}}
   try{const cached=JSON.parse(localStorage.getItem(KEY)||'null');if(cached)feed=clean(cached);}catch{}
   button.addEventListener('click',refresh);document.querySelector('[data-page=radar]').addEventListener('click',()=>{render();if(Date.now()-last>30*60000)refresh();});
   document.addEventListener('visibilitychange',()=>{if(!document.hidden){render();if(document.getElementById('page-radar').classList.contains('active'))refresh();}});

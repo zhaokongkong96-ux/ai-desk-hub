@@ -136,7 +136,7 @@
       const button=document.createElement('button');button.type='button';button.className='timeline-event event-'+state;
       button.style.cssText='left:'+left+'%;width:'+width+'%;max-width:'+(100-left)+'%;top:'+(lane*52+12)+'px;--event-fill:'+paint.fill+';--event-line:'+paint.line+';--event-text:'+paint.text;
       button.setAttribute('aria-label',label+(remote(event)?'，飞书只读，点击查看':'，点击编辑'));button.title=label;
-      const name=document.createElement('span');name.textContent=event.title;button.append(name);
+      const time=document.createElement('span');time.textContent=event.allDay?'全天':timeText(event.start);const name=document.createElement('span');name.textContent=event.title.replace(/^示例\s*[·・]\s*/, '');button.append(time,name);
       const row=document.createElement('button');row.type='button';row.className='timeline-agenda-item event-'+state;
       row.style.setProperty('--event-text',paint.text);row.setAttribute('aria-label',label+(remote(event)?'，飞书只读，点击查看':'，点击编辑'));
       const rowTime=document.createElement('small');rowTime.textContent=period;
