@@ -2,9 +2,9 @@
 (() => {
   'use strict';
   const $=id=>document.getElementById(id), KEY='ai-desk-hub-companion-v1';
-  const themes=['gallery','nature'], wallpapers=window.DeskWallpapers||[];
+  const themes=['aquarium','gallery','nature'], wallpapers=window.DeskWallpapers||[];
   let wallpaperRequest=0;
-  let prefs={theme:'gallery',wallpapers:{},idle:0,netease:'',reminders:false,reminded:[]}, idleSince=Date.now(),imageURL='',weatherPosition=null,weatherAt=0,weatherRequest=0;
+  let prefs={theme:'aquarium',wallpapers:{},idle:0,netease:'',reminders:false,reminded:[]}, idleSince=Date.now(),imageURL='',weatherPosition=null,weatherAt=0,weatherRequest=0;
   let weatherAbort=null, mediaMode='netease',playlist=[],trackIndex=0,nativeLaunchRequested=false,editor=null,returnFocus=null;
   const audio=$('deskAudio');
   try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved){if(saved.wallpapers&&typeof saved.wallpapers==='object')for(const theme of ['gallery','nature'])if(wallpapers.some(w=>w.theme===theme&&w.id===saved.wallpapers[theme]))prefs.wallpapers[theme]=saved.wallpapers[theme];if(themes.includes(saved.theme))prefs.theme=saved.theme;if([0,2,5,15].includes(saved.idle))prefs.idle=saved.idle;if(typeof saved.reminders==='boolean')prefs.reminders=saved.reminders;if(Array.isArray(saved.reminded))prefs.reminded=saved.reminded.filter(v=>typeof v==='string'&&v.length<300).slice(-100);if(typeof saved.netease==='string'&&neteaseURL(saved.netease))prefs.netease=saved.netease;}}catch{}
@@ -15,7 +15,7 @@
   document.querySelectorAll('[data-close-dialog]').forEach(b=>b.addEventListener('click',()=>closeDialog(b.dataset.closeDialog)));
   $('openDeskSettings').addEventListener('click',()=>showDialog('deskSettings'));
   // AMBIENT deliberately has no task, note or calendar content.
-  function clock(){const now=new Date();$('ambientClock').textContent=now.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',hour12:false});$('ambientDate').textContent=now.toLocaleDateString('zh-CN',{month:'long',day:'numeric',weekday:'long'});}
+  function clock(){const now=new Date();$('ambientClock').textContent=now.toLocaleTimeString('zh-CN',{timeZone:'Asia/Shanghai',hour:'2-digit',minute:'2-digit',hour12:false});$('ambientDate').textContent=now.toLocaleDateString('zh-CN',{timeZone:'Asia/Shanghai',month:'long',day:'numeric',weekday:'long'});}
   function displayWallpaper(src,alt,fit){
     const request=++wallpaperRequest, probe=new Image();
     $('wallpaperStatus').textContent='图片载入中…';
@@ -25,7 +25,7 @@
   }
   function setTheme(theme){
     if(!themes.includes(theme))return;
-    prefs.theme=theme;$('ambientArt').dataset.theme=theme;
+    prefs.theme=theme;$('ambientArt').dataset.theme=theme;$('ambientDialog').dataset.theme=theme;$('ambientTitle').textContent=theme==='aquarium'?'CYBER AQUARIUM / 赛博鱼缸':'AMBIENT / 环境屏';
     document.querySelectorAll('button[data-theme]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.theme===theme)));
     const group=wallpapers.filter(w=>w.theme===theme), chosen=group.find(w=>w.id===prefs.wallpapers[theme])||group[0];
     $('ambientWallpaper').hidden=!chosen;$('wallpaperPrev').disabled=false;$('wallpaperNext').disabled=false;
@@ -47,7 +47,7 @@
   $('ambientMusic').addEventListener('click',()=>{closeDialog('ambientDialog');showDialog('mediaDialog');});
   $('ambientCapture').addEventListener('click',()=>{closeDialog('ambientDialog');$('captureInput').focus();});
   document.querySelectorAll('button[data-theme]').forEach(b=>b.addEventListener('click',()=>setTheme(b.dataset.theme)));
-  $('ambientImageFile').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;if(!file.type.startsWith('image/')||file.size>15*1024*1024){toast('请选择 15MB 以内的图片');return;}if(imageURL)URL.revokeObjectURL(imageURL);imageURL=URL.createObjectURL(file);$('ambientWallpaper').hidden=false;document.querySelectorAll('button[data-theme]').forEach(b=>b.setAttribute('aria-pressed','false'));$('wallpaperPrev').disabled=true;$('wallpaperNext').disabled=true;$('wallpaperCount').textContent='本机图片';$('wallpaperCredit').textContent='自己的画作 · 仅本次页面';$('wallpaperCredit').removeAttribute('href');$('wallpaperCredit').removeAttribute('title');displayWallpaper(imageURL,'你选择的环境画作','contain');toast('画作仅用于当前页面，刷新后需重新选择');});
+  $('ambientImageFile').addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;if(!file.type.startsWith('image/')||file.size>15*1024*1024){toast('请选择 15MB 以内的图片');return;}if(imageURL)URL.revokeObjectURL(imageURL);imageURL=URL.createObjectURL(file);$('ambientWallpaper').hidden=false;document.querySelectorAll('button[data-theme]').forEach(b=>b.setAttribute('aria-pressed','false'));$('wallpaperPrev').disabled=true;$('wallpaperNext').disabled=true;$('wallpaperCount').textContent='本机图片';$('wallpaperCredit').textContent='自己的画作 · 仅本次页面';$('wallpaperCredit').removeAttribute('href');$('wallpaperCredit').removeAttribute('title');$('ambientDialog').dataset.theme='custom';$('ambientTitle').textContent='AMBIENT / 环境屏';displayWallpaper(imageURL,'你选择的环境画作','contain');toast('画作仅用于当前页面，刷新后需重新选择');});
   $('ambientIdle').value=String(prefs.idle);$('ambientIdle').addEventListener('change',()=>{prefs.idle=Number($('ambientIdle').value);idleSince=Date.now();savePrefs();});
   for(const event of ['pointerdown','keydown','wheel','touchstart','input'])document.addEventListener(event,()=>{idleSince=Date.now();},{passive:true});
   document.addEventListener('visibilitychange',()=>{idleSince=Date.now();if(!document.hidden&&weatherPosition&&Date.now()-weatherAt>=900000){if(weatherPosition.source==='manual')updateWeather();else locateWeather();}});

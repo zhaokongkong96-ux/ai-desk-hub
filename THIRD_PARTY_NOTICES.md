@@ -1,5 +1,11 @@
 # Third-party components and references
 
+## User-selected aquarium reference (local v0.15.1)
+
+`assets/aquarium/reference-v2.png` is the user's supplied 1448×1086 reference, retained byte-for-byte for the requested local implementation. Source SHA-256: `41ab7e832c259799585c92ec8ff160553e873918b73e9d3574a786d1de1f5cd2`. The original creator and license were not supplied; no public-domain or stock-image license is asserted.
+
+`assets/aquarium/clean-ui-plate-v2.png` was produced with OpenAI ImageGen to remove baked-in UI from that reference. Only former UI regions are used from the cleaned image at runtime. The scene uses the supplied source; fish texture deformation and restrained water shimmer are rendered locally. This implementation has not been publicly deployed.
+
 - FullCalendar Standard Bundle 6.1.19, MIT, Copyright (c) 2021 Adam Shaw. Source: https://github.com/fullcalendar/fullcalendar. Distribution retrieved from the official npm registry (`fullcalendar@6.1.19`, tarball SHA-1 e43bdd0c21a7e18f897ece4006d1b0b4d29b5e39). Local bundle: vendor/fullcalendar-6.1.19.min.js. License: vendor/fullcalendar-LICENSE.md. No Premium plugins used.
 - Third Screen: https://github.com/ericvaish/thirdscreen. Visual and interaction reference selected by the user: dark panels, fixed zones, large clock and glanceable tasks. AI Desk Hub implements these ideas in its existing HTML/CSS/JavaScript; no Third Screen source code, mascot, branding, or application dependencies were copied.
 
@@ -36,3 +42,19 @@ The daily catalog combines the existing Awesome AI Hardware directory (https://g
 ## Open canvas interface
 Background `assets/theme/quiet-horizon.png` generated with OpenAI ImageGen from the approved UI reference, 2026-10-29.
 `vendor/desk-icons.svg`: Bootstrap Icons, Copyright The Bootstrap Authors, MIT. Source: https://github.com/twbs/icons .
+
+## Independent swimming assets (local v0.15.2)
+
+`assets/aquarium/swim-background-v3.png`, `fish-atlas-v3.png` and `turn-atlas-v3.png` were made with OpenAI ImageGen from the user's selected reference for the requested local aquarium. They reconstruct water behind the fish and provide transparent fish/turning poses; these assets are not byte-identical extractions or real fish footage. The unmodified source remains in `reference-v2.png` as local provenance; the v0.15.2 static-site build uses only the current three rendering assets. No additional stock-image licensing or original authorship is asserted.
+
+## Small fish turning pose (local v0.15.4)
+
+`assets/aquarium/small-turn-v4.png` was generated with built-in OpenAI ImageGen using the supplied small silver-blue fish atlas as reference. It supplies a single head-on turning pose with alpha, replacing the cropped half-head fallback. It is a generated perspective reconstruction, not original source pixels or real footage. The prompt and verification limits are recorded in `docs/AQUARIUM_TURN_V0154.md`.
+
+## Multi-view turn sequences (local v0.15.6)
+
+`assets/aquarium/gold-views-v6.png` and `small-views-v6.png` were generated using built-in OpenAI ImageGen with the existing fish atlas as reference. Each contains nine right-side-to-front perspective poses in a 3×3 layout. Runtime aligns body centers and silhouette area and interpolates neighboring views; opposing views are mirrored. Original side sprites are retained at the turn endpoints. Generated views approximate the source fish, with possible shape/fin differences; no claim of actual 3D footage or exact source identity across all poses. Prompt specification is recorded in docs/AQUARIUM_MULTIVIEW_V0156.md.
+
+## Flow-morphed turn frames (local v0.15.8)
+
+`gold-morph-a-v8.png`, `gold-morph-b-v8.png`, `small-morph-v8.png` are build-time renderings derived from the existing generated v0.15.6 view sheets. No new external provider/model call was made. Local OpenCV derives only bidirectional displacement vectors; the native Canvas build script renders the interpolated meshes. Each type has 129 turn frames; they are derived animation frames, not independently photographed angles or a real 3D fish. Static-site runtime loads these three sheets and the existing background, and no longer ships the original source/view sheets for playback.
