@@ -58,3 +58,10 @@ Background `assets/theme/quiet-horizon.png` generated with OpenAI ImageGen from 
 ## Flow-morphed turn frames (local v0.15.8)
 
 `gold-morph-a-v8.png`, `gold-morph-b-v8.png`, `small-morph-v8.png` are build-time renderings derived from the existing generated v0.15.6 view sheets. No new external provider/model call was made. Local OpenCV derives only bidirectional displacement vectors; the native Canvas build script renders the interpolated meshes. Each type has 129 turn frames; they are derived animation frames, not independently photographed angles or a real 3D fish. Static-site runtime loads these three sheets and the existing background, and no longer ships the original source/view sheets for playback.
+
+
+## User-supplied nature videos (2026-11-04)
+
+- `assets/ambient/coast-overhead.mp4`: supplied by the user as `338904_small.mp4`; original owner and licence document were not supplied. No public-domain, free redistribution, or original-authorship claim is made.
+- `assets/ambient/beach-waves.mp4`: supplied as 摄图网_51259_大海沙滩合集_(非企业商用)._720p.mp4. Retains the supplied source designation and non-enterprise-commercial-use label; no broader licence is asserted.
+- Delivery copies retain the full picture content and original speed, encoded as silent 1280×720 H.264/yuv420p fast-start MP4 for the user's personal environment screen. No cuts, watermark removal, synthetic frames or seam reconstruction. Posters are extracted frames. Playback repeats original endpoints and is not certified seamless.

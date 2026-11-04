@@ -17,6 +17,7 @@
   // AMBIENT deliberately has no task, note or calendar content.
   function clock(){const now=new Date();$('ambientClock').textContent=now.toLocaleTimeString('zh-CN',{timeZone:'Asia/Shanghai',hour:'2-digit',minute:'2-digit',hour12:false});$('ambientDate').textContent=now.toLocaleDateString('zh-CN',{timeZone:'Asia/Shanghai',month:'long',day:'numeric',weekday:'long'});}
   function displayWallpaper(src,alt,fit){
+    window.DeskAmbientVideo.clear();
     const request=++wallpaperRequest, probe=new Image();
     $('wallpaperStatus').textContent='图片载入中…';
     probe.onload=()=>{if(request!==wallpaperRequest)return;$('ambientImage').src=src;$('ambientImage').alt=alt;$('ambientImage').style.objectFit=fit;$('ambientImage').hidden=false;$('ambientArt').hidden=true;$('wallpaperStatus').textContent='';};
@@ -29,18 +30,21 @@
     document.querySelectorAll('button[data-theme]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.theme===theme)));
     const group=wallpapers.filter(w=>w.theme===theme), chosen=group.find(w=>w.id===prefs.wallpapers[theme])||group[0];
     $('ambientWallpaper').hidden=!chosen;$('wallpaperPrev').disabled=false;$('wallpaperNext').disabled=false;
+    $('ambientScene').replaceChildren(...group.map(item=>{const option=document.createElement('option');option.value=item.id;option.textContent=(item.kind==='video'?'视频 · ':'图片 · ')+item.title;return option;}));
+    if(chosen)$('ambientScene').value=chosen.id;
     if(chosen){
       prefs.wallpapers[theme]=chosen.id;
       $('wallpaperCount').textContent=(group.indexOf(chosen)+1)+' / '+group.length;
-      $('wallpaperCredit').textContent=chosen.title+' · '+chosen.artist+' · '+chosen.source+' ↗';
-      $('wallpaperCredit').href=chosen.sourceURL;$('wallpaperCredit').title=chosen.license;
-      displayWallpaper(chosen.file,chosen.title+' — '+chosen.artist,theme==='gallery'?'contain':'cover');
-    }else{++wallpaperRequest;$('ambientImage').hidden=true;$('ambientArt').hidden=false;$('wallpaperStatus').textContent='';}
+      $('wallpaperCredit').textContent=chosen.title+' · '+chosen.artist+' · '+chosen.source+(chosen.sourceURL?' ↗':'');
+      if(chosen.sourceURL)$('wallpaperCredit').href=chosen.sourceURL;else $('wallpaperCredit').removeAttribute('href');$('wallpaperCredit').title=chosen.license;
+      if(chosen.kind==='video'){++wallpaperRequest;window.DeskAmbientVideo.select(chosen);}else displayWallpaper(chosen.file,chosen.title+' — '+chosen.artist,theme==='gallery'?'contain':'cover');
+    }else{window.DeskAmbientVideo.clear();++wallpaperRequest;$('ambientImage').hidden=true;$('ambientArt').hidden=false;$('wallpaperStatus').textContent='';}
     savePrefs();
   }
   function stepWallpaper(delta){const group=wallpapers.filter(w=>w.theme===prefs.theme);if(!group.length)return;const at=group.findIndex(w=>w.id===prefs.wallpapers[prefs.theme]);prefs.wallpapers[prefs.theme]=group[(at+delta+group.length)%group.length].id;setTheme(prefs.theme);}
   $('wallpaperPrev').addEventListener('click',()=>stepWallpaper(-1));
   $('wallpaperNext').addEventListener('click',()=>stepWallpaper(1));
+  $('ambientScene').addEventListener('change',()=>{const item=wallpapers.find(w=>w.theme===prefs.theme&&w.id===$('ambientScene').value);if(item){prefs.wallpapers[prefs.theme]=item.id;setTheme(prefs.theme);}});
   function enterAmbient(){if(document.querySelector('dialog[open]'))return;clock();showDialog('ambientDialog');}
   $('openAmbient').addEventListener('click',enterAmbient);$('leaveAmbient').addEventListener('click',()=>{closeDialog('ambientDialog');switchPage('today');});
   $('ambientReturn').addEventListener('click',()=>{closeDialog('ambientDialog');switchPage('return');});

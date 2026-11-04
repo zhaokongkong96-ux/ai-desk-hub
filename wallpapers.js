@@ -146,3 +146,36 @@ window.DeskWallpapers = [
     "height": 1365
   }
 ];
+
+/* User-selected ambience clips; fetched only when the environment screen is open. */
+window.DeskWallpapers.push({
+  "id": "nature-coast-video",
+  "theme": "nature",
+  "kind": "video",
+  "title": "海岸俯瞰",
+  "artist": "用户提供",
+  "source": "自然视频",
+  "license": "用户提供用于个人环境屏；不声明原创或可再分发授权",
+  "file": "./assets/ambient/coast-overhead.mp4",
+  "poster": "./assets/ambient/coast-overhead.jpg",
+  "width": 1280,
+  "height": 720,
+  "duration": 23.624,
+  "loop": true,
+  "muted": true
+}, {
+  "id": "nature-beach-video",
+  "theme": "nature",
+  "kind": "video",
+  "title": "海浪沙滩",
+  "artist": "用户提供",
+  "source": "视频合集",
+  "license": "用户提供；原文件标注“非企业商用”，保留来源，不扩展授权",
+  "file": "./assets/ambient/beach-waves.mp4",
+  "poster": "./assets/ambient/beach-waves.jpg",
+  "width": 1280,
+  "height": 720,
+  "duration": 51.451,
+  "loop": true,
+  "muted": true
+});

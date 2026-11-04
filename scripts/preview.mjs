@@ -14,7 +14,7 @@ const port=args.length?Number(args[1]):8765;
 if(!Number.isInteger(port)||port<1024||port>65535)throw Error('Port must be an integer from 1024 through 65535');
 await import('./prepare-site.mjs');
 const site=path.join(root,'_site'),prefix='/ai-desk-hub/';
-const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.webmanifest':'application/manifest+json; charset=utf-8','.png':'image/png','.jpg':'image/jpeg','.md':'text/plain; charset=utf-8'};
+const types={'.mp4':'video/mp4','.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.webmanifest':'application/manifest+json; charset=utf-8','.png':'image/png','.jpg':'image/jpeg','.md':'text/plain; charset=utf-8'};
 const run=promisify(execFile);
 let topicsCache=null,topicsPending=null;
 async function publicTopics(){
@@ -48,6 +48,15 @@ const server=http.createServer(async(req,res)=>{
     const file=path.resolve(site,name);
     if(!file.startsWith(site+path.sep)||!(await stat(file)).isFile()){res.writeHead(404).end();return;}
     const data=await readFile(file);
+    if(path.extname(file)==='.mp4'){
+      res.setHeader('Accept-Ranges','bytes');
+      if(req.headers.range){
+        const m=req.headers.range.match(/^bytes=(\d*)-(\d*)$/);let start,end;
+        if(m&&(m[1]||m[2])){if(!m[1]){start=Math.max(0,data.length-Number(m[2]));end=data.length-1;}else{start=Number(m[1]);end=m[2]?Math.min(Number(m[2]),data.length-1):data.length-1;}}
+        if(!Number.isSafeInteger(start)||!Number.isSafeInteger(end)||start<0||start>end||start>=data.length){res.writeHead(416,{'Content-Range':`bytes */${data.length}`}).end();return;}
+        res.writeHead(206,{'Content-Type':'video/mp4','Content-Range':`bytes ${start}-${end}/${data.length}`,'Content-Length':end-start+1});res.end(req.method==='HEAD'?undefined:data.subarray(start,end+1));return;
+      }
+    }
     res.writeHead(200,{'Content-Type':types[path.extname(file)]||'application/octet-stream','Content-Length':data.length});
     res.end(req.method==='HEAD'?undefined:data);
   }catch(error){res.writeHead(error instanceof URIError?400:404).end();}
