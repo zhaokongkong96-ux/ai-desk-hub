@@ -2,7 +2,6 @@
 import datetime as dt, math, re, time, urllib.error, urllib.parse, urllib.request
 ZONE=dt.timezone(dt.timedelta(hours=8))
 TRENDING='https://github.com/trending?since=daily'
-AI=re.compile(r'\b(ai|llm|agent|agents|gpt|inference|diffusion|transformer|rag|machine.learning|deep.learning|neural)\b',re.I)
 def moment(s):
     try:return dt.datetime.fromisoformat(s.replace('Z','+00:00')).astimezone(ZONE)
     except (ValueError,TypeError,AttributeError):return None
@@ -52,31 +51,56 @@ def rank(candidates,history,now):
     history.append({'date':today,'collectedAt':now.isoformat(),'shown':[p['name'].lower() for p in items],'metrics':metrics})
     return items,history
 
+def public_project(repo):
+    name=repo.get('full_name','')
+    if not re.fullmatch(r'[\w.-]+/[\w.-]+',name) or any(repo.get(key) for key in ('private','archived','fork','disabled')):
+        return None
+    return dict(name=name,url='https://github.com/'+name,id=repo.get('id'),
+                description=repo.get('description') or '请查看原仓库说明。',
+                stars=repo['stargazers_count'],language=repo.get('language'),
+                createdAt=repo.get('created_at'),license=(repo.get('license') or {}).get('spdx_id'))
+
+def collect_new(previous,fetch_json,now):
+    start=now.replace(hour=0,minute=0,second=0,microsecond=0)
+    query=f'created:>={start.isoformat()} stars:>=1 size:>1 archived:false fork:false is:public'
+    url='https://api.github.com/search/repositories?'+urllib.parse.urlencode(dict(q=query,sort='stars',order='desc',per_page=60))
+    snapshot=dict(newAttemptedAt=now.isoformat())
+    try:
+        data=fetch_json(url)
+        projects={}
+        for repo in data['items']:
+            created=moment(repo.get('created_at'))
+            if not created or not start<=created<=now or not repo.get('language') or not (repo.get('description') or '').strip():continue
+            item=public_project(repo)
+            if item and item['stars']>=1 and item['license'] not in (None,'','NOASSERTION'):
+                projects.setdefault(item['name'].lower(),item)
+        items=[];fingerprints=set()
+        for item in sorted(projects.values(),key=lambda p:(-p['stars'],p['name'].lower())):
+            fingerprint=(item['name'].split('/')[-1].casefold(), ' '.join(item['description'].casefold().split()))
+            if fingerprint in fingerprints:continue
+            fingerprints.add(fingerprint);items.append(item)
+            if len(items)>=12:break
+        return dict(snapshot,newItems=items,newGeneratedAt=now.isoformat(),newPartial=bool(data.get('incomplete_results')))
+    except Exception:
+        return dict(snapshot,newItems=previous.get('newItems',[]),newGeneratedAt=previous.get('newGeneratedAt'),newRefreshError=True)
+
 def collect(previous,fetch_json,now=None):
-    now=now or dt.datetime.now(ZONE);stamp=now.isoformat();errors=[];pool={};daily={};deadline=time.monotonic()+240
+    now=(now or dt.datetime.now(ZONE)).astimezone(ZONE);stamp=now.isoformat();errors=[];daily={};deadline=time.monotonic()+150
+    new=collect_new(previous,fetch_json,now)
     try:daily=trending()
     except Exception:errors.append('GitHub Trending 读取失败')
     since=(now-dt.timedelta(days=7)).date().isoformat()
-    # Recent AI candidates, ordered by update time. Not by all-time stars.
-    for topic in ['artificial-intelligence','llm']:
-        try:
-            q=f'topic:{topic} pushed:>={since} archived:false fork:false'
-            data=fetch_json('https://api.github.com/search/repositories?'+urllib.parse.urlencode(dict(q=q,sort='updated',per_page=8)))
-            if data.get('incomplete_results'):errors.append('AI 候选搜索不完整')
-            for r in data['items']:pool[r['full_name'].lower()]=r
-        except Exception:errors.append('AI 候选搜索失败：'+topic)
     # Retain previous candidates for growth comparisons even if no longer in search results.
-    names=list(dict.fromkeys([*daily,*[i['name'].lower() for i in previous.get('items',[])],*pool]))[:36]
+    previous_names=[i['name'].lower() for i in previous.get('items',[]) if re.fullmatch(r'[\w.-]+/[\w.-]+',i.get('name',''))]
+    names=list(dict.fromkeys([*list(daily)[:12],*previous_names]))[:18]
     candidates=[]
     for name in names:
         if time.monotonic()>deadline:
             errors.append('采集达到时间上限，候选数据不完整');break
         try:
-            r=pool.get(name) or fetch_json('https://api.github.com/repos/'+name)
-            text=' '.join([r['full_name'],r.get('description') or '',*r.get('topics',[])])
-            if r.get('private') or r.get('archived') or r.get('fork') or not AI.search(text):continue
-            if not re.fullmatch(r'[\w.-]+/[\w.-]+',r['full_name']):continue
-            p=dict(name=r['full_name'],url='https://github.com/'+r['full_name'],description=r.get('description') or '请查看原仓库说明。',stars=r['stargazers_count'],dailyStars=daily.get(name),activeThreads=None,discussionURL='https://github.com/'+r['full_name']+'/issues',release=None)
+            p=public_project(fetch_json('https://api.github.com/repos/'+name))
+            if not p:continue
+            p.update(dailyStars=daily.get(name),activeThreads=None,discussionURL=p['url']+'/issues',release=None)
             candidates.append(p)
             # Keep search API calls bounded below the authenticated 30/min limit.
             if len(candidates)>=12:break
@@ -97,6 +121,8 @@ def collect(previous,fetch_json,now=None):
             if e.code!=404:errors.append('版本数据不可用：'+p['name'])
         except Exception:errors.append('版本数据不可用：'+p['name'])
     if not candidates:
-        return {**previous,'schemaVersion':1,'attemptedAt':stamp,'refreshError':True,'errors':errors or ['未取得有效 AI 候选'],'items':previous.get('items',[])},False
+        return {**previous,**new,'schemaVersion':1,'attemptedAt':stamp,'refreshError':True,'errors':errors or ['未取得有效候选'],'items':previous.get('items',[])},False
     items,history=rank(candidates,previous.get('history',[]),now)
-    return dict(schemaVersion=1,generatedAt=stamp,attemptedAt=stamp,items=items,history=history,partial=bool(errors),errors=errors),True
+    if not items and errors:
+        return {**previous,**new,'schemaVersion':1,'attemptedAt':stamp,'refreshError':True,'errors':errors,'items':previous.get('items',[])},False
+    return dict(schemaVersion=1,scope='all-github',generatedAt=stamp,attemptedAt=stamp,items=items,history=history,partial=bool(errors),errors=errors,**new),True

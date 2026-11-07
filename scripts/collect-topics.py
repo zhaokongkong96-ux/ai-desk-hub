@@ -1,5 +1,6 @@
 """Collect public headline RSS only; no accounts, article bodies or invented trends."""
 import argparse, concurrent.futures, datetime as dt, email.utils, hashlib, json, re, urllib.parse, urllib.request, xml.etree.ElementTree as ET
+from html.parser import HTMLParser
 from pathlib import Path
 ZONE=dt.timezone(dt.timedelta(hours=8))
 CATEGORIES=['社会观察','职场成长','科技生活','文化知识']
@@ -19,6 +20,27 @@ def safe_url(value):
         u=urllib.parse.urlsplit(value.strip())
         return value.strip() if u.scheme=='https' and u.hostname and not u.username and not u.password else ''
     except ValueError:return ''
+class FeedImageParser(HTMLParser):
+    def __init__(self):super().__init__();self.image='';self.text=[]
+    def handle_data(self,data):self.text.append(data)
+    def handle_starttag(self,tag,attrs):
+        if tag!='img' or self.image:return
+        attrs=dict(attrs)
+        if any(str(attrs.get(k,'')).isdigit() and int(attrs[k])<32 for k in ['width','height']):return
+        self.image=safe_url(attrs.get('src') or attrs.get('data-src') or '')
+def feed_image(node):
+    # Only publisher-supplied RSS media metadata. No article fetch, proxy or
+    # unrelated stock photo; feeds with no picture receive a labelled UI cover.
+    for child in node.iter():
+        tag=child.tag.rsplit('}',1)[-1];attrs=child.attrib
+        if tag=='thumbnail' or (tag in ['content','enclosure'] and (attrs.get('medium')=='image' or attrs.get('type','').startswith('image/'))):
+            image=safe_url(attrs.get('url',''))
+            if image:return image
+    for child in node:
+        if child.tag.rsplit('}',1)[-1] in ['description','encoded']:
+            parser=FeedImageParser();parser.feed(child.text or '')
+            if parser.image:return parser.image
+    return ''
 def read_source(spec,now):
     key,name,url,category=spec
     status=dict(id=key,name=name,url=url,ok=False,count=0)
@@ -38,7 +60,15 @@ def read_source(spec,now):
             if not title or not link or published>now+dt.timedelta(minutes=5) or published<now-dt.timedelta(days=7):continue
             publisher=node.find('source');source=(publisher.text or '').strip() if publisher is not None else name
             if source and title.endswith(' - '+source):title=title[:-len(' - '+source)]
-            found.append(dict(id=hashlib.sha256(link.encode()).hexdigest()[:20],title=title,url=link,source=source[:100],feed=name,category=category,publishedAt=published.isoformat(),date=published.date().isoformat()))
+            item=dict(id=hashlib.sha256(link.encode()).hexdigest()[:20],title=title,url=link,source=source[:100],feed=name,category=category,publishedAt=published.isoformat(),date=published.date().isoformat())
+            image=feed_image(node)
+            if image:item['imageURL']=image
+            if not key.startswith('google-'):
+                parser=FeedImageParser()
+                parser.feed((node.findtext('description') or '')[:12000])
+                excerpt=' '.join(' '.join(parser.text).split())
+                if excerpt and excerpt!=title:item['excerpt']=excerpt[:99]+('…' if len(excerpt)>99 else '')
+            found.append(item)
         status.update(ok=True,count=len(found));return found,status
     except Exception:status['error']='暂未获取到有效内容';return [],status
 

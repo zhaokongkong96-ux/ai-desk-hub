@@ -1,10 +1,10 @@
-import {mkdir,copyFile,rm,readFile} from 'node:fs/promises';
+import {mkdir,copyFile,rm,readFile,rename,readdir} from 'node:fs/promises';
 import vm from 'node:vm';
 import {execFileSync} from 'node:child_process';
-const files=['ambient-video.js','ambient-video.css','assets/aquarium/small-morph-v8.png','aquarium-render.js','assets/aquarium/gold-morph-a-v8.png','assets/aquarium/gold-morph-b-v8.png','aquarium-motion.js','assets/aquarium/swim-background-v3.png','aquarium.js','aquarium.css','sync-core.js','sync-crypto.js','sync-engine.js','device-sync.js','device-sync.css','sync-config.json','intake.css','intake-core.js','intake.js','workday.css','workday-core.js','workday.js','hotlist.js','hotlist-feed.json','open-canvas.css','open-canvas.js','assets/theme/quiet-horizon.png','vendor/desk-icons.svg','vendor/bootstrap-icons-LICENSE.md','index.html','manifest.webmanifest','projects-seed.json','sw.js','icon-192.png','icon-512.png','.nojekyll','workspace.css','desk-layout.css','calendar.js','return.js','return.css','radar.css','timeline.css','companion.css','companion.js','wallpapers.js','desk-media.js','desk-media.css','attention.js','attention.css','push-config.json','feishu.js','feishu-config.json','topics.js','topics.css','topics-feed.json','radar-feed.json','THIRD_PARTY_NOTICES.md','vendor/fullcalendar-6.1.19.min.js','vendor/fullcalendar-LICENSE.md'];
+const files=['card-media.js','ambient-clean.css','ambient-clean.js','rondesign-content.css','rondesign-content.js','rondesign.css','rondesign.js','ambient-video.js','ambient-video.css','assets/aquarium/small-morph-v8.png','aquarium-render.js','assets/aquarium/gold-morph-a-v8.png','assets/aquarium/gold-morph-b-v8.png','aquarium-motion.js','assets/aquarium/swim-background-v3.png','aquarium.js','aquarium.css','sync-preferences.js','sync-core.js','sync-crypto.js','sync-engine.js','device-sync.js','device-sync.css','sync-config.json','intake.css','intake-core.js','intake.js','workday.css','workday-core.js','workday.js','hotlist.js','hotlist-feed.json','open-canvas.css','open-canvas.js','assets/theme/quiet-horizon.png','vendor/desk-icons.svg','vendor/bootstrap-icons-LICENSE.md','index.html','manifest.webmanifest','projects-seed.json','sw.js','icon-192.png','icon-512.png','.nojekyll','workspace.css','desk-layout.css','calendar.js','return.js','return.css','radar.css','timeline.css','companion.css','companion.js','wallpapers.js','desk-media.js','desk-media.css','attention.js','attention.css','push-config.json','feishu.js','feishu-config.json','topics.js','topics.css','topics-feed.json','radar-feed.json','THIRD_PARTY_NOTICES.md','vendor/fullcalendar-6.1.19.min.js','vendor/fullcalendar-LICENSE.md'];
 const html=await readFile('index.html','utf8');
 for(const match of html.matchAll(/<script>([\s\S]*?)<\/script>/g))new vm.Script(match[1]);
-for(const path of ['ambient-video.js','aquarium-render.js','aquarium-motion.js','aquarium.js','sync-core.js','sync-crypto.js','sync-engine.js','device-sync.js','intake-core.js','intake.js','workday-core.js','workday.js','hotlist.js','open-canvas.js','sw.js','calendar.js','return.js','companion.js','wallpapers.js','topics.js','attention.js','desk-media.js','feishu.js','vendor/fullcalendar-6.1.19.min.js'])new vm.Script(await readFile(path,'utf8'));
+for(const path of ['card-media.js','ambient-clean.js','rondesign-content.js','rondesign.js','ambient-video.js','aquarium-render.js','aquarium-motion.js','aquarium.js','sync-preferences.js','sync-core.js','sync-crypto.js','sync-engine.js','device-sync.js','intake-core.js','intake.js','workday-core.js','workday.js','hotlist.js','open-canvas.js','sw.js','calendar.js','return.js','companion.js','wallpapers.js','topics.js','attention.js','desk-media.js','feishu.js','vendor/fullcalendar-6.1.19.min.js'])new vm.Script(await readFile(path,'utf8'));
 const wallpaperContext={window:{}};
 vm.runInNewContext(await readFile('wallpapers.js','utf8'),wallpaperContext);
 function jpegDimensions(bytes){
@@ -49,6 +49,18 @@ const seed=JSON.parse(await readFile('projects-seed.json','utf8'));
 if(!Array.isArray(seed.projects)||!seed.projects.length)throw Error('Missing seed projects');
 for(const p of seed.projects)if(!p.id||!p.name||!p.repo_url.startsWith('https://github.com/'))throw Error('Invalid seed project');
 for(const size of [192,512]){const png=await readFile(`icon-${size}.png`);if(png.readUInt32BE(16)!==size||png.readUInt32BE(20)!==size)throw Error('Incorrect icon dimensions');}
-await rm('_site',{recursive:true,force:true});await mkdir('_site');
-for(const file of files){const dir=file.includes('/')?file.slice(0,file.lastIndexOf('/')):'';if(dir)await mkdir(`_site/${dir}`,{recursive:true});await copyFile(file,`_site/${file}`);}
+// Keep the live preview readable while rebuilding. Copying into a served MP4
+// can expose a truncated file and poison the browser's subsequent range reads.
+await mkdir('_site',{recursive:true});
+for(const file of files){const dir=file.includes('/')?file.slice(0,file.lastIndexOf('/')):'';if(dir)await mkdir(`_site/${dir}`,{recursive:true});const temp=`_site/${file}.staging-${process.pid}`;await copyFile(file,temp);await rename(temp,`_site/${file}`);}
+// Preserve the public allowlist: old assets and stray files must not be served.
+const allowed=new Set(files);
+async function prune(dir=''){
+ for(const entry of await readdir(`_site/${dir}`,{withFileTypes:true})){
+  const relative=dir+entry.name;
+  if(entry.isDirectory())await prune(relative+'/');
+  else if(!allowed.has(relative))await rm(`_site/${relative}`,{force:true});
+ }
+}
+await prune();
 console.log(`Validated JavaScript, manifest, ${seed.projects.length} projects, PNG sizes; staged ${files.length} public files.`);

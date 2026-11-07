@@ -20,7 +20,7 @@
       if(Array.isArray(saved.logs))data.logs=saved.logs.filter(e=>e&&codes[e.code]&&timestamp(e.at)>0).slice(0,8).map(e=>({code:e.code,at:e.at,reason:['disabled','quiet','window','cooldown','home','expired'].includes(e.reason)?e.reason:undefined}));
     }
   }catch(e){$('storageWarning').hidden=false;}
-  function save(){try{localStorage.setItem(KEY,JSON.stringify(data));return true;}catch(e){$('storageWarning').hidden=false;return false;}}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(data));window.dispatchEvent(new Event('desk-preferences-change'));return true;}catch(e){$('storageWarning').hidden=false;return false;}}
   function settings(){for(const key of ['Enabled','Quiet'])$('return'+key).checked=data[key.toLowerCase()];$('returnStart').value=data.start;$('returnEnd').value=data.end;$('returnCooldown').value=String(data.cooldown);}
   function inWindow(now=Date.now()){
     const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Shanghai',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date(now));
@@ -53,5 +53,6 @@
   document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',clearPersonal));
   document.addEventListener('visibilitychange',()=>{if(document.hidden)clearPersonal();});
   setInterval(()=>{if(revealUntil&&Date.now()>=revealUntil){clearPersonal();result('idle','个人摘要已收起','模拟摘要展示已超过 5 分钟；重新操作仍遵守触发规则。');}},1000);
+  window.addEventListener('desk-preferences-applied',()=>{const saved=JSON.parse(localStorage.getItem(KEY)||'{}');for(const key of Object.keys(defaults))if(saved[key]!==undefined)data[key]=saved[key];settings();});
   settings();renderLogs();clearPersonal();applyPrivacy();
 })();

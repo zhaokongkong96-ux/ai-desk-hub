@@ -7,3 +7,32 @@
 #page-today #openWorkday{color:#ddd;background:none;font-size:10px;min-height:28px}
 #workdayDialog select{background:#25292b;color:#eee;border:1px solid #ffffff30;border-radius:8px;padding:8px;min-height:40px}
 #briefFeedback{font-size:13px;color:#dfd4b6}
+/* Project context uses quiet reading surfaces; colour marks only the next action. */
+#workdayDialog .project-resume-card{padding:22px;margin:16px 0;border:1px solid #cbd5ce;border-radius:22px;background:#f8f9f5;color:#182a24;overflow-wrap:anywhere}
+#workdayDialog .project-card-head{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+#workdayDialog .project-card-head h3{margin:3px 0 0;font-size:20px;line-height:1.4;font-weight:600}
+#workdayDialog .project-card-head .btn{flex-shrink:0;min-height:44px}
+#workdayDialog .project-context-grid{display:grid;gap:16px;margin:20px 0 16px}
+#workdayDialog .project-context{margin:0}
+#workdayDialog .project-context dt{font-size:12px;font-weight:500;color:#52655b;margin:0 0 6px}
+#workdayDialog .project-context dd{margin:0;font-size:15px;line-height:1.7;white-space:pre-wrap}
+#workdayDialog .project-next-action{border-left:3px solid #8caa38;padding-left:12px}
+#workdayDialog .project-card-meta{font-size:12px;line-height:1.7;color:#52655b}
+#workdayDialog .project-card-meta p{margin:4px 0;white-space:pre-wrap}
+#workdayDialog .project-continuations{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+#workdayDialog .project-continuations a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;color:#253e32;background:#e8eedf;border-color:#c6d3bd}
+#workdayDialog .project-file-entry{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:center;width:100%;font-size:13px;padding:12px;border-radius:14px;background:#eef2eb}
+#workdayDialog .project-file-entry code{grid-column:1;grid-row:2;font-size:12px;color:#52655b;white-space:pre-wrap;overflow-wrap:anywhere}
+#workdayDialog .project-file-entry button{grid-column:2;grid-row:1/3;min-height:44px}
+#workdayDialog .project-file-entry input{grid-column:1/-1;width:100%;min-width:0}
+#workdayDialog .project-steps{margin:0;border-top:1px solid #d8e1d6}
+#workdayDialog .project-steps summary{font-size:13px;color:#52655b;padding:14px 0 4px;min-height:44px}
+#workdayDialog .project-steps .day-check{min-height:44px;font-size:14px}
+#workdayDialog .project-steps .day-actions{margin-bottom:0}
+#workdayDialog .project-card-editor{padding:18px 0 0;border-top:1px solid #c7d4cb;margin-top:24px}
+#workdayDialog .project-card-editor .companion-field{gap:7px;font-size:14px;color:#273e32}
+#workdayDialog .project-card-editor textarea,#workdayDialog .project-card-editor input{width:100%;min-width:0;box-sizing:border-box;background:#fff;color:#182a24;border:1px solid #becdc0;border-radius:12px;padding:12px;font:inherit;line-height:1.6}
+#workdayDialog .project-card-editor input{min-height:44px}
+#workdayDialog .project-card-editor .companion-note,#workdayDialog .project-resume-card .companion-note{color:#52655b;font-size:12px;line-height:1.7}
+#workdayDialog #projectCancel[hidden],#workdayDialog #projectStepsField[hidden],#workdayDialog .project-file-entry input[hidden]{display:none!important}
+@media(max-width:600px){#workdayDialog .project-resume-card{padding:16px;border-radius:18px}#workdayDialog .project-card-head h3{font-size:18px}#workdayDialog .project-card-head .btn{padding:8px 10px;font-size:12px}#workdayDialog .project-file-entry{grid-template-columns:minmax(0,1fr)}#workdayDialog .project-file-entry button{grid-column:1;grid-row:auto;justify-self:start}}

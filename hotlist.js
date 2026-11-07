@@ -15,7 +15,8 @@
     status.dataset.warning=String(!!(old||error||feed?.partial));grid.replaceChildren();
     if(!feed?.items.length)node('p',busy?'正在读取热榜…':'暂无可验证的热榜项目；不会用累计 Star 高的旧项目补齐。',grid);
     for(const p of feed?.items||[]){
-      const card=node('article','',grid);card.className='hotlist-card';node('span',(old||error?'上次标注：':'')+p.label,card).className='meta-chip';
+      const article=node('article','',grid);article.className='hotlist-card';article.innerHTML=window.DeskCardMedia.markup({url:window.DeskCardMedia.githubPreview(p.url),title:p.name,category:(old||error?'上次标注：':'')+p.label,kind:'repo'});
+      const card=node('div','',article);card.className='hotlist-card-body';node('span',(old||error?'上次标注：':'')+p.label,card).className='meta-chip';
       const title=node('h3','',card);link(p.name,p.url,title);node('p',p.description,card);
       const evidence=node('div','',card);evidence.className='hotlist-evidence';
       if(p.growth)link(p.growth.source+'：+'+p.growth.count+' Star / '+p.growth.hours+' 小时',p.growth.url,evidence);else node('span','Star 增长：基线积累中，未推算',evidence);

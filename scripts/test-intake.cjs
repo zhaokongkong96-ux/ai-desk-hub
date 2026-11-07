@@ -9,3 +9,30 @@ test('dedup matches confirmed provenance and existing semantic dates, not unrela
 test('alternative times, foreign timezone and impossible edited dates remain unconfirmed',()=>{for(const text of ['明天10:00或14:00会议','明天上午10点和11点会议','明天纽约时间14:00至15:00会议']){assert.equal(C.parse(text,now)[0].start,'');}assert.ok(C.validate({type:'event',title:'评审',start:'2026-02-30T10:00',end:'2026-03-02T11:00'}));});
 
 test('same relative notice on a later reference day is a new dated event',()=>{const old=C.parse('明天14:00至15:00评审',now)[0],next=C.parse('明天14:00至15:00评审',new Date('2026-10-31T12:00:00+08:00'))[0];const existing={title:old.title,start:old.start+':00+08:00',end:old.end+':00+08:00',extendedProps:{captureSource:{fragment:old.source,referenceDay:old.referenceDay}}};assert.equal(C.duplicate(next,[existing]),undefined);assert.ok(C.duplicate(old,[existing]));});
+
+test('daily Chinese clock wording gives a clean title and the next Beijing start',()=>{
+  const text='安排每天晚上八点半学习英语。';
+  const [draft]=C.parse(text,'2026-11-07T18:00:00+08:00');
+  assert.equal(draft.title,'学习英语');assert.equal(draft.start,'2026-11-07T20:30');assert.equal(draft.repeat,'daily');assert.equal(draft.type,'event');assert.equal(draft.end,'');
+  assert.equal(C.parse(text,'2026-11-07T21:00:00+08:00')[0].start,'2026-11-08T20:30');
+  assert.equal(C.parse('每天八点学习英语','2026-11-07T18:00:00+08:00')[0].start,'');
+  assert.equal(C.parse('明天晚上八点三十分开会',now)[0].start,'2026-10-31T20:30');
+});
+test('daily batch handles midnight and rejects invalid counts without duplicating an existing slot',()=>{
+  const draft={...C.parse('每天晚上十一点半学习英语',now)[0],days:7};
+  draft.end=C.shiftTime(draft.start,60);assert.equal(C.validate(draft),'');
+  const dates=C.occurrences(draft);assert.equal(dates.length,7);assert.equal(dates[6].start,'2026-11-06T23:30');assert.equal(dates[6].end,'2026-11-07T00:30');
+  const existing={title:draft.title,start:'2026-10-31T15:30:00Z',end:'2026-10-31T16:00:00Z'};
+  assert.ok(C.duplicate(dates[0],[existing]));assert.equal(C.duplicate(dates[1],[existing]),undefined);
+  assert.ok(C.validate({...draft,days:366}));assert.ok(C.validate({...draft,days:2.5}));
+});
+test('year-long plans separate a daily end clock from the final occurrence date',()=>{
+  const draft={title:'学习英语',type:'event',repeat:'daily',days:365,start:'2026-11-07T20:30',end:C.dailyEnd('2026-11-07T20:30','21:00')};
+  assert.equal(C.validate(draft),'');
+  const slots=C.occurrences(draft);
+  assert.equal(slots.length,365);assert.equal(slots[364].end,'2027-11-06T21:00');
+  assert.equal(C.dailyEnd('2026-11-07T23:30','00:15'),'2026-11-08T00:15');
+  assert.equal(C.dailyEnd('2026-11-07T20:30','25:00'),'');
+  assert.match(C.validate({...draft,days:366}),/2–365/);
+  assert.match(C.validate({...draft,end:'2026-12-31T21:00'}),/每次活动/);
+});

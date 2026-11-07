@@ -15,5 +15,30 @@
   const timed=list.filter(e=>!e.allDay),conflicts=[];for(let i=0;i<timed.length;i++)for(let j=i+1;j<timed.length;j++)if(Math.max(from,Date.parse(timed[i].start),Date.parse(timed[j].start))<Math.min(to,Date.parse(timed[i].end),Date.parse(timed[j].end)))conflicts.push([timed[i],timed[j]]);
   return {events:list,conflicts,important:tasks.filter(t=>!t.done&&t.important)};
  }
- return {copy,day,addDay,defaultData,data,due,ensureTasks,start,stepStatus,summary};
+ function projectTarget(value){
+  if(typeof value!=='string'||!value.trim()||value.length>2048||/[\u0000-\u001f\u007f]/.test(value))throw Error('继续入口地址无效。');
+  const target=value.trim();
+  if((target.startsWith('/')&&!target.startsWith('//'))||target.startsWith('~/'))return {kind:'file',target};
+  let url;try{url=new URL(target);}catch{throw Error('继续入口请填写完整网页链接或本机绝对路径。');}
+  if(!/^https?:\/\//i.test(target)||!['http:','https:'].includes(url.protocol)||url.username||url.password)throw Error('继续入口仅支持 http/https 网页链接或本机绝对路径。');
+  return {kind:'web',target};
+ }
+ function projectLinks(text){
+  if(typeof text!=='string')throw Error('继续入口格式无效。');
+  const lines=text.split('\n').map(s=>s.trim()).filter(Boolean);if(lines.length>5)throw Error('每张项目卡最多填写 5 个继续入口。');
+  return lines.map(line=>{const split=line.search(/[|｜]/),label=split<0?'':line.slice(0,split).trim(),value=split<0?line:line.slice(split+1).trim(),link=projectTarget(value);
+   if(label.length>80)throw Error('入口名称请控制在 80 字以内。');
+   return {label:label||(link.kind==='web'?new URL(link.target).hostname:(link.target.split('/').filter(Boolean).pop()||'本机文件')).slice(0,80),target:link.target};
+  });
+ }
+ function projectResume(input,previous,now=Date.now()){
+  const limits={decision:1500,nextAction:240,source:600},value={};
+  for(const [key,max] of Object.entries(limits)){if(typeof input[key]!=='string'||input[key].length>max)throw Error('项目卡内容过长或格式无效。');value[key]=input[key].trim();}
+  value.links=projectLinks(input.linksText);
+  // Reading a card or ticking a task must never make an old decision look new.
+  const unchanged=previous&&Object.keys(limits).every(key=>previous[key]===value[key])&&JSON.stringify(previous.links)===JSON.stringify(value.links);
+  value.updatedAt=unchanged?previous.updatedAt:new Date(now).toISOString();
+  return value;
+ }
+ return {copy,day,addDay,defaultData,data,due,ensureTasks,start,stepStatus,summary,projectTarget,projectLinks,projectResume};
 });

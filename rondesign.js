@@ -1,0 +1,15 @@
+/* Presentation only. Existing IDs and event handlers are retained on moved nodes. */
+(()=>{
+ const $=id=>document.getElementById(id),clock=$('clock'),panel=clock.closest('.clock-panel'),grid=panel.parentElement;
+ const heading=document.createElement('div');heading.className='desk-heading';const title=document.createElement('h1');title.textContent='工作台';heading.append(title,$('dateText'));grid.before(heading);
+ const next=panel.querySelector('.next-event');grid.append(next);panel.querySelector('.eyebrow').textContent='此刻';
+ const zone=document.createElement('p');zone.className='clock-zone';zone.textContent='北京时间';panel.append(zone);
+ const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.id='dotClock';svg.setAttribute('viewBox','0 0 285 55');svg.setAttribute('aria-hidden','true');clock.after(svg);
+ const hours=document.createElement('div');hours.className='clock-hours';hours.setAttribute('aria-hidden','true');hours.innerHTML='<i></i><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span>';panel.append(hours);
+ const patterns={0:['01110','10001','10011','10101','11001','10001','01110'],1:['00100','01100','00100','00100','00100','00100','01110'],2:['01110','10001','00001','00010','00100','01000','11111'],3:['11110','00001','00001','01110','00001','00001','11110'],4:['00010','00110','01010','10010','11111','00010','00010'],5:['11111','10000','10000','11110','00001','00001','11110'],6:['01110','10000','10000','11110','10001','10001','01110'],7:['11111','00001','00010','00100','01000','01000','01000'],8:['01110','10001','10001','01110','10001','10001','01110'],9:['01110','10001','10001','01111','00001','00001','01110'],':':['0','1','1','0','1','1','0']};
+ let previous='';const update=()=>{const value=clock.textContent;if(value===previous)return;previous=value;const fragment=document.createDocumentFragment();let x=4;for(const char of value){const rows=patterns[char];if(!rows)continue;rows.forEach((row,y)=>[...row].forEach((on,col)=>{if(on==='1'){const c=document.createElementNS(svg.namespaceURI,'circle');c.setAttribute('cx',String(x+col*8));c.setAttribute('cy',String(3+y*8));c.setAttribute('r','2.7');fragment.append(c);}}));x+=(char===':'?3:7)*8;}svg.replaceChildren(fragment);const d=new Date();hours.style.setProperty('--hour-position',((d.getUTCHours()+8)%24+d.getUTCMinutes()/60)/24*100+'%');};new MutationObserver(update).observe(clock,{childList:true,characterData:true,subtree:true});update();
+ // Preserve record count and task completion labels, including accessible names.
+ $('quickTask').setAttribute('aria-label','新增待办');
+ const notes=$('noteList');const notesUpdate=()=>{const empty=notes.querySelector('.empty-state');if(empty)empty.textContent='还没有记录\n随时记下新的灵感';};new MutationObserver(notesUpdate).observe(notes,{childList:true});notesUpdate();
+ const tasks=$('taskList');const tasksUpdate=()=>{const empty=tasks.querySelector('.empty-state');if(empty)empty.textContent='还没有待办\n从一件小事开始';};new MutationObserver(tasksUpdate).observe(tasks,{childList:true});tasksUpdate();
+})();

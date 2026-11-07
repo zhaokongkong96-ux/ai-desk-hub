@@ -1,7 +1,8 @@
 /* Local routines, recurring tasks, project steps, and tomorrow preparation. */
 (()=>{
  'use strict';
- const C=window.DeskDayCore,$=id=>document.getElementById(id);let flowId='start',tab='today',repeatEdit=null;
+ const C=window.DeskDayCore,$=id=>document.getElementById(id);let flowId='start',tab='today',repeatEdit=null,projectEdit=null,projectDraftDirty=false;
+ const projectStepDrafts=new Map(),projectStepsOpen=new Map();
  const w=()=>C.data(state.workday),uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random().toString(36).slice(2);
  function el(tag,text,parent,cls){const n=document.createElement(tag);n.textContent=text;if(cls)n.className=cls;parent.append(n);return n;}
  function action(text,parent,fn){const b=el('button',text,parent,'btn btn-light');b.type='button';b.addEventListener('click',fn);return b;}
@@ -24,7 +25,44 @@
  function renderRepeats(){const box=$('repeatList');box.replaceChildren();if(!w().repeats.length)el('p','还没有重复任务。只生成启用后当天的任务，不补造过去日期。',box,'companion-note');
   for(const r of w().repeats){const row=el('div','',box,'day-step');el('strong',r.text,row);el('p',(r.active?'启用':'已暂停')+' · '+(r.frequency==='daily'?'每天':'每周 '+r.days.map(d=>'日一二三四五六'[d]).join('、'))+' · 自 '+r.startsOn+' 起',row,'companion-note');const controls=el('div','',row,'day-actions');action(r.active?'暂停后续':'恢复后续',controls,()=>{if(commit((_,d)=>{d.repeats.find(x=>x.id===r.id).active=!r.active;}))refreshDay();});action('编辑后续模板',controls,()=>{repeatEdit=r.id;$('repeatText').value=r.text;$('repeatFrequency').value=r.frequency;$('repeatImportant').checked=!!r.important;document.querySelectorAll('[name=repeatWeekday]').forEach(c=>c.checked=r.days.includes(Number(c.value)));$('repeatEditor').open=true;$('repeatSave').textContent='保存后续模板';$('repeatText').focus();});}
  }
- function renderProjects(){const box=$('projectList');box.replaceChildren();if(!w().projects.length)el('p','把一个项目拆成可执行步骤，步骤与工作台待办共用完成状态。',box,'companion-note');for(const p of w().projects){const section=el('section','',box,'day-step'),steps=state.tasks.filter(t=>t.projectId===p.id);el('h3',p.name,section);el('p',steps.filter(t=>t.done).length+' / '+steps.length+' 步完成',section,'companion-note');for(const t of steps){const label=el('label','',section,'day-check');const input=el('input','',label);input.type='checkbox';input.checked=!!t.done;input.addEventListener('change',()=>commit(next=>{next.tasks.find(x=>x.id===t.id).done=input.checked;}));el('span',t.text,label);}const form=el('form','',section,'day-actions');const input=el('input','',form);input.placeholder='添加下一步';input.setAttribute('aria-label','为'+p.name+'添加步骤');input.required=true;input.maxLength=240;el('button','添加步骤',form,'btn btn-light').type='submit';form.addEventListener('submit',e=>{e.preventDefault();const text=input.value.trim();if(text)commit(next=>next.tasks.push({id:uid(),text,projectId:p.id,category:'项目 · '+p.name,done:false}));});}}
+ function resetProjectEditor(){projectEdit=null;projectDraftDirty=false;$('projectForm').reset();$('projectFormTitle').textContent='新建项目卡';$('projectSave').textContent='确认并创建项目卡';$('projectCancel').hidden=true;$('projectStepsField').hidden=false;}
+ function editProject(p){
+  if(projectDraftDirty){feedback('请先保存或取消当前项目草稿，再编辑其他项目。');$('projectForm').scrollIntoView({block:'nearest'});return;}
+  projectEdit=p.id;const resume=p.resume||{};$('projectName').value=p.name;
+  for(const [field,key] of [['projectDecision','decision'],['projectNextAction','nextAction'],['projectSource','source']])$(field).value=typeof resume[key]==='string'?resume[key]:'';
+  $('projectLinks').value=Array.isArray(resume.links)?resume.links.map(link=>link.label+' | '+link.target).join('\n'):'';
+  $('projectFormTitle').textContent='编辑项目卡';$('projectSave').textContent='确认并保存项目卡';$('projectCancel').textContent='取消编辑';$('projectCancel').hidden=false;$('projectStepsField').hidden=true;
+  $('projectForm').scrollIntoView({block:'nearest'});$('projectName').focus();
+ }
+ function projectField(parent,label,text,fallback,cls=''){const block=el('div','',parent,'project-context '+cls);el('dt',label,block);el('dd',typeof text==='string'&&text.trim()?text:fallback,block);}
+ function renderProjects(){
+  const box=$('projectList');box.replaceChildren();
+  if(!w().projects.length)el('p','还没有项目卡。先记录一个正在推进的项目，下次从这里继续。',box,'companion-note');
+  for(const p of w().projects){
+   const section=el('article','',box,'project-resume-card'),steps=state.tasks.filter(t=>t.projectId===p.id),resume=p.resume||{};
+   section.setAttribute('aria-label','项目卡：'+p.name);const head=el('div','',section,'project-card-head');el('h3',p.name,head);action('编辑项目卡',head,()=>editProject(p));
+   const context=el('dl','',section,'project-context-grid');
+   projectField(context,'上次定了什么',resume.decision,'尚未记录确认结论');projectField(context,'下一步做什么',resume.nextAction,'尚未填写下一步','project-next-action');
+   const meta=el('div','',section,'project-card-meta');el('p','来源 · '+(resume.source||'未填写'),meta);
+   if(typeof resume.updatedAt==='string'&&Number.isFinite(Date.parse(resume.updatedAt))){const row=el('p','卡片更新 · ',meta),stamp=el('time',new Date(resume.updatedAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})+'（北京时间）',row);stamp.dateTime=resume.updatedAt;}else el('p','尚未记录更新时间',meta);
+   const links=el('div','',section,'project-continuations');
+   if(!Array.isArray(resume.links)||!resume.links.length)el('p','继续入口尚未填写',links,'companion-note');
+   for(const entry of Array.isArray(resume.links)?resume.links:[]){
+    let target;try{target=C.projectTarget(entry.target);}catch{el('p','入口无效，请编辑项目卡。',links,'companion-note');continue;}
+    if(target.kind==='web'){const a=el('a',(entry.label||'继续工作')+' ↗',links,'btn btn-light');a.href=target.target;a.target='_blank';a.rel='noopener noreferrer';a.title=target.target;}
+    else {const file=el('div','',links,'project-file-entry');el('span',entry.label||'本机文件',file);el('code',target.target,file);
+     const manual=el('input','',file);manual.type='text';manual.value=target.target;manual.readOnly=true;manual.hidden=true;manual.setAttribute('aria-label','文件路径：'+(entry.label||'本机文件'));
+     action('复制路径',file,async()=>{try{if(!navigator.clipboard?.writeText)throw Error('Clipboard unavailable');await navigator.clipboard.writeText(target.target);feedback('已复制文件路径，请在文件所在电脑打开。');}catch{manual.hidden=false;manual.focus();manual.select();feedback('自动复制不可用，已选中路径，请手动复制。');}});
+    }
+   }
+   const detail=el('details','',section,'project-steps');detail.open=projectStepsOpen.get(p.id)??true;
+   el('summary',steps.filter(t=>t.done).length+' / '+steps.length+' 步完成',detail);detail.addEventListener('toggle',()=>projectStepsOpen.set(p.id,detail.open));
+   for(const t of steps){const label=el('label','',detail,'day-check'),input=el('input','',label);input.type='checkbox';input.checked=!!t.done;input.addEventListener('change',()=>{const checked=input.checked;if(!commit(next=>{next.tasks.find(x=>x.id===t.id).done=checked;}))input.checked=!!t.done;});el('span',t.text,label);}
+   const form=el('form','',detail,'day-actions'),input=el('input','',form);input.placeholder='添加项目步骤';input.setAttribute('aria-label','为'+p.name+'添加步骤');input.required=true;input.maxLength=240;input.value=projectStepDrafts.get(p.id)||'';
+   input.addEventListener('input',()=>projectStepDrafts.set(p.id,input.value));el('button','添加步骤',form,'btn btn-light').type='submit';
+   form.addEventListener('submit',e=>{e.preventDefault();const text=input.value.trim();if(text&&commit(next=>next.tasks.push({id:uid(),text,projectId:p.id,category:'项目 · '+p.name,done:false}))){projectStepDrafts.delete(p.id);renderProjects();}});
+  }
+ }
  function time(value){return new Date(value).toLocaleTimeString('zh-CN',{timeZone:'Asia/Shanghai',hour:'2-digit',minute:'2-digit',hour12:false});}
  function renderBrief(){if(tab==='today'){$('briefDetails').hidden=false;$('tomorrowDetails').hidden=true;return;}$('briefDetails').hidden=true;$('tomorrowDetails').hidden=false;const box=$('tomorrowDetails');box.replaceChildren();const date=C.addDay(C.day(),1),result=C.summary(window.deskCalendarEvents?.()||[],state.tasks,date);
   el('h3',date+' · 明日准备（北京时间）',box);el('p','本机规则整理，仅覆盖当前已读取的日程。'+($('calendarConnectionStatus').textContent||'')+'；未读取的外部日历无法判断。',box,'companion-note');
@@ -46,7 +84,16 @@
  $('repeatForm').addEventListener('submit',e=>{e.preventDefault();const text=$('repeatText').value.trim(),frequency=$('repeatFrequency').value,days=[...document.querySelectorAll('[name=repeatWeekday]:checked')].map(c=>Number(c.value));if(!text||(frequency==='weekly'&&!days.length)){$('workdayFeedback').textContent='请填写任务；每周任务至少选择一天。';return;}
   if(commit((_,d)=>{const old=d.repeats.find(r=>r.id===repeatEdit),value={id:old?.id||uid(),text,frequency,days,active:old?old.active:true,important:$('repeatImportant').checked,startsOn:old?.startsOn||C.day()};if(old)Object.assign(old,value);else d.repeats.push(value);})){repeatEdit=null;$('repeatForm').reset();$('repeatSave').textContent='保存重复任务';refreshDay();}});
  $('repeatCancel').addEventListener('click',()=>{repeatEdit=null;$('repeatForm').reset();$('repeatSave').textContent='保存重复任务';});
- $('projectForm').addEventListener('submit',e=>{e.preventDefault();const name=$('projectName').value.trim(),steps=lines($('projectSteps').value);if(!name||!steps.length||steps.length>20){$('workdayFeedback').textContent='请填写项目名称及 1—20 个步骤。';return;}if(commit((next,d)=>{const id=uid();d.projects.push({id,name});steps.forEach(text=>next.tasks.push({id:uid(),text,projectId:id,category:'项目 · '+name,done:false}));}))$('projectForm').reset();});
+ $('projectForm').addEventListener('submit',e=>{
+  e.preventDefault();const name=$('projectName').value.trim(),steps=projectEdit?[]:lines($('projectSteps').value),old=projectEdit?w().projects.find(p=>p.id===projectEdit):null;
+  if(!name||name.length>100||steps.length>20||steps.some(text=>text.length>240)){feedback('请填写项目名称；最多 20 个步骤，每步不超过 240 字。');return;}
+  if(projectEdit&&!old){feedback('原项目已不存在，请取消编辑并刷新。');return;}
+  let resume;try{resume=C.projectResume({decision:$('projectDecision').value,nextAction:$('projectNextAction').value,source:$('projectSource').value,linksText:$('projectLinks').value},old?.resume);}catch(error){feedback(error.message);return;}
+  if(old&&old.name!==name)resume.updatedAt=new Date().toISOString();
+  if(commit((next,d)=>{if(old){const p=d.projects.find(p=>p.id===old.id);p.name=name;p.resume=resume;next.tasks.filter(t=>t.projectId===p.id).forEach(t=>{t.category='项目 · '+name;});}else{const id=uid();d.projects.push({id,name,resume});steps.forEach(text=>next.tasks.push({id:uid(),text,projectId:id,category:'项目 · '+name,done:false}));}}))resetProjectEditor();
+ });
+ $('projectForm').addEventListener('input',()=>{projectDraftDirty=true;$('projectCancel').hidden=false;$('projectCancel').textContent=projectEdit?'取消编辑':'清空草稿';});
+ $('projectCancel').addEventListener('click',resetProjectEditor);
  document.querySelectorAll('[data-brief-tab]').forEach(b=>b.addEventListener('click',()=>{tab=b.dataset.briefTab;document.querySelectorAll('[data-brief-tab]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));renderBrief();}));
  $('reviewPriorities').addEventListener('click',()=>renderBrief());window.addEventListener('desk-data-change',render);window.addEventListener('desk-calendar-change',()=>{if($('briefDialog').open&&!$('briefDialog').querySelector('textarea:focus'))renderBrief();});
  window.addEventListener('storage',e=>{if(e.key===STORAGE_KEY||e.key===null){window.deskDayStale=true;$('storageWarning').hidden=false;feedback('另一个页面修改了本机记录，请关闭编辑并刷新后继续，避免覆盖。');$('workdayDialog').querySelectorAll('button,select,input,textarea').forEach(n=>{if(!n.hasAttribute('data-close-dialog'))n.disabled=true;});}});

@@ -1,0 +1,12 @@
+/* Pure scenery is the default for every environment theme, including uploads. */
+#ambientDialog .ambient-clock,#ambientDialog #ambientTitle,#ambientDialog .ambient-scrim,#ambientDialog #aquariumPanel>p,#ambientDialog #aquariumTimeLabel,#ambientDialog #attentionBanner{display:none!important}
+#ambientDialog #aquariumTimeLabel[hidden]{display:none!important}
+#ambientDialog[data-controls=hidden]{cursor:none}
+#ambientDialog[data-controls=hidden] :is(.ambient-top,.ambient-bottom,#ambientWallpaper,#aquariumPanel){visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+#ambientDialog[data-controls=visible] :is(.ambient-top,.ambient-bottom,#ambientWallpaper,#aquariumPanel){visibility:visible;opacity:1}
+/* The source credit and playback status appear only in the temporary controls. */
+#ambientDialog[data-controls=visible] .ambient-top{justify-content:flex-end}
+#ambientDialog[data-controls=visible] .ambient-top #leaveAmbient{margin-left:auto}
+#ambientDialog[data-theme=aquarium][data-controls=visible] .ambient-top{pointer-events:none}
+#ambientDialog[data-theme=aquarium][data-controls=visible] #leaveAmbient{pointer-events:auto}
+@media(prefers-reduced-motion:reduce){#ambientDialog :is(.ambient-top,.ambient-bottom,#ambientWallpaper,#aquariumPanel){transition:none!important}}

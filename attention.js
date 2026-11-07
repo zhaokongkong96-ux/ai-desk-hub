@@ -4,7 +4,7 @@
  const $=id=>document.getElementById(id),KEY='ai-desk-hub-attention-v1';
  const read=(key,fallback={})=>{try{return JSON.parse(localStorage.getItem(key))||fallback;}catch{return fallback;}};
  let prefs={auto:true,start:'08:00',end:'23:00',cooldown:120,voice:false,readContent:true,lastGreeting:0,seen:[],...read(KEY)},device=read('ai-desk-hub-push-device',null),base='',publicKey='',speechReady=false,hiddenAt=0,syncTimer,healthy=false;
- const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(prefs));}catch{$('voiceStatus').textContent='设置未能保存，请检查浏览器存储。';}};
+ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(prefs));window.dispatchEvent(new Event('desk-preferences-change'));}catch{$('voiceStatus').textContent='设置未能保存，请检查浏览器存储。';}};
  const rules=()=>read('ai-desk-hub-return-v04');
  const quiet=()=>rules().quiet||rules().privacyHidden||document.documentElement.classList.contains('return-private');
  const busy=()=>document.hidden||quiet()||/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName||'')||!!document.querySelector('dialog[open]:not(#ambientDialog)');
@@ -41,6 +41,7 @@
   const input=$(id);if(input.type==='checkbox')input.checked=!!prefs[prop];else input.value=prefs[prop];
   input.addEventListener('change',()=>{prefs[prop]=input.type==='checkbox'?input.checked:input.type==='select-one'?Number(input.value):input.value;if((prop==='start'||prop==='end')&&!/^([01]\d|2[0-3]):[0-5]\d$/.test(prefs[prop]))prefs[prop]=prop==='start'?'08:00':'23:00';save();diagnostics();if(!prefs.voice)stopSpeech();});
  }
+ window.addEventListener('desk-preferences-applied',()=>{const saved=read(KEY);for(const [id,prop]of [['autoGreeting','auto'],['voiceEnabled','voice'],['readReminderContent','readContent'],['greetStart','start'],['greetEnd','end'],['greetCooldown','cooldown']]){if(saved[prop]!==undefined)prefs[prop]=saved[prop];const input=$(id);if(input.type==='checkbox')input.checked=!!prefs[prop];else input.value=prefs[prop];}if(!prefs.voice)stopSpeech();diagnostics();});
  $('voiceTest').onclick=()=>{if(quiet()){$('voiceStatus').textContent='免打扰或隐私遮挡已开启，请先关闭后试听。';return;}if(!window.speechSynthesis){$('voiceStatus').textContent='当前浏览器不支持系统语音。';return;}prefs.voice=true;$('voiceEnabled').checked=true;speechReady=true;save();diagnostics();speak('你好，欢迎使用 AI Desk Hub。语音播报已开启。',true,true);};
  $('voiceStop').onclick=()=>{stopSpeech();$('voiceStatus').textContent='已停止播报。';};
  async function request(path,method='GET',data,auth=true){if(!base)throw Error('请先检查通知服务。');const response=await fetch(base+path,{method,headers:{...(data?{'Content-Type':'application/json'}:{}),...(auth&&device?{Authorization:'Bearer '+device.token}:{})},...(data?{body:JSON.stringify(data)}:{}),cache:'no-store',signal:AbortSignal.timeout(15000)});if(!response.ok){if(response.status===401){healthy=false;throw Error('配对码或设备授权无效，请重新配对。');}throw Error('通知服务暂不可用（'+response.status+'）。');}return response.json();}

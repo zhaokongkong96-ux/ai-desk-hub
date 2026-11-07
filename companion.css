@@ -24,3 +24,6 @@
 .ambient-bottom .btn,.ambient-themes>button{background:#050b10df;color:#d5dfe8}
 @media(max-width:700px){.ambient-wallpaper{bottom:156px;left:20px;right:20px;gap:6px}.ambient-bottom{bottom:20px;left:20px;right:20px;gap:8px}.ambient-clock{left:6%;padding:12px 16px}.ambient-themes,.ambient-actions{gap:6px}#wallpaperCredit{font-size:11px}}
 @media(max-height:540px){.ambient-clock{top:20%;padding:8px 16px}.ambient-clock time{font-size:70px}.ambient-clock p{font-size:12px;margin:4px 0}.ambient-wallpaper{bottom:84px}.ambient-bottom{bottom:20px}}
+
+/* Feishu controls: enabled actions must not resemble unavailable controls. */
+#feishuConnection .media-modes{flex-wrap:wrap;position:relative;isolation:isolate}#feishuConnection button{min-height:48px;touch-action:manipulation}#feishuConnection button:not(:disabled){pointer-events:auto;cursor:pointer;opacity:1;background:#173d40;color:#e1faf8;border:1px solid #4d9294}#feishuConnection #feishuSync:not(:disabled){background:#9bd8d0;color:#10292a;border-color:#9bd8d0}#feishuConnection button:disabled{opacity:.4;cursor:default}#feishuConnection #feishuConnectionState{margin:12px 0;color:#e6d1a3}#feishuConnection #feishuConnectionState[data-state=connected]{color:#a8e4d4}#feishuConnection select:not(:disabled){border-color:#4d9294;color:#effaf7}

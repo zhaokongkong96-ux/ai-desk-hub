@@ -29,4 +29,20 @@ class Hotlist(unittest.TestCase):
         previous=dict(generatedAt='2026-10-29T08:17:00+08:00',items=[repo('a/new')],history=[dict(date='2026-10-29')])
         with patch.object(hotlist,'trending',side_effect=OSError()):data,ok=hotlist.collect(previous,lambda u:(_ for _ in ()).throw(OSError()),NOW)
         self.assertFalse(ok);self.assertEqual(data['generatedAt'],previous['generatedAt']);self.assertEqual(data['history'],previous['history']);self.assertEqual(data['items'],previous['items']);self.assertTrue(data['refreshError'])
+    def test_new_projects_use_beijing_creation_day_and_deduplicate_copies(self):
+        base=dict(description='A command-line editor',language='Rust',stargazers_count=5,license={'spdx_id':'MIT'})
+        entries=[dict(base,full_name='a/editor',created_at='2026-10-29T16:00:00Z'),dict(base,full_name='b/editor',created_at='2026-10-29T16:01:00Z'),dict(base,full_name='a/old',created_at='2026-10-29T15:59:59Z'),dict(base,full_name='a/fork',created_at=NOW.isoformat(),fork=True)]
+        result=hotlist.collect_new({},lambda _: {'items':entries},NOW)
+        self.assertEqual([p['name'] for p in result['newItems']],['a/editor'])
+        self.assertEqual(result['newGeneratedAt'],NOW.isoformat())
+    def test_general_trending_and_new_failure_are_independent(self):
+        old=dict(newGeneratedAt='2026-10-29T08:17:00+08:00',newItems=[repo('a/old')])
+        def fetch(url):
+            if '/search/repositories' in url:raise OSError('search unavailable')
+            if '/search/issues' in url:return {'total_count':4}
+            if '/releases/' in url:raise OSError('release unavailable')
+            return dict(full_name='a/editor',description='Text editor',language='Rust',stargazers_count=100)
+        with patch.object(hotlist,'trending',return_value={'a/editor':20}):data,ok=hotlist.collect(old,fetch,NOW)
+        self.assertTrue(ok);self.assertEqual(data['items'][0]['name'],'a/editor');self.assertTrue(data['newRefreshError'])
+        self.assertEqual(data['newItems'],old['newItems']);self.assertEqual(data['newGeneratedAt'],old['newGeneratedAt'])
 if __name__=='__main__':unittest.main()

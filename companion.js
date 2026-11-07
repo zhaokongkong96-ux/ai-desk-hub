@@ -8,7 +8,14 @@
   let weatherAbort=null, mediaMode='netease',playlist=[],trackIndex=0,nativeLaunchRequested=false,editor=null,returnFocus=null;
   const audio=$('deskAudio');
   try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved){if(saved.wallpapers&&typeof saved.wallpapers==='object')for(const theme of ['gallery','nature'])if(wallpapers.some(w=>w.theme===theme&&w.id===saved.wallpapers[theme]))prefs.wallpapers[theme]=saved.wallpapers[theme];if(themes.includes(saved.theme))prefs.theme=saved.theme;if([0,2,5,15].includes(saved.idle))prefs.idle=saved.idle;if(typeof saved.reminders==='boolean')prefs.reminders=saved.reminders;if(Array.isArray(saved.reminded))prefs.reminded=saved.reminded.filter(v=>typeof v==='string'&&v.length<300).slice(-100);if(typeof saved.netease==='string'&&neteaseURL(saved.netease))prefs.netease=saved.netease;}}catch{}
-  function savePrefs(){try{localStorage.setItem(KEY,JSON.stringify(prefs));}catch{$('storageWarning').hidden=false;}}
+  function savePrefs(){try{localStorage.setItem(KEY,JSON.stringify(prefs));window.dispatchEvent(new Event('desk-preferences-change'));}catch{$('storageWarning').hidden=false;}}
+  window.addEventListener('desk-preferences-applied',()=>{
+    const saved=JSON.parse(localStorage.getItem(KEY)||'{}'),oldScene=JSON.stringify([prefs.theme,prefs.wallpapers]);
+    for(const key of ['theme','idle','netease','reminders','wallpapers'])if(saved[key]!==undefined)prefs[key]=saved[key];
+    $('ambientIdle').value=String(prefs.idle);$('importantReminders').checked=prefs.reminders;$('neteaseLink').value=prefs.netease;
+    if(prefs.netease)$('neteaseOriginal').href=prefs.netease;else $('neteaseOriginal').removeAttribute('href');
+    if(oldScene!==JSON.stringify([prefs.theme,prefs.wallpapers]))setTheme(prefs.theme);
+  });
   function showDialog(id){const d=$(id);if(d.open)return;returnFocus=document.activeElement;d.showModal();}
   function closeDialog(id){$(id).close();if(returnFocus?.isConnected)returnFocus.focus();idleSince=Date.now();}
   document.querySelectorAll('dialog').forEach(dialog=>dialog.addEventListener('close',()=>{idleSince=Date.now();}));

@@ -205,18 +205,23 @@
     events=serialize();savedCalendarText=localStorage.getItem(KEY);renderNext();renderTimeline();window.dispatchEvent(new Event('desk-calendar-change'));
   };
   // Confirmed intake writes first, then updates the in-memory calendar. Never writes Feishu.
-  window.deskImportLocalEvent=item=>{
+  window.deskImportLocalEvents=items=>{
     if(window.deskDayStale)return {ok:false,error:'其他页面修改了记录，请刷新后再确认。'};
+    if(!Array.isArray(items)||!items.length||items.length>365||items.some(item=>!item?.id?.startsWith('intake-')||!item.title?.trim()||!Number.isFinite(Date.parse(item.start))||!Number.isFinite(Date.parse(item.end))||Date.parse(item.end)<=Date.parse(item.start))||new Set(items.map(item=>item.id)).size!==items.length)return {ok:false,error:'日程字段不完整。'};
     const list=serialize().filter(e=>!remote(e));
-    if(list.some(e=>e.id===item.id))return {ok:true,duplicate:true};
-    if(!item.id?.startsWith('intake-')||!item.title?.trim()||!Number.isFinite(Date.parse(item.start))||!Number.isFinite(Date.parse(item.end))||Date.parse(item.end)<=Date.parse(item.start))return {ok:false,error:'日程字段不完整。'};
+    const ids=new Set(list.map(e=>e.id));
+    const entries=items.filter(item=>!ids.has(item.id)).map(item=>({id:item.id,title:item.title,start:item.start,end:item.end,allDay:false,extendedProps:{category:'meeting',sample:false,status:'normal',captureSource:item.captureSource,preparation:item.preparation||''}}));
+    if(!entries.length)return {ok:true,duplicate:true,count:0};
     try{
       if(localStorage.getItem(KEY)!==savedCalendarText)return {ok:false,error:'其他页面修改了日历，请刷新后再确认。'};
-      const entry={id:item.id,title:item.title,start:item.start,end:item.end,allDay:false,extendedProps:{category:'meeting',sample:false,status:'normal',captureSource:item.captureSource,preparation:item.preparation||''}};
-      const encoded=JSON.stringify([...list,entry]);localStorage.setItem(KEY,encoded);savedCalendarText=encoded;
-      window.deskSyncLocalSuccess?.();calendar.addEvent({...entry,...eventPaint('meeting')});events=serialize();renderNext();renderTimeline();window.dispatchEvent(new Event('desk-calendar-change'));return {ok:true};
+      const encoded=JSON.stringify([...list,...entries]);localStorage.setItem(KEY,encoded);savedCalendarText=encoded;
     }catch{window.deskSyncLocalFailure?.();return {ok:false,error:'保存失败，草稿已保留，请释放空间后重试。'};}
+    window.deskSyncLocalSuccess?.();
+    calendar.batchRendering(()=>{for(const entry of entries)calendar.addEvent({...entry,...eventPaint('meeting')});});
+    events=serialize();renderNext();renderTimeline();window.dispatchEvent(new Event('desk-calendar-change'));
+    return {ok:true,count:entries.length};
   };
+  window.deskImportLocalEvent=item=>window.deskImportLocalEvents([item]);
 
   window.deskSetFeishuEvents=(items,syncedAt)=>{
     if(!Array.isArray(items))return;

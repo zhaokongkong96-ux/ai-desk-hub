@@ -1,219 +1,363 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T09:15:32.685931+08:00",
-  "attemptedAt": "2026-10-30T09:15:32.685931+08:00",
+  "scope": "all-github",
+  "generatedAt": "2026-11-07T12:25:39.071644+08:00",
+  "attemptedAt": "2026-11-07T12:25:39.071644+08:00",
   "items": [
     {
-      "name": "milind-soni/OpenMausBot",
-      "url": "https://github.com/milind-soni/OpenMausBot",
-      "description": "Open-source Grok Bot alternative with a virtual machine that bots can use",
-      "stars": 7485,
-      "dailyStars": 1199,
-      "activeThreads": 525,
-      "discussionURL": "https://github.com/milind-soni/OpenMausBot/issues?q=updated%3A%3E%3D2026-10-23%20comments%3A%3E0",
+      "name": "microsoft/vscode",
+      "url": "https://github.com/microsoft/vscode",
+      "id": 41881900,
+      "description": "Visual Studio Code",
+      "stars": 195059,
+      "language": "TypeScript",
+      "createdAt": "2015-09-03T20:23:38Z",
+      "license": "MIT",
+      "dailyStars": 301,
+      "activeThreads": 3032,
+      "discussionURL": "https://github.com/microsoft/vscode/issues?q=updated%3A%3E%3D2026-10-31%20comments%3A%3E0",
       "release": {
-        "tag": "v0.1.134",
-        "publishedAt": "2026-10-30T00:37:07Z",
-        "url": "https://github.com/milind-soni/OpenMausBot/releases/tag/v0.1.134"
+        "tag": "1.145.2",
+        "publishedAt": "2026-11-06T10:21:07Z",
+        "url": "https://github.com/microsoft/vscode/releases/tag/1.145.2"
       },
       "growth": {
-        "count": 1199,
+        "count": 301,
         "hours": 24,
         "source": "GitHub Trending 今日新增",
         "url": "https://github.com/trending?since=daily"
       },
       "label": "今日新上榜",
       "shownDays7": 0,
-      "score": 33.801
+      "score": 33.166
     },
     {
-      "name": "pbakaus/impeccable",
-      "url": "https://github.com/pbakaus/impeccable",
-      "description": "The design vocabulary for your coding agent. Steer with polish and bolder, review with critique and audit, catch AI slop before it ships.",
-      "stars": 95360,
-      "dailyStars": 2870,
-      "activeThreads": 108,
-      "discussionURL": "https://github.com/pbakaus/impeccable/issues?q=updated%3A%3E%3D2026-10-23%20comments%3A%3E0",
+      "name": "rust-lang/rust",
+      "url": "https://github.com/rust-lang/rust",
+      "id": 724712,
+      "description": "Empowering everyone to build reliable and efficient software.",
+      "stars": 121496,
+      "language": "Rust",
+      "createdAt": "2010-06-16T20:39:03Z",
+      "license": "Apache-2.0",
+      "dailyStars": 192,
+      "activeThreads": 4015,
+      "discussionURL": "https://github.com/rust-lang/rust/issues?q=updated%3A%3E%3D2026-10-31%20comments%3A%3E0",
       "release": {
-        "tag": "cli-v4.8.0",
-        "publishedAt": "2026-10-26T23:41:55Z",
-        "url": "https://github.com/pbakaus/impeccable/releases/tag/cli-v4.8.0"
+        "tag": "1.99.1",
+        "publishedAt": "2026-10-16T04:47:44Z",
+        "url": "https://github.com/rust-lang/rust/releases/tag/1.99.1"
       },
       "growth": {
-        "count": 2870,
+        "count": 192,
         "hours": 24,
         "source": "GitHub Trending 今日新增",
         "url": "https://github.com/trending?since=daily"
       },
       "label": "今日新上榜",
       "shownDays7": 0,
-      "score": 33.27
+      "score": 32.384
     },
     {
-      "name": "nightly-labs/openbot",
-      "url": "https://github.com/nightly-labs/openbot",
-      "description": "A local-first desktop workspace for persistent AI teammates. Run Codex, Claude, and Grok with dedicated workspaces, task queues, file sharing, browser control, and agent-to-agent collaboration.",
-      "stars": 3892,
-      "dailyStars": 709,
-      "activeThreads": 758,
-      "discussionURL": "https://github.com/nightly-labs/openbot/issues?q=updated%3A%3E%3D2026-10-23%20comments%3A%3E0",
+      "name": "zed-industries/zed",
+      "url": "https://github.com/zed-industries/zed",
+      "id": 340547520,
+      "description": "Code at the speed of thought – Zed is a high-performance, multiplayer code editor from the creators of Atom and Tree-sitter.",
+      "stars": 93752,
+      "language": "Rust",
+      "createdAt": "2021-02-20T03:01:06Z",
+      "license": "NOASSERTION",
+      "dailyStars": 306,
+      "activeThreads": 555,
+      "discussionURL": "https://github.com/zed-industries/zed/issues?q=updated%3A%3E%3D2026-10-31%20comments%3A%3E0",
       "release": {
-        "tag": "v0.54.0",
-        "publishedAt": "2026-10-29T14:47:49Z",
-        "url": "https://github.com/nightly-labs/openbot/releases/tag/v0.54.0"
+        "tag": "v1.27.0",
+        "publishedAt": "2026-11-04T17:04:23Z",
+        "url": "https://github.com/zed-industries/zed/releases/tag/v1.27.0"
       },
       "growth": {
-        "count": 709,
+        "count": 306,
         "hours": 24,
         "source": "GitHub Trending 今日新增",
         "url": "https://github.com/trending?since=daily"
       },
       "label": "今日新上榜",
       "shownDays7": 0,
-      "score": 32.96
+      "score": 29.822
     },
     {
-      "name": "JetBrains/thinkrail",
-      "url": "https://github.com/JetBrains/thinkrail",
-      "description": "Vibe code with pi in a lightweight, real IDE that customises itself around the way you work — The Vibe You Need",
-      "stars": 6023,
-      "dailyStars": 1117,
-      "activeThreads": 172,
-      "discussionURL": "https://github.com/JetBrains/thinkrail/issues?q=updated%3A%3E%3D2026-10-23%20comments%3A%3E0",
-      "release": {
-        "tag": "v0.3.0",
-        "publishedAt": "2026-10-29T18:26:41Z",
-        "url": "https://github.com/JetBrains/thinkrail/releases/tag/v0.3.0"
-      },
+      "name": "react/react",
+      "url": "https://github.com/react/react",
+      "id": 10270250,
+      "description": "The library for web and native user interfaces.",
+      "stars": 252288,
+      "language": "JavaScript",
+      "createdAt": "2013-05-24T16:15:54Z",
+      "license": "MIT",
+      "dailyStars": 248,
+      "activeThreads": 99,
+      "discussionURL": "https://github.com/react/react/issues?q=updated%3A%3E%3D2026-10-31%20comments%3A%3E0",
+      "release": null,
       "growth": {
-        "count": 1117,
+        "count": 248,
         "hours": 24,
         "source": "GitHub Trending 今日新增",
         "url": "https://github.com/trending?since=daily"
       },
       "label": "今日新上榜",
       "shownDays7": 0,
-      "score": 31.364
+      "score": 25.763
     },
     {
-      "name": "HKUDS/DeepTutor",
-      "url": "https://github.com/HKUDS/DeepTutor",
-      "description": "DeepTutor: Lifelong Personalized Tutoring. https://deeptutor.info/.",
-      "stars": 50093,
-      "dailyStars": 1930,
-      "activeThreads": 27,
-      "discussionURL": "https://github.com/HKUDS/DeepTutor/issues?q=updated%3A%3E%3D2026-10-23%20comments%3A%3E0",
+      "name": "angular/angular",
+      "url": "https://github.com/angular/angular",
+      "id": 24195339,
+      "description": "Deliver web apps with confidence 🚀",
+      "stars": 101402,
+      "language": "TypeScript",
+      "createdAt": "2014-09-18T16:12:01Z",
+      "license": "MIT",
+      "dailyStars": 135,
+      "activeThreads": 215,
+      "discussionURL": "https://github.com/angular/angular/issues?q=updated%3A%3E%3D2026-10-31%20comments%3A%3E0",
       "release": {
-        "tag": "v1.7.0",
-        "publishedAt": "2026-10-28T14:13:12Z",
-        "url": "https://github.com/HKUDS/DeepTutor/releases/tag/v1.7.0"
+        "tag": "v22.2.5",
+        "publishedAt": "2026-11-06T19:37:09Z",
+        "url": "https://github.com/angular/angular/releases/tag/v22.2.5"
       },
       "growth": {
-        "count": 1930,
+        "count": 135,
         "hours": 24,
         "source": "GitHub Trending 今日新增",
         "url": "https://github.com/trending?since=daily"
       },
       "label": "今日新上榜",
       "shownDays7": 0,
-      "score": 29.362
+      "score": 25.489
     },
     {
-      "name": "thedotmack/claude-mem",
-      "url": "https://github.com/thedotmack/claude-mem",
-      "description": "Persistent Context Across Sessions for Every Agent –  Captures everything your agent does during sessions, compresses it with AI, and injects relevant context back into future sessions. Works with Claude Code, OpenClaw, Codex, Gemini, Hermes, Copilot, OpenCode + More",
-      "stars": 104815,
-      "dailyStars": 336,
-      "activeThreads": 238,
-      "discussionURL": "https://github.com/thedotmack/claude-mem/issues?q=updated%3A%3E%3D2026-10-23%20comments%3A%3E0",
+      "name": "prometheus/prometheus",
+      "url": "https://github.com/prometheus/prometheus",
+      "id": 6838921,
+      "description": "The Prometheus monitoring system and time series database.",
+      "stars": 67221,
+      "language": "Go",
+      "createdAt": "2012-11-24T11:14:12Z",
+      "license": "Apache-2.0",
+      "dailyStars": 148,
+      "activeThreads": 139,
+      "discussionURL": "https://github.com/prometheus/prometheus/issues?q=updated%3A%3E%3D2026-10-31%20comments%3A%3E0",
       "release": {
-        "tag": "v15.6.0",
-        "publishedAt": "2026-10-29T17:01:29Z",
-        "url": "https://github.com/thedotmack/claude-mem/releases/tag/v15.6.0"
+        "tag": "v3.16.0",
+        "publishedAt": "2026-11-05T16:06:52Z",
+        "url": "https://github.com/prometheus/prometheus/releases/tag/v3.16.0"
       },
       "growth": {
-        "count": 336,
+        "count": 148,
         "hours": 24,
         "source": "GitHub Trending 今日新增",
         "url": "https://github.com/trending?since=daily"
       },
       "label": "今日新上榜",
       "shownDays7": 0,
-      "score": 28.413
+      "score": 24.895
     }
   ],
   "history": [
     {
-      "date": "2026-10-30",
-      "collectedAt": "2026-10-30T09:15:32.685931+08:00",
+      "date": "2026-11-07",
+      "collectedAt": "2026-11-07T12:25:39.071644+08:00",
       "shown": [
-        "milind-soni/openmausbot",
-        "pbakaus/impeccable",
-        "nightly-labs/openbot",
-        "jetbrains/thinkrail",
-        "hkuds/deeptutor",
-        "thedotmack/claude-mem"
+        "microsoft/vscode",
+        "rust-lang/rust",
+        "zed-industries/zed",
+        "react/react",
+        "angular/angular",
+        "prometheus/prometheus"
       ],
       "metrics": {
-        "hkuds/deeptutor": {
-          "stars": 50093,
-          "release": "v1.7.0"
+        "zed-industries/zed": {
+          "stars": 93752,
+          "release": "v1.27.0"
         },
-        "obra/superpowers": {
-          "stars": 308566,
-          "release": "v7.0.1"
+        "rails/rails": {
+          "stars": 59044,
+          "release": "v8.1.4.1"
         },
-        "pbakaus/impeccable": {
-          "stars": 95360,
-          "release": "cli-v4.8.0"
+        "mpv-player/mpv": {
+          "stars": 37911,
+          "release": "v0.42.0"
         },
-        "jetbrains/thinkrail": {
-          "stars": 6023,
-          "release": "v0.3.0"
+        "rust-lang/rust": {
+          "stars": 121496,
+          "release": "1.99.1"
+        },
+        "react/react": {
+          "stars": 252288,
+          "release": null
+        },
+        "angular/angular": {
+          "stars": 101402,
+          "release": "v22.2.5"
+        },
+        "symfony/symfony": {
+          "stars": 31458,
+          "release": "v8.2.0-BETA1"
+        },
+        "prometheus/prometheus": {
+          "stars": 67221,
+          "release": "v3.16.0"
+        },
+        "google/skills": {
+          "stars": 22903,
+          "release": null
+        },
+        "microsoft/vscode": {
+          "stars": 195059,
+          "release": "1.145.2"
+        },
+        "nushell/nushell": {
+          "stars": 41005,
+          "release": "0.116.1"
         },
         "milind-soni/openmausbot": {
-          "stars": 7485,
-          "release": "v0.1.134"
-        },
-        "nightly-labs/openbot": {
-          "stars": 3892,
-          "release": "v0.54.0"
-        },
-        "elayadesign/ai-design-skills": {
-          "stars": 12170,
-          "release": null
-        },
-        "thedotmack/claude-mem": {
-          "stars": 104815,
-          "release": "v15.6.0"
-        },
-        "copilotkit/openbot": {
-          "stars": 8159,
-          "release": "v0.2.0"
-        },
-        "donchitos/claude-code-game-studios": {
-          "stars": 29218,
-          "release": "v1.2.0"
-        },
-        "grwtsk/math": {
-          "stars": 0,
-          "release": null
-        },
-        "lostlight530/china-agentic-observatory": {
-          "stars": 1,
-          "release": "v2026.10-fourteen-day-evidence-checkpoint"
+          "stars": 15602,
+          "release": "v0.1.145"
         }
       }
     }
   ],
-  "partial": false,
-  "errors": [],
-  "automation": {
-    "enabled": true,
-    "timezone": "Asia/Shanghai",
-    "scheduledAt": "08:17",
-    "platform": "GitHub Actions"
-  },
-  "delivery": "github-actions-daily",
-  "runId": "local-validation"
+  "partial": true,
+  "errors": [
+    "仓库详情读取失败：nvidia/auto-ontology",
+    "版本数据不可用：react/react",
+    "讨论数据不可用：nushell/nushell",
+    "讨论数据不可用：milind-soni/OpenMausBot"
+  ],
+  "newAttemptedAt": "2026-11-07T12:30:57.509038+08:00",
+  "newItems": [
+    {
+      "name": "sostenesfreitas/ocarina-recomp",
+      "url": "https://github.com/sostenesfreitas/ocarina-recomp",
+      "id": 1448807268,
+      "description": "Ocarina of Time running natively on Windows, no emulator. Built on your PC from your own copy. No game files included.",
+      "stars": 299,
+      "language": "C",
+      "createdAt": "2026-11-06T22:24:03Z",
+      "license": "GPL-3.0"
+    },
+    {
+      "name": "DhruvAtreja/open-uncensored-desktop",
+      "url": "https://github.com/DhruvAtreja/open-uncensored-desktop",
+      "id": 1448785497,
+      "description": "Desktop agent for uncensored models: chat, or let it read, write and run code. From openuncensored.com",
+      "stars": 65,
+      "language": "TypeScript",
+      "createdAt": "2026-11-06T21:54:18Z",
+      "license": "MIT"
+    },
+    {
+      "name": "Beingfluresurrect/Solana-token-sniper",
+      "url": "https://github.com/Beingfluresurrect/Solana-token-sniper",
+      "id": 1448599968,
+      "description": "Solana token sniper for Raydium V4 and Pump.fun. Bypass mempool with Jito MEV bundles, auto-skip honeypots and rugpulls, and secure profits with trailing stops. High-winrate crypto trading bot.",
+      "stars": 51,
+      "language": "Rust",
+      "createdAt": "2026-11-06T18:18:03Z",
+      "license": "MIT"
+    },
+    {
+      "name": "Abdoandqsnk/ai-manus",
+      "url": "https://github.com/Abdoandqsnk/ai-manus",
+      "id": 1448598421,
+      "description": "AI Manus is a general-purpose AI Agent system that supports running various tools and operations in a sandbox environment.",
+      "stars": 44,
+      "language": "Python",
+      "createdAt": "2026-11-06T18:16:33Z",
+      "license": "Apache-2.0"
+    },
+    {
+      "name": "oscarcreatess/airpointer",
+      "url": "https://github.com/oscarcreatess/airpointer",
+      "id": 1448848522,
+      "description": "Airpointer - Use your Airpods as an air-mouse for your Macbook! More OS's/Devices coming in the future",
+      "stars": 21,
+      "language": "Swift",
+      "createdAt": "2026-11-06T23:25:29Z",
+      "license": "MIT"
+    },
+    {
+      "name": "hg552/eSIM-Matrix",
+      "url": "https://github.com/hg552/eSIM-Matrix",
+      "id": 1448497555,
+      "description": "eSIM-Matrix: 基于 Android 备用机的远程多国 eSIM 切卡、基带漫游监控、3D 异构海外环境联动（SIM + 代理 + 虚拟定位）与短信/验证码转发网关",
+      "stars": 12,
+      "language": "Dart",
+      "createdAt": "2026-11-06T16:35:46Z",
+      "license": "MIT"
+    },
+    {
+      "name": "nico-bohlinger/xmimic",
+      "url": "https://github.com/nico-bohlinger/xmimic",
+      "id": 1448896104,
+      "description": "Whole-body motion tracking for the Unitree G1 in under a minute. BlinkMimic's world-model trainer rebuilt in JAX, 3.5x faster on four H100s.",
+      "stars": 12,
+      "language": "Python",
+      "createdAt": "2026-11-07T00:46:23Z",
+      "license": "MIT"
+    },
+    {
+      "name": "callme-sy/Lichii-Superbuild",
+      "url": "https://github.com/callme-sy/Lichii-Superbuild",
+      "id": 1448460300,
+      "description": "Unofficial Lichii superbuild: PGO builds with curated performance and correctness fixes",
+      "stars": 11,
+      "language": "C++",
+      "createdAt": "2026-11-06T16:00:29Z",
+      "license": "GPL-3.0"
+    },
+    {
+      "name": "rsantos722/imsa-wcr-m2-recomp",
+      "url": "https://github.com/rsantos722/imsa-wcr-m2-recomp",
+      "id": 1448610517,
+      "description": "Recompilation project for the unreleased IMSA presents World Championship Racing for the Panasonic M2",
+      "stars": 11,
+      "language": "C++",
+      "createdAt": "2026-11-06T18:28:44Z",
+      "license": "MIT"
+    },
+    {
+      "name": "Anime-Vanguards/roblox-ui-renderer",
+      "url": "https://github.com/Anime-Vanguards/roblox-ui-renderer",
+      "id": 1448629466,
+      "description": "Offline Roblox UI renderer at Studio parity: renders UI stories and .rbxm trees as Studio shows them, with a storybook and live preview",
+      "stars": 9,
+      "language": "Rust",
+      "createdAt": "2026-11-06T18:49:36Z",
+      "license": "GPL-2.0"
+    },
+    {
+      "name": "tylerwatt12/Open25-DM32",
+      "url": "https://github.com/tylerwatt12/Open25-DM32",
+      "id": 1448653958,
+      "description": "Open firmware research for P25 Phase 1 voice on the Baofeng DM-32UV.",
+      "stars": 9,
+      "language": "Python",
+      "createdAt": "2026-11-06T19:16:28Z",
+      "license": "GPL-3.0"
+    },
+    {
+      "name": "KrakenWagen/mismo",
+      "url": "https://github.com/KrakenWagen/mismo",
+      "id": 1448637170,
+      "description": "mismo shares screens, routes and navigation between a React Native app and a web app, while each app keeps its own router: Expo Router or React Navigation on native, and Next.js, TanStack Start or React Router on the web.",
+      "stars": 8,
+      "language": "TypeScript",
+      "createdAt": "2026-11-06T18:58:00Z",
+      "license": "MIT"
+    }
+  ],
+  "newGeneratedAt": "2026-11-07T12:30:57.509038+08:00",
+  "newPartial": false,
+  "delivery": "local-preview"
 }

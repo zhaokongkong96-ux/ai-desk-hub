@@ -7,6 +7,16 @@
  function validDate(y,m,d){const s=y+'-'+pad(m)+'-'+pad(d),v=new Date(s+'T00:00:00+08:00');return Number.isFinite(+v)&&day(v)===s?s:'';}
  const datePattern=/(?:\d{4}[-年/.]\d{1,2}[-月/.]\d{1,2}日?|\d{1,2}月\d{1,2}[日号]|今天|今日|明天|明日|后天|后日|(?:下|本)周[一二三四五六日天])/;
  const prepPattern=/^(?:[-•\d、.\s]*)(?:准备(?:材料)?|需(?:要)?准备|请携带|材料|地点|备注)\s*[:：]/;
+ const clockDigits='零一二三四五六七八九';
+ function clockNumber(text){
+  const value=text.replace(/[〇两]/g,c=>c==='两'?'二':'零');
+  if(value.includes('十')){const [tens,ones]=value.split('十');return (tens?clockDigits.indexOf(tens):1)*10+(ones?clockDigits.indexOf(ones):0);}
+  return Number([...value].map(c=>clockDigits.indexOf(c)).join(''));
+ }
+ function normalizeClock(text){
+  return text.normalize('NFKC').replace(/([零〇一二两三四五六七八九十]{1,3})(?=[点时](?!间))/g,(_,value)=>clockNumber(value))
+   .replace(/([点时])([零〇一二两三四五六七八九十]{1,3})分/g,(_,mark,value)=>mark+clockNumber(value)+'分');
+ }
  function dateOf(text,reference,warnings){const dates=[];let m;
   const full=/(\d{4})[-年/.](\d{1,2})[-月/.](\d{1,2})日?/g;
   while((m=full.exec(text))){dates.push(validDate(+m[1],+m[2],+m[3]));}
@@ -42,26 +52,36 @@
   }push();return blocks;
  }
  function parse(input,now=Date.now()){const reference=day(now);return fragments(input).map((source,index)=>{
-   const warnings=[],content=source.split('\n').filter(s=>!prepPattern.test(s)).join('\n'),date=dateOf(content,reference,warnings),times=timeOf(content,warnings);let endDate=date;
+   const warnings=[],content=normalizeClock(source.split('\n').filter(s=>!prepPattern.test(s)).join('\n'));
+   const daily=/每天|每日/.test(content),times=timeOf(content,warnings);
+   const unspecifiedDaily=daily&&!datePattern.test(content)&&!/(?:周|星期)[一二三四五六日天末]|近期/.test(content);
+   let date=unspecifiedDaily?reference:dateOf(content,reference,warnings);
+   if(unspecifiedDaily&&times.start&&Date.parse(reference+'T'+times.start+':00+08:00')<=+new Date(now))date=plus(reference,1);
+   let endDate=date;
    if(/次日|第二天/.test(content)&&date)endDate=plus(date,1);
    let start=date&&times.start?date+'T'+times.start:'',end=endDate&&times.end?endDate+'T'+times.end:'';
    const duration=content.match(/(?:持续|时长|历时|共)\s*(\d+(?:\.\d+)?)\s*(小时|分钟)/);
    if(start&&!end&&duration){const amount=+duration[1]*(duration[2]==='小时'?60:1);if(amount>0&&amount<=1440)end=new Date(Date.parse(start+':00+08:00')+amount*60000+8*3600000).toISOString().slice(0,16);}
-   const type=(date||times.start)&&/会议|评审|培训|讲座|活动|讨论|面试|答辩|汇报|开会/.test(source)||!!end?'event':'task';
+   const type=daily||(date||times.start)&&/会议|评审|培训|讲座|活动|讨论|面试|答辩|汇报|开会/.test(source)||!!end?'event':'task';
    if(type==='event'&&!start)warnings.push('开始日期和时间待确认。');if(type==='event'&&!end)warnings.push('未识别结束时间；不会自动补足时长。');if(start&&end&&Date.parse(end+':00+08:00')<=Date.parse(start+':00+08:00'))warnings.push('结束不晚于开始；如跨日，请明确选择结束日期。');
    const rows=source.split('\n'),explicit=source.match(/(?:事项|主题|标题|会议名称)\s*[:：]\s*([^\n]+)/),title=(explicit?explicit[1]:rows.find(s=>!prepPattern.test(s)&&!/^\s*[【[]?(?:会议)?通知[】\]]?[:：]?\s*$/.test(s))||rows[0]).replace(/^\s*(?:\d+[.、）)]|[一二三四五六七八九十]+、)\s*/,'').trim().slice(0,100);
    const materials=rows.filter(s=>/^(?:\s*[-•\d、.]*)?(?:准备(?:材料)?|需(?:要)?准备|请携带|材料)\s*[:：]/.test(s)).map(s=>s.replace(/^.*?[:：]\s*/,'' )).join('\n');
-   return {index,source,title,type,start,end,materials,warnings:[...new Set(warnings)],referenceDay:reference};
+   const action=daily&&!explicit?normalizeClock(title).replace(/^(?:请\s*)?(?:帮我\s*)?(?:安排|设置)?\s*(?:每天|每日)\s*(?:凌晨|早上|上午|中午|下午|晚上)?\s*\d{1,2}(?:[:：]\d{2}|[点时](?:半|\d{1,2}分?)?)\s*[,，、：:]?\s*/,'').replace(/[。！!]+$/,'').trim():'';
+   return {index,source,title:action||title,type,start,end,materials,repeat:daily?'daily':'once',warnings:[...new Set(warnings)],referenceDay:reference};
   });}
  const normalize=s=>String(s||'').normalize('NFKC').replace(/\s+/g,'').toLowerCase();
  function duplicate(draft,items){return items.find(item=>{
+  if(draft.repeat==='daily'&&Date.parse(item.start)!==Date.parse(draft.start+':00+08:00'))return false;
   const source=item.extendedProps?.captureSource||item.captureSource;
   if(source&&normalize(source.fragment)===normalize(draft.source)){const relative=/今天|今日|明天|明日|后天|后日|(?:下|本)周/.test(draft.source);if(!relative||!source.referenceDay||source.referenceDay===draft.referenceDay)return true;}
   if(normalize(item.title||item.text)!==normalize(draft.title))return false;
-  if(draft.type==='task')return true;
+  if(draft.type==='task'||draft.repeat==='daily')return true;
   return Date.parse(item.start)===Date.parse(draft.start+':00+08:00')&&Date.parse(item.end)===Date.parse(draft.end+':00+08:00');
  });}
  function validLocal(value){const m=/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/.exec(value||'');return m&&validDate(+m[1],+m[2],+m[3])&&+m[4]<24&&+m[5]<60;}
- function validate(d){if(!d.title?.trim())return '请填写事项名称。';if(d.type==='event'){if(!d.start||!d.end)return '请确认完整的开始和结束时间。';const start=Date.parse(d.start+':00+08:00'),end=Date.parse(d.end+':00+08:00');if(!validLocal(d.start)||!validLocal(d.end)||!Number.isFinite(start)||!Number.isFinite(end)||end<=start)return '结束时间必须晚于开始时间。';}return '';}
- return {parse,fragments,duplicate,validate,day,normalize};
+ function validate(d){if(!d.title?.trim())return '请填写事项名称。';if(d.type==='event'){if(!d.start||!d.end)return '请选择时长或填写结束时间。';const start=Date.parse(d.start+':00+08:00'),end=Date.parse(d.end+':00+08:00');if(!validLocal(d.start)||!validLocal(d.end)||!Number.isFinite(start)||!Number.isFinite(end)||end<=start)return '结束时间必须晚于开始时间。';if(d.repeat==='daily'){if(!Number.isInteger(d.days)||d.days<2||d.days>365)return '连续安排天数请填写 2–365 的整数。';if(end-start>86400000)return '请填写每次活动的结束时刻；整个计划的长度请用连续安排天数设置。';}}return '';}
+ function shiftTime(value,minutes){if(!validLocal(value))return '';return new Date(Date.parse(value+':00+08:00')+minutes*60000+8*3600000).toISOString().slice(0,16);}
+ function occurrences(d){return Array.from({length:d.repeat==='daily'?d.days:1},(_,i)=>({...d,start:shiftTime(d.start,i*1440),end:shiftTime(d.end,i*1440)}));}
+ function dailyEnd(start,time){if(!validLocal(start)||!/^\d{2}:\d{2}$/.test(time))return '';const end=start.slice(0,10)+'T'+time;if(!validLocal(end))return '';return end<=start?shiftTime(end,1440):end;}
+ return {parse,fragments,duplicate,validate,day,normalize,shiftTime,occurrences,dailyEnd};
 });

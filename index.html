@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#d2dfdd">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icon-192.png">
-<title>AI Desk Hub 0.15.8 — 桌面 AI 工作台</title>
+<title>AI Desk Hub 0.16.11 — 桌面 AI 工作台</title>
 <style>
 :root{--bg:#f1f0e9;--paper:#fffefa;--ink:#202923;--muted:#7d857e;--line:#e7e6dd;--green:#c8f169;--green-dark:#2e4a36;--lime-pale:#edf5dd;--orange:#e9a16d;--blue:#dce8f4;--shadow:0 14px 42px rgba(35,43,34,.055);--radius:24px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}button,input,select{font:inherit}button{cursor:pointer}a{color:inherit}.app{max-width:1440px;margin:0 auto;padding:26px 28px 150px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:30px}.brand{display:flex;align-items:center;gap:12px;min-width:220px}.brand-mark{width:42px;height:42px;border-radius:14px;background:var(--ink);display:grid;place-items:center;color:var(--green);font-weight:800;font-size:19px;letter-spacing:-2px}.brand-title{font-size:16px;font-weight:760;letter-spacing:-.4px}.brand-sub{font-size:10px;color:var(--muted);letter-spacing:1.7px;margin-top:4px}.nav{display:flex;align-items:center;gap:5px;padding:5px;background:#e7e6de;border-radius:15px}.nav button{border:0;background:transparent;padding:11px 17px;border-radius:11px;color:#69726a;font-size:12px;font-weight:750;letter-spacing:.7px;transition:.2s}.nav button.active{background:var(--paper);color:var(--ink);box-shadow:0 3px 10px #2029230d}.top-actions{display:flex;align-items:center;gap:10px}.status-pill{display:flex;align-items:center;gap:7px;padding:9px 12px;background:#e6e9dd;border-radius:99px;font-size:10px;color:#4e6551;white-space:nowrap}.status-dot{width:6px;height:6px;background:#5f9c53;border-radius:50%}.icon-btn{border:1px solid var(--line);background:var(--paper);border-radius:12px;padding:10px 12px;font-size:12px;color:var(--muted)}.page{display:none;animation:appear .22s ease}.page.active{display:block}@keyframes appear{from{opacity:.3;transform:translateY(4px)}to{opacity:1;transform:none}}.eyebrow{font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);font-weight:800}.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin:6px 0 24px}.hero h1{font-size:clamp(31px,4vw,48px);letter-spacing:-2px;line-height:1.08;margin:10px 0 10px;font-weight:760}.hero p{margin:0;color:var(--muted);font-size:13px;line-height:1.7}.hero-date{text-align:right;min-width:150px}.hero-date .time{font-size:34px;font-weight:650;letter-spacing:-1.5px}.hero-date .date{font-size:11px;color:var(--muted);margin-top:5px}.grid-today{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(310px,.8fr);gap:18px;align-items:start}.stack{display:grid;gap:18px}.panel{background:var(--paper);border:1px solid rgba(45,55,45,.055);border-radius:var(--radius);padding:23px;box-shadow:var(--shadow);min-width:0}.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:18px}.panel-title{font-size:16px;font-weight:760;letter-spacing:-.4px}.panel-sub{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.5}.tiny-label{font-size:9px;font-weight:800;letter-spacing:1.2px;padding:6px 8px;border-radius:7px;background:#f1f1e9;color:#777e73;white-space:nowrap}.timeline{display:grid;gap:0}.event{display:grid;grid-template-columns:65px 12px minmax(0,1fr);gap:12px;align-items:stretch;min-height:66px}.event-time{font-size:11px;color:#777f76;padding-top:4px;font-variant-numeric:tabular-nums}.event-track{position:relative;display:flex;justify-content:center}.event-track:before{content:"";position:absolute;top:10px;bottom:-5px;width:1px;background:#e1e5d9}.event:last-child .event-track:before{display:none}.event-dot{width:8px;height:8px;border-radius:50%;background:#b7c1ae;position:relative;z-index:1;margin-top:6px;border:2px solid var(--paper);outline:1px solid #d8dfd1}.event.current .event-dot{background:#7eaa54;outline-color:#b7d38e}.event-card{padding:0 0 17px}.event-name{font-size:13px;font-weight:680}.event-meta{font-size:10px;color:var(--muted);margin-top:5px}.event.current .event-name{color:#36553b}.event-tag{display:inline-block;margin-left:7px;font-size:9px;padding:3px 6px;border-radius:5px;background:var(--lime-pale);color:#5b7b3f;font-weight:750}.task-list{display:grid;gap:10px}.task-row{display:flex;align-items:center;gap:11px;padding:12px 13px;border-radius:14px;background:#f7f7f1;border:1px solid transparent;transition:.15s}.task-row:hover{border-color:#dfe5d5}.task-check{appearance:none;width:18px;height:18px;border:1.5px solid #c5cabe;border-radius:6px;background:#fff;flex:0 0 auto;display:grid;place-items:center;margin:0}.task-check:checked{background:var(--green-dark);border-color:var(--green-dark)}.task-check:checked:after{content:"✓";font-size:12px;color:white;font-weight:800}.task-text{font-size:12px;font-weight:580;line-height:1.5;flex:1;overflow-wrap:anywhere}.task-row.done .task-text{text-decoration:line-through;color:#a0a69c}.task-category{font-size:9px;color:#7c8579;background:#e9ece3;border-radius:6px;padding:5px 7px;white-space:nowrap}.delete-task{border:0;background:transparent;color:#a2a69d;font-size:16px;padding:0 2px}.empty-state{font-size:12px;color:var(--muted);padding:18px;text-align:center;border:1px dashed var(--line);border-radius:14px}.briefing{background:var(--ink);color:#f8f8ef;border:0;position:relative;overflow:hidden}.briefing:after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,#c8f1692b,transparent 70%);right:-60px;top:-80px;pointer-events:none}.briefing .eyebrow{color:#a9b3a7}.briefing .panel-title{font-size:18px}.briefing .panel-sub{color:#a7afa4}.briefing-list{display:grid;gap:14px;margin-top:20px;position:relative;z-index:1}.brief-item{display:grid;grid-template-columns:26px 1fr;gap:10px}.brief-num{font-size:11px;color:var(--green);font-weight:800;padding-top:2px}.brief-item strong{font-size:12px;display:block;margin-bottom:4px}.brief-item p{font-size:11px;line-height:1.65;color:#bdc4b8;margin:0}.disclaimer{font-size:9px;color:#8f9a8b;margin-top:18px;padding-top:12px;border-top:1px solid #ffffff18;line-height:1.5}.focus-card{background:#e9f0dc;border:1px solid #e1e9d5}.focus-card .panel-sub{color:#687565}.focus-time{font-size:49px;font-weight:620;letter-spacing:-2px;font-variant-numeric:tabular-nums;margin:18px 0 12px}.focus-controls{display:flex;gap:8px}.btn{border:0;border-radius:11px;padding:11px 15px;font-size:11px;font-weight:760;transition:transform .15s,opacity .15s}.btn:active{transform:scale(.98)}.btn-primary{background:var(--ink);color:white}.btn-soft{background:#dbe6cd;color:#4b6143}.btn-light{background:#f1f1e9;color:#687164}.btn-outline{background:transparent;border:1px solid var(--line);color:var(--ink)}.section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin:10px 0 22px}.section-heading h1{font-size:clamp(30px,4vw,44px);letter-spacing:-1.8px;margin:8px 0}.section-heading p{color:var(--muted);font-size:12px;line-height:1.6;margin:0}.search-row{display:flex;gap:10px;align-items:center;margin:0 0 18px;flex-wrap:wrap}.searchbox{flex:1;min-width:190px;background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:12px 15px;display:flex;gap:9px;align-items:center}.searchbox input{border:0;outline:0;background:transparent;width:100%;font-size:12px;color:var(--ink)}.filters{display:flex;gap:6px;flex-wrap:wrap}.filter-btn{border:1px solid var(--line);background:var(--paper);border-radius:99px;padding:9px 12px;font-size:10px;color:#71796e}.filter-btn.active{background:var(--ink);color:white;border-color:var(--ink)}.project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.project-card{background:var(--paper);border:1px solid rgba(45,55,45,.055);border-radius:22px;padding:21px;box-shadow:var(--shadow);display:flex;flex-direction:column;min-width:0}.project-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.project-icon{width:42px;height:42px;border-radius:14px;background:#e9eddf;display:grid;place-items:center;font-size:19px}.project-category{font-size:9px;font-weight:800;letter-spacing:.8px;color:#718069;background:#f0f2e9;padding:6px 8px;border-radius:7px}.project-card h3{font-size:16px;letter-spacing:-.4px;margin:17px 0 7px}.project-card .project-summary{font-size:11px;line-height:1.7;color:#727b71;margin:0 0 15px;min-height:54px}.project-meta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}.meta-chip{font-size:9px;color:#657061;background:#f1f2eb;padding:6px 8px;border-radius:7px}.project-card .hardware{font-size:10px;line-height:1.6;color:#7a8278;margin-bottom:16px}.project-card .hardware b{color:#414b41}.project-actions{display:flex;gap:8px;align-items:center;margin-top:auto;padding-top:14px;border-top:1px solid var(--line)}.project-actions a,.project-actions button{font-size:10px;text-decoration:none}.project-actions a{font-weight:800;color:#446b40;padding:10px 0}.project-actions button{margin-left:auto}.note-list{display:grid;gap:8px;margin-top:14px}.note-item{padding:11px 12px;background:#f6f6f0;border-radius:12px;display:flex;gap:9px;align-items:flex-start;font-size:11px;line-height:1.5}.note-kind{font-size:9px;font-weight:800;color:#5c7652;background:#e5edd9;padding:4px 6px;border-radius:5px;white-space:nowrap}.capture-dock{position:fixed;z-index:20;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));width:min(940px,calc(100% - 28px));padding:8px;background:rgba(255,254,250,.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid #dcded4;border-radius:19px;box-shadow:0 14px 45px rgba(25,34,25,.16);display:flex;gap:9px;align-items:center}.capture-icon{width:38px;height:38px;display:grid;place-items:center;background:var(--green);border-radius:12px;font-size:20px;font-weight:500;flex:0 0 auto}.capture-dock input{flex:1;min-width:60px;border:0;outline:0;background:transparent;padding:9px 3px;font-size:12px;color:var(--ink)}.capture-dock select{border:1px solid var(--line);background:#f6f6f0;color:#677063;border-radius:10px;padding:10px 8px;font-size:10px;max-width:92px}.capture-dock .btn{padding:12px 16px;white-space:nowrap}.toast{position:fixed;z-index:30;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translate(-50%,10px);background:var(--ink);color:#fff;border-radius:12px;padding:12px 16px;font-size:11px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.2s;max-width:calc(100% - 32px);text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}.footer-note{font-size:9px;color:#9aa095;line-height:1.5;margin-top:18px}.mobile-only{display:none}
@@ -24,28 +24,31 @@ button,.project-actions a{min-height:44px;min-width:44px}.project-card h3,.note-
 @media(max-width:400px){.hero{flex-wrap:wrap}.hero-date{text-align:left}.nav button{padding:11px 8px}}
 .brief-placeholder{font-size:12px;line-height:1.8;color:#bdc4b8;margin:0}.note-item{align-items:flex-start}
 </style>
-<link rel="stylesheet" href="./aquarium.css?v=0.15.8">
-<link rel="stylesheet" href="./device-sync.css?v=0.15.8">
-<link rel="stylesheet" href="./intake.css?v=0.15.8">
-<link rel="stylesheet" href="./workday.css?v=0.15.8">
-<link rel="stylesheet" href="./workspace.css?v=0.15.8">
-<link rel="stylesheet" href="./return.css?v=0.15.8">
-<link rel="stylesheet" href="./radar.css?v=0.15.8">
-<link rel="stylesheet" href="./timeline.css?v=0.15.8">
-<link rel="stylesheet" href="./companion.css?v=0.15.8">
-<link rel="stylesheet" href="./ambient-video.css?v=0.15.8-nature-1">
-<link rel="stylesheet" href="./topics.css?v=0.15.8">
-<link rel="stylesheet" href="./desk-layout.css?v=0.15.8">
+<link rel="stylesheet" href="./aquarium.css?v=0.16.11">
+<link rel="stylesheet" href="./device-sync.css?v=0.16.11">
+<link rel="stylesheet" href="./intake.css?v=0.16.11">
+<link rel="stylesheet" href="./workday.css?v=0.16.11">
+<link rel="stylesheet" href="./workspace.css?v=0.16.11">
+<link rel="stylesheet" href="./return.css?v=0.16.11">
+<link rel="stylesheet" href="./radar.css?v=0.16.11">
+<link rel="stylesheet" href="./timeline.css?v=0.16.11">
+<link rel="stylesheet" href="./companion.css?v=0.16.11">
+<link rel="stylesheet" href="./ambient-video.css?v=0.16.11">
+<link rel="stylesheet" href="./topics.css?v=0.16.11">
+<link rel="stylesheet" href="./desk-layout.css?v=0.16.11">
 <script>try{if(JSON.parse(localStorage.getItem('ai-desk-hub-return-v04')||'null')?.privacyHidden===true)document.documentElement.classList.add('return-private');}catch(e){}</script>
-<script src="./vendor/fullcalendar-6.1.19.min.js?v=0.15.8"></script>
-<link rel="stylesheet" href="./attention.css?v=0.15.8">
-<link rel="stylesheet" href="./desk-media.css?v=0.15.8">
-<link rel="stylesheet" href="./open-canvas.css?v=0.15.8">
+<script src="./vendor/fullcalendar-6.1.19.min.js?v=0.16.11"></script>
+<link rel="stylesheet" href="./attention.css?v=0.16.11">
+<link rel="stylesheet" href="./desk-media.css?v=0.16.11">
+<link rel="stylesheet" href="./rondesign.css?v=0.16.11">
+<link rel="stylesheet" href="./rondesign-content.css?v=0.16.11">
+<script src="./card-media.js?v=0.16.11"></script>
+<link rel="stylesheet" href="./ambient-clean.css?v=0.16.11">
 </head>
 <body>
 <div class="app">
   <header class="topbar">
-    <div class="brand"><div class="brand-mark">AI.</div><div><div class="brand-title">AI Desk Hub <span id="appVersion" style="font-size:10px;color:#8090a3;font-weight:400">v0.15.8</span></div><div class="brand-sub">PERSONAL WORK SYSTEM</div></div></div>
+    <div class="brand"><div class="brand-mark">AI.</div><div><div class="brand-title">AI Desk Hub <span id="appVersion" style="font-size:10px;color:#8090a3;font-weight:400">v0.16.11</span></div><div class="brand-sub">PERSONAL WORK SYSTEM</div></div></div>
     <nav class="nav" aria-label="主导航">
       <button class="active" data-page="today">工作台 <span>01</span></button>
       <button data-page="topics">今日话题 <span>02</span></button>
@@ -118,29 +121,22 @@ button,.project-actions a{min-height:44px;min-width:44px}.project-card h3,.note-
     <div class="topics-status" id="topicsStatus" role="status" aria-live="polite">进入页面后获取话题来源。</div>
     <div class="topic-filters" aria-label="话题分类"><button data-topic-category="全部" aria-pressed="true">全部<small>0</small></button><button data-topic-category="社会观察" aria-pressed="false">社会观察<small>0</small></button><button data-topic-category="职场成长" aria-pressed="false">职场成长<small>0</small></button><button data-topic-category="科技生活" aria-pressed="false">科技生活<small>0</small></button><button data-topic-category="文化知识" aria-pressed="false">文化知识<small>0</small></button></div>
     <div class="topics-toolbar"><label class="searchbox"><input id="topicsSearch" type="search" placeholder="搜索标题或来源…" aria-label="搜索话题"></label><label><input id="topicsSavedOnly" type="checkbox">只看选题库 <span id="topicsSavedCount">0</span></label></div>
-    <div class="topics-list-title"><h2 id="topicsListTitle">当日关注</h2><span id="topicsListCount">0 条</span></div><div class="topics-grid" id="topicsGrid"></div>
+    <div class="radar-spotlight" id="topicsSpotlight" hidden><div id="featuredTopic"></div><aside class="panel radar-topic-panel"><div class="panel-head"><h2>分类概览</h2><span class="tiny-label">当前结果</span></div><p class="radar-topic-note">按当前结果的话题分类分组。</p><div class="radar-overview-list" id="topicsOverview"></div></aside></div>
+    <div class="topics-list-title"><h2 id="topicsListTitle">继续浏览</h2><span id="topicsListCount">0 条</span></div><div class="topics-grid" id="topicsGrid"></div>
     <p class="topics-method">日期按北京时间判断，仅将当日报道放入「当日关注」。观点问题与写作提纲是本机规则提示，供你思考和改写；尚未接入 AI 模型。收藏保存在本机浏览器。</p><div class="topics-source-title">信息来源</div><div class="topics-sources" id="topicsSourceList"></div>
   </main>
 
   <main id="page-radar" class="page">
-    <section class="section-heading"><div><div class="eyebrow">DISCOVER / RESEARCH / MAKE</div><h1>AI RADAR <span>热点与项目</span></h1><p>AI 硬件与开源项目线索。先浏览重点，再按主题深入。</p></div><div class="radar-status" id="radarStatus" role="status" aria-live="polite"><span><strong>每日项目库</strong> · 每日自动采集 · 许可与复现性仍需回源核验。</span><span class="status-right" id="radarCount">正在读取项目数据…</span></div></section>
-    <section class="panel daily-hotlist" aria-labelledby="hotlistTitle">
-      <div class="panel-head"><h2 id="hotlistTitle">每日热榜</h2><button class="btn btn-light" id="hotlistRefresh">检查热榜更新 ↻</button></div>
-      <p>优先近期 Star 增长与讨论活动；近 7 天重复项目降权。</p>
-      <p id="hotlistStatus" role="status" aria-live="polite">正在读取采集状态…</p>
-      <div id="hotlistGrid"></div>
-      <details><summary>热度与标注依据</summary><p>参考 GitHub Trending 今日新增 Star，或两次采集的 Star 净增（显示实际间隔），以及近 7 天更新过且有评论的 Issue / PR 数。讨论计数包含历史评论，不等于新增评论数，也不包含 GitHub Discussions。累计 Star 不参与排名。首次采集无基线时不推算增量；没有可验证热度时不补齐榜单。</p><p>“今日新上榜”指近 7 天展示记录中未出现；“持续热门”指近 7 天再次出现；“重大更新”仅在近 7 天首次发现稳定主版本 x.0.0 发布时使用。普通提交不算重大更新。重复项目无重大更新时热度分降至 35%。这是所采集候选中的排序，非全网排名。</p></details>
-    </section>
+    <section class="section-heading"><div><div class="eyebrow">DISCOVER / RESEARCH / MAKE</div><h1>项目雷达 <span>每日新项目与当前最热</span></h1><p>从 GitHub 发现各领域的公开项目。</p></div><div class="radar-status" id="radarStatus" role="status" aria-live="polite"><span id="radarCollectionStatus">正在读取采集状态…</span><span class="status-right" id="radarCount"></span></div></section>
     <div class="radar-sourcebar">
-      <div class="source-switch" role="tablist" aria-label="项目来源"><button class="active" data-radar-source="curated" role="tab" aria-selected="true">每日项目库</button><button data-radar-source="live" role="tab" aria-selected="false">GitHub 实时发现</button></div>
-      <div class="radar-actions"><select id="githubPreset" aria-label="GitHub 搜索方向"><option value="hardware">AI 硬件综合</option><option value="edge">ESP32 / 端侧 AI</option><option value="voice">语音助手 / AI 伙伴</option><option value="robotics">AI 机器人</option><option value="display">桌面显示 / 创意硬件</option></select><button class="btn btn-primary" id="discoverGithub">搜索 GitHub ↗</button><button class="btn btn-light" id="refreshCurated">检查项目更新 ↻</button></div>
+      <div class="source-switch" role="group" aria-label="榜单视图"><button class="active" data-radar-source="hot" aria-pressed="true">当前最热</button><button data-radar-source="new" aria-pressed="false">每日新项目</button></div>
+      <div class="radar-actions"><button class="btn btn-light" id="refreshCurated">检查项目更新 ↻</button></div>
     </div>
-
-    <div class="search-row"><label class="searchbox"><span>⌕</span><input id="radarSearch" type="search" placeholder="筛选项目；输入关键词后可搜索 GitHub…" aria-label="搜索项目"></label><div class="filters" id="filters"><button class="filter-btn active" data-filter="全部">全部</button><button class="filter-btn" data-filter="智能家居">智能家居</button><button class="filter-btn" data-filter="语音 AI">语音 AI</button><button class="filter-btn" data-filter="桌面机器人">机器人</button><button class="filter-btn" data-filter="可穿戴">可穿戴</button><button class="filter-btn" data-filter="端侧 AI">端侧 AI</button><button class="filter-btn" data-filter="基础设施">基础设施</button><button class="filter-btn" data-filter="创意硬件">创意硬件</button></div></div>
-    <div class="radar-spotlight"><div id="featuredProject"></div><aside class="panel radar-topic-panel"><div class="panel-head"><h2>主题概览</h2><span class="tiny-label">当前结果</span></div><p class="radar-topic-note">按当前列表数量排列，不代表新闻热度。</p><div id="radarTopics"></div></aside></div>
+    <div class="search-row"><label class="searchbox"><span>⌕</span><input id="radarSearch" type="search" placeholder="筛选当前榜单…" aria-label="筛选项目"></label><div class="filters" id="filters" aria-label="主要语言"></div></div>
+    <div class="radar-spotlight"><div id="featuredProject"></div><aside class="panel radar-topic-panel"><div class="panel-head"><h2>语言概览</h2><span class="tiny-label">当前结果</span></div><p class="radar-topic-note">按当前结果的主要编程语言分组。</p><div id="radarTopics"></div></aside></div>
     <div class="radar-list-heading"><h2>继续发现 <span id="radarListCount"></span></h2><label class="radar-saved-toggle"><input type="checkbox" id="radarSavedOnly"> 只看收藏 <span id="radarSavedCount">0</span></label></div>
     <div class="project-grid" id="projectGrid"></div>
-    <div class="radar-scope-note">每日项目库来自 Awesome AI Hardware 上游目录与 GitHub 公开搜索，自动采集结果未经人工核验；GitHub 实时搜索结果未经人工审核，Star 数不代表复现质量。采购或制作前请打开原仓库核对 README、许可证、物料清单、最近提交和安全边界。匿名 GitHub 搜索存在频率限制。</div>
+    <details class="radar-scope-note"><summary>数据来源与排序规则</summary><p>当前最热按近期 Star 增长及有评论的 Issue / PR 活动排序，近 7 天重复项目降权。热度来自采集候选，累计 Star 仅供参考。每日新项目按北京时间当天创建筛选，筛选有简介、主要语言、许可证和至少 1 个 Star 的仓库，合并同名同简介的副本，再按 Star 数排序。数据来源为 GitHub Trending 和公开仓库搜索。</p></details>
   </main>
 
 
@@ -152,14 +148,6 @@ button,.project-actions a{min-height:44px;min-width:44px}.project-card h3,.note-
 <script>
 const STORAGE_KEY='ai-desk-hub-v1';
 const initialTasks=[];
-let projects=[
- {id:'ivy',name:'Ivy AI · ESP32-S3 离线语音助手',category:'端侧 AI',type:'语音 AI',icon:'◉',difficulty:'进阶',date:'2026.10.19 收录',summary:'尝试在一块 ESP32-S3 开发板上运行唤醒检测、语音转写、小型量化语言模型与语音合成，探索极低资源下的离线语音交互。',hardware:'Freenove FNK0104B / ESP32-S3R8、板载屏幕、麦克风与扬声器',url:'https://github.com/iamankushpandit/esp_ai',source:'esp32.diy 项目介绍',note:'适合研究端侧 AI 的边界；属于进阶项目，先核对板型、内存与固件版本。'},
- {id:'orion',name:'Orion · 桌面语音助手',category:'语音 AI',type:'语音 AI',icon:'◌',difficulty:'中等',date:'2026.10.13 发布介绍',summary:'基于 ESP32-S3 设备的桌面语音助手，支持设备端唤醒词检测，并通过外部 AI 服务生成对话回复。',hardware:'LilyGO T-CameraPlus-S3、USB-C 数据线；需要配置 API 密钥',url:'https://github.com/MultiX0/orion',source:'GitHub / MultiX0',note:'适合研究“低功耗常驻唤醒 + 外部推理”的混合架构；项目许可为非商业用途，使用前阅读条款。'},
- {id:'pi-assistant',name:'Raspberry Pi 本地语音助手',category:'语音 AI',type:'语音 AI',icon:'⌁',difficulty:'中等',date:'开源仓库',summary:'将语音识别、Ollama 本地模型、RAG 知识库与语音合成组合成可持续运行的语音助手。',hardware:'Raspberry Pi 4 / 5（建议 4GB 起）、USB 麦克风、扬声器',url:'https://github.com/PatriceG/AI-Assistant-on-Raspberry-Pi',source:'GitHub / PatriceG',note:'适合在未来给 iPad 增加本地服务端；需要额外硬件与 Linux 环境。'},
- {id:'bmo',name:'BMO · 桌面陪伴机器人',category:'桌面机器人',type:'桌面机器人',icon:'▣',difficulty:'进阶',date:'近期更新',summary:'带有表情动画的桌面 AI 伙伴，整合语音唤醒、温湿度、智能家居控制，并可在本地与远程推理之间切换。',hardware:'Raspberry Pi 5、定制外壳、麦克风与扬声器；部分能力依赖外部 GPU / 服务',url:'https://github.com/FelixLiu339/bmo_AI_project',source:'GitHub / FelixLiu339',note:'适合研究如何把 AI 的状态与个性转化为实体交互；复现成本高于纯软件方案。'},
- {id:'adeus',name:'ADeus · 开源 AI 可穿戴',category:'可穿戴',type:'可穿戴',icon:'⌚',difficulty:'进阶',date:'开源项目',summary:'采集现实场景中的语音并转写、存储到个人服务器，再通过应用与带上下文的个人 AI 进行交互。',hardware:'可穿戴采集设备、个人服务器与配套应用；具体硬件以文档为准',url:'https://github.com/adamcohenhillel/ADeus',source:'GitHub / ADeus',note:'适合研究个人记忆型 AI；持续录音涉及隐私和他人同意，不能默认开启。'},
- {id:'pocket',name:'ESP32 AI Pocket Assistant',category:'端侧 AI',type:'语音 AI',icon:'▤',difficulty:'入门–中等',date:'含硬件资料',summary:'围绕 ESP32 与小型屏幕制作口袋语音助手，仓库包含固件、PCB 相关文件、外壳模型和接线资料。',hardware:'ESP32 开发板、屏幕、麦克风 / 扬声器模块；按仓库 BOM 配置',url:'https://github.com/Rau7han/esp32-ai-pocket-assistant',source:'GitHub / Rau7han',note:'资料相对适合动手研究；采购前先核对 BOM、PCB 版本和所用语音服务。'}
-];
 let state={tasks:initialTasks.slice(),notes:[]};
 try{const saved=localStorage.getItem(STORAGE_KEY);if(saved){const parsed=JSON.parse(saved);if(parsed&&Array.isArray(parsed.tasks)&&Array.isArray(parsed.notes)){state={tasks:parsed.tasks.filter(t=>t&&typeof t.id==='string'&&typeof t.text==='string'),notes:parsed.notes.filter(n=>n&&typeof n.text==='string'),...(parsed.workday?{workday:parsed.workday}:{})};}}}catch(e){}
 function persist(){if(window.deskDayStale){document.getElementById('storageWarning').hidden=false;return false;}window.deskDaySync?.(state);let saved=true;try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){saved=false;document.getElementById('storageWarning').hidden=false;}if(!saved)window.deskSyncLocalFailure?.();else {window.deskSyncLocalSuccess?.();window.dispatchEvent(new Event('desk-data-change'));}return saved;}
@@ -167,81 +155,142 @@ function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;',
 let toastTimer;function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2600)}
 function renderTasks(){const box=document.getElementById('taskList');const open=state.tasks.filter(t=>!t.done).length;document.getElementById('taskCount').textContent=`${open} 未完成 / ${state.tasks.length} 总计`;if(!state.tasks.length){box.innerHTML='<div class="empty-state">还没有待办。用底部快速记录添加第一项。</div>';return;}box.innerHTML=state.tasks.slice().sort((a,b)=>Number(!!a.done)-Number(!!b.done)||Number(!!b.important)-Number(!!a.important)).map(t=>`<div class="task-row ${t.done?'done':''}" data-task="${esc(t.id)}"><label class="task-toggle"><input class="task-check" type="checkbox" ${t.done?'checked':''} aria-label="完成任务"></label><button class="task-text record-open" data-edit-task="${esc(t.id)}">${t.important?'<span class="priority-label">重点</span> ':''}${esc(t.text)}</button><span class="task-category">${esc(t.category||'待办')}</span><button class="delete-task" aria-label="删除任务" title="删除任务">×</button></div>`).join('');}
 function renderNotes(){const box=document.getElementById('noteList');document.getElementById('noteCount').textContent=`${state.notes.length} NOTES`;if(!state.notes.length){box.innerHTML='<div class="empty-state">还没有记录。使用底部快速记录栏保存灵感、待办或研究线索。</div>';return;}box.innerHTML=state.notes.map((n,i)=>({n,i})).reverse().map(({n,i})=>`<button class="note-item record-open" data-edit-note="${i}"><span class="note-kind">${esc(n.type||'灵感')}</span><span style="flex:1">${esc(n.text)}</span><span style="font-size:9px;color:#a0a69c;white-space:nowrap">${esc(n.time||'')}</span></button>`).join('');}
-let liveProjects=[];
-let radarMeta=null,radarFeedError=false,radarCheckedAt=0,radarLoading=false;
-let hasSearchedGithub=false;
-let radarSource='curated';
-const AWESOME_SOURCE='https://github.com/s87343472/awesome-ai-hardware';
-const AWESOME_RAW='https://raw.githubusercontent.com/s87343472/awesome-ai-hardware/main/data/projects.json';
-const githubSearchPresets={
- hardware:'"AI hardware" in:name,description,readme',
- edge:'ESP32 in:name,description,readme',
- voice:'"voice assistant" in:name,description,readme',
- robotics:'robotics in:name,description,readme',
- display:'"desk companion" in:name,description,readme'
-};
-async function fetchWithTimeout(url,options={},timeoutMs=9000){const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),timeoutMs);try{return await fetch(url,{...options,signal:controller.signal});}finally{clearTimeout(timer);}}
-const categoryMap={'smart-home-iot':'智能家居','wearables':'可穿戴','robotics':'桌面机器人','edge-ai':'端侧 AI','protocols-infrastructure':'基础设施','creative-hardware':'创意硬件','voice-assistants':'语音 AI'};
-function categoryIcon(category){return ({'智能家居':'⌂','可穿戴':'⌚','桌面机器人':'▣','端侧 AI':'◉','基础设施':'⌘','创意硬件':'✳','语音 AI':'◌'})[category]||'◇';}
-function safeRepoUrl(value){try{const url=new URL(value);return url.protocol==='https:'&&url.hostname==='github.com'&&!url.username&&!url.password?url.href:'https://github.com/';}catch(e){return 'https://github.com/';}}
-function mapAwesomeProject(p){const category=categoryMap[p.category]||'创意硬件',discovered=p.origin==='github-discovery';return {id:discovered?p.id:'awesome-'+p.id,name:p.name,category,type:category,icon:categoryIcon(category),difficulty:'待评估',date:discovered?'仓库更新 '+formatDate(p.pushed_at||p.updated_at):'收录 '+(p.added_at||p.last_verified||'日期未知'),summary:p.description_zh||p.description_en||'项目暂未提供简介。',hardware:p.hardware_role||'请查看原仓库硬件说明。',url:safeRepoUrl(p.repo_url),source:discovered?'GitHub 每日发现':'Awesome AI Hardware',note:'AI 作用：'+(p.ai_role||'请查看项目文档。')+' 许可证：'+(p.license||'未标注')+'。自动采集不等于人工核验，请核对 README、依赖与硬件版本。',license:p.license||'未标注',tags:Array.isArray(p.tags)?p.tags:[],addedAt:p.added_at||'',lastVerified:p.last_verified||'',isLive:false};}
-function formatDate(value){if(!value)return '未知';const d=new Date(value);if(Number.isNaN(d.getTime()))return '未知';return d.toLocaleDateString('zh-CN',{year:'numeric',month:'2-digit',day:'2-digit'});}
-function guessCategory(repo){const text=[repo.name,repo.description,(repo.topics||[]).join(' ')].join(' ').toLowerCase();if(/robot|robotic|embodied|physical-ai|lerobot|servo|vla/.test(text))return '桌面机器人';if(/wearable|glasses|watch|omi|memory wearable/.test(text))return '可穿戴';if(/home assistant|smart.home|iot|mqtt|doorbell/.test(text))return '智能家居';if(/voice|speech|assistant|companion|wake.word|tts|stt/.test(text))return '语音 AI';if(/display|dashboard|status.screen|desk.companion/.test(text))return '创意硬件';if(/esp32|edge.ai|on.device|microcontroller|raspberry.pi|llm|local.ai|npu/.test(text))return '端侧 AI';return '基础设施';}
-function mapGithubRepo(r){const category=guessCategory(r);const license=r.license?(r.license.spdx_id||r.license.name||'已声明'):'未标注';return {id:'github-'+r.id,name:r.full_name,category,type:category,icon:categoryIcon(category),difficulty:'待评估',date:'更新 '+formatDate(r.pushed_at||r.updated_at),summary:r.description||'仓库未提供简介，请打开 README 了解项目。',hardware:'主要语言：'+(r.language||'未标注')+' · Stars：'+(r.stargazers_count||0)+' · Forks：'+(r.forks_count||0),url:r.html_url,source:'GitHub Search API',note:'许可证：'+license+'。自动发现结果未经人工审核，请检查 README、最近提交、Issues 与硬件物料清单。',license,stars:r.stargazers_count||0,forks:r.forks_count||0,updatedAt:r.updated_at,pushedAt:r.pushed_at,language:r.language||'未标注',topics:r.topics||[],isLive:true};}
-function currentProjects(){return radarSource==='live'?liveProjects:projects;}
-function renderStatus(message){const status=document.getElementById('radarStatus'),count=document.getElementById('radarCount');count.textContent=message||(radarSource==='live'?liveProjects.length:projects.length)+' 个项目';status.querySelector('strong').textContent=radarSource==='live'?'GitHub 实时发现':'每日项目库';let detail=' · 本地备用目录，尚未读取每日数据。';if(radarMeta){const stamp=new Date(radarMeta.generatedAt).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false});detail=' · 计划每日 08:17 更新（可能延迟） · 采集于 '+stamp+'（北京时间）';const age=Date.now()-Date.parse(radarMeta.generatedAt);if(age>36*3600000)detail+=' · 数据已过期';if(radarFeedError||radarMeta.refreshError)detail+=' · 更新失败，保留旧数据';if(radarMeta.sources?.some(x=>!x.ok||x.partial))detail+=' · 部分来源暂不可用';}if(!navigator.onLine)detail+=' · 离线快照';status.querySelector('span:first-child').lastChild.textContent=radarSource==='live'?' · GitHub 官方公开搜索，结果未经人工审核。':detail;document.querySelectorAll('[data-radar-source]').forEach(b=>{const active=b.dataset.radarSource===radarSource;b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});}
 const RADAR_SAVED_KEY='ai-desk-hub-radar-saved-v1';
-let radarSaved=new Set();
-try{const saved=JSON.parse(localStorage.getItem(RADAR_SAVED_KEY)||'[]');if(Array.isArray(saved))radarSaved=new Set(saved.filter(id=>typeof id==='string').slice(0,2000));}catch(e){}
-function repoPreview(url){try{const u=new URL(safeRepoUrl(url));const parts=u.pathname.split('/').filter(Boolean);if(parts.length>=2&&parts.slice(0,2).every(p=>/^[a-zA-Z0-9_.-]+$/.test(p)))return 'https://opengraph.githubassets.com/1/'+parts[0]+'/'+parts[1];}catch(e){}return '';}
+const RADAR_FEED_KEY='ai-desk-hub-hotlist-v1';
+const radarDay=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'});
+let radarFeed=null,radarFeedError=false,radarCheckedAt=0,radarLoading=false;
+let radarSource='hot',radarFilter='全部',radarSaved=new Set();
+function validRadarFeed(data){
+  return data?.schemaVersion===1&&Array.isArray(data.items)&&(!data.generatedAt||Number.isFinite(Date.parse(data.generatedAt)))&&(!data.newItems||Array.isArray(data.newItems))&&(!data.newGeneratedAt||Number.isFinite(Date.parse(data.newGeneratedAt)));
+}
+try{const data=JSON.parse(localStorage.getItem(RADAR_FEED_KEY)||'null');if(validRadarFeed(data))radarFeed=data;}catch{}
+try{const saved=JSON.parse(localStorage.getItem(RADAR_SAVED_KEY)||'[]');if(Array.isArray(saved))radarSaved=new Set(saved.filter(id=>typeof id==='string').slice(0,2000));}catch{}
+function safeRepoUrl(value){
+  try{const url=new URL(value);return url.protocol==='https:'&&url.hostname==='github.com'&&!url.username&&!url.password?url.href:'https://github.com/';}catch{return 'https://github.com/';}
+}
+function formatDate(value){return new Date(value).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false});}
+function repoPreview(url){return window.DeskCardMedia.githubPreview(url);}
+function radarSnapshot(){
+  const isNew=radarSource==='new';
+  const timestamp=isNew?radarFeed?.newGeneratedAt:radarFeed?.generatedAt;
+  const failed=radarFeedError||!navigator.onLine||!!(isNew?radarFeed?.newRefreshError:radarFeed?.refreshError);
+  return {isNew,timestamp,failed,old:!!timestamp&&radarDay.format(new Date(timestamp))!==radarDay.format(new Date()),partial:!!(isNew?radarFeed?.newPartial:radarFeed?.partial)};
+}
+function currentProjects(){
+  const {isNew,timestamp,old,failed}=radarSnapshot(),seen=new Set();
+  return (isNew?radarFeed?.newItems:radarFeed?.items||[])?.flatMap(p=>{
+    if(!p||!repoPreview(p.url)||typeof p.name!=='string'||(isNew&&(!timestamp||!Number.isFinite(Date.parse(p.createdAt))||radarDay.format(new Date(p.createdAt))!==radarDay.format(new Date(timestamp)))))return [];
+    const key=new URL(p.url).pathname.replace(/\/$/,'').toLowerCase();
+    if(seen.has(key))return [];seen.add(key);
+    const label=isNew?'今日新建':p.label;
+    return [{...p,id:Number.isSafeInteger(p.id)?'github-'+p.id:'repo:'+key,summary:p.description||'请查看原仓库说明。',category:p.language||'未标注',badge:label?(old||failed?'上次标注 · ':'')+label:'',isNew}];
+  })||[];
+}
 function projectCard(p,featured=false){
-  const image=repoPreview(p.url),saved=radarSaved.has(p.id);
-  const category=p.category||'其他';
-  const categoryColor=({'智能家居':'green','可穿戴':'cyan','桌面机器人':'purple','端侧 AI':'orange','基础设施':'blue','创意硬件':'purple','语音 AI':'pink'})[category]||'cyan';
-  const date=p.isLive?'更新 '+formatDate(p.pushedAt||p.updatedAt):(p.date||'上游精选');
-  return `<article class="project-card ${featured?'project-featured':''}" data-tone="${categoryColor}"><div class="radar-image"><div class="radar-image-fallback">GitHub<br><span>原仓库预览</span></div>${image?`<img src="${esc(image)}" alt="${esc(p.name)} 的 GitHub 仓库预览" ${featured?'loading="eager"':'loading="lazy"'} referrerpolicy="no-referrer" onerror="this.hidden=true;this.parentElement.classList.add('image-unavailable')">`:''}<span class="project-category">${esc(category)}</span><span class="radar-image-caption">仓库预览</span></div><div class="radar-card-body">${featured?'<div class="radar-feature-label">重点浏览 <span>当前列表首项 · 非热度排名</span></div>':''}<h3><a href="${esc(safeRepoUrl(p.url))}" target="_blank" rel="noopener">${esc(p.name)}</a></h3><p class="project-summary">${esc(p.summary)}</p><div class="radar-source-line"><span>${esc(p.source||'GitHub')}</span><span>${esc(date)}</span></div><div class="project-meta"><span class="meta-chip license-chip">许可 ${esc(p.license||'未标注')}</span>${p.isLive?`<span class="meta-chip">${Number(p.stars||0).toLocaleString()} Stars</span>`:''}<span class="meta-chip">${p.isLive?'搜索线索':'上游快照'}</span></div><details class="radar-details"><summary>硬件与核验说明</summary><p><b>硬件 / 依赖</b><br>${esc(p.hardware||'查看原仓库说明')}</p><p><b>待核验</b><br>${esc(p.note||'请核对 README、许可、版本及物料清单。')}</p></details><div class="project-actions"><button class="btn btn-light radar-save" data-save-project="${esc(p.id)}" aria-pressed="${saved}" aria-label="${saved?'取消收藏':'收藏'} ${esc(p.name)}">${saved?'已收藏':'收藏'}</button><button class="btn btn-light" data-add-project="${esc(p.id)}">加入待办</button><a class="btn btn-primary repo-link" href="${esc(safeRepoUrl(p.url))}" target="_blank" rel="noopener">查看原文 ↗</a></div></div></article>`;
+  const image=repoPreview(p.url),saved=radarSaved.has(p.id),category=p.category||'未标注';
+  const evidence=[];
+  const overviews={
+    'microsoft/vscode':'Visual Studio Code 是一款代码编辑器，可通过扩展支持不同编程语言，编辑、调试和管理代码。',
+    'rust-lang/rust':'Rust 是一门通用编程语言，常用于构建需要性能和内存安全的软件，例如系统工具和服务。',
+    'zed-industries/zed':'Zed 是一款支持多人协作的代码编辑器，开发者可以在同一项目中一起阅读和编辑代码。',
+    'react/react':'React 是一个构建用户界面的 JavaScript 库，可以把网页和应用界面拆成可复用的组件。',
+    'angular/angular':'Angular 是一个 Web 应用框架，用于组织页面组件、路由和应用逻辑。',
+    'prometheus/prometheus':'Prometheus 是一套监控系统和时序数据库，用于采集、存储和查询服务运行指标。',
+    'sostenesfreitas/ocarina-recomp':'这个项目将《塞尔达传说：时之笛》重新编译为可在 Windows 上运行的版本，需要使用者提供自己的游戏副本。',
+    'dhruvatreja/open-uncensored-desktop':'这是一款桌面 AI 助手，可以对话，也支持让模型读取、编写和运行代码。',
+    'beingfluresurrect/solana-token-sniper':'这是面向 Solana 的代币交易机器人，支持 Raydium 和 Pump.fun，并提供交易过滤和移动止损功能。',
+    'abdoandqsnk/ai-manus':'AI Manus 是一个通用 AI 智能体系统，可以在沙盒环境中调用工具并执行任务。',
+    'oscarcreatess/airpointer':'Airpointer 让 AirPods 充当 MacBook 的空中鼠标，用于操控屏幕上的指针。',
+    'hg552/esim-matrix':'eSIM Matrix 利用 Android 备用机远程切换 eSIM，监控漫游状态，并支持短信转发。',
+    'nico-bohlinger/xmimic':'xmimic 面向宇树 G1 人形机器人的全身动作跟踪，使用 JAX 重写了世界模型训练流程。',
+    'callme-sy/lichii-superbuild':'这是一套非官方的 Lichii 构建配置，包含性能优化和部分修复。',
+    'rsantos722/imsa-wcr-m2-recomp':'这个项目尝试重新编译原为 Panasonic M2 开发的未发行赛车游戏。',
+    'anime-vanguards/roblox-ui-renderer':'这是一款离线 Roblox 界面渲染工具，可以预览界面组件和 .rbxm 文件。',
+    'tylerwatt12/open25-dm32':'这个项目研究宝锋 DM-32UV 对讲机上的开放固件，聚焦 P25 Phase 1 数字语音。',
+    'krakenwagen/mismo':'mismo 帮助 React Native 应用和网页共用界面、路由定义和导航逻辑，各端仍使用自己的路由器。'
+  };
+  const name=p.name.toLowerCase();
+  const overview=Object.hasOwn(overviews,name)?overviews[name]:p.summary;
+  if(p.isNew)evidence.push(`<span>创建于 ${esc(formatDate(p.createdAt))}（北京时间）</span>`);
+  else {
+    if(p.growth&&Number.isFinite(p.growth.count)&&Number.isFinite(p.growth.hours))evidence.push(`<a href="${esc(safeRepoUrl(p.growth.url))}" target="_blank" rel="noopener noreferrer">${esc(p.growth.source)} · +${p.growth.count} Star / ${p.growth.hours} 小时 ↗</a>`);
+    if(Number.isFinite(p.activeThreads))evidence.push(`<a href="${esc(safeRepoUrl(p.discussionURL))}" target="_blank" rel="noopener noreferrer">近 7 天更新且有评论的 Issue / PR · ${p.activeThreads} ↗</a>`);
+    if(p.release&&p.label==='重大更新')evidence.push(`<a href="${esc(safeRepoUrl(p.release.url))}" target="_blank" rel="noopener noreferrer">主版本 ${esc(p.release.tag)} ↗</a>`);
+  }
+  return `<article class="project-card ${featured?'project-featured':''}">${window.DeskCardMedia.markup({url:image,title:p.name,category,kind:'repo',featured})}<div class="radar-card-body">
+    ${featured?'<div class="radar-feature-label">重点浏览</div>':''}
+    <h3><a href="${esc(safeRepoUrl(p.url))}" target="_blank" rel="noopener noreferrer">${esc(p.name)}</a></h3>
+    <div class="card-overview"><strong>项目概述</strong><p>${esc(overview)}</p></div>
+    <div class="project-meta">${p.badge?`<span class="meta-chip">${esc(p.badge)}</span>`:''}${Number.isFinite(p.stars)?`<span class="meta-chip">${p.stars.toLocaleString()} Star</span>`:''}${p.license?`<span class="meta-chip license-chip">${esc(p.license)}</span>`:''}</div>
+    ${evidence.length?`<div class="hotlist-evidence">${evidence.join('')}</div>`:''}
+    <div class="project-actions"><button class="btn btn-light radar-save" data-save-project="${esc(p.id)}" aria-pressed="${saved}" aria-label="${saved?'取消收藏':'收藏'} ${esc(p.name)}">${saved?'已收藏':'收藏'}</button><button class="btn btn-light" data-add-project="${esc(p.id)}">加入待办</button><a class="btn btn-primary repo-link" href="${esc(safeRepoUrl(p.url))}" target="_blank" rel="noopener noreferrer">查看原文 ↗</a></div></div></article>`;
 }
 function renderProjects(){
-  const q=radarSource==='curated'?(document.getElementById('radarSearch').value||'').trim().toLowerCase():'';
-  const active=document.querySelector('.filter-btn.active')?.dataset.filter||'全部';
-  const sourceList=currentProjects();const onlySaved=document.getElementById('radarSavedOnly').checked;
-  const filtered=sourceList.filter(p=>(!onlySaved||radarSaved.has(p.id))&&(active==='全部'||p.category===active||p.type===active)&&(q===''||[p.name,p.category,p.summary,p.hardware,p.note,p.license,(p.tags||[]).join(' '),p.language||''].join(' ').toLowerCase().includes(q)));
-  const box=document.getElementById('projectGrid');const featured=document.getElementById('featuredProject');
-  document.getElementById('radarSavedCount').textContent=radarSaved.size;
+  const q=document.getElementById('radarSearch').value.trim().toLowerCase(),onlySaved=document.getElementById('radarSavedOnly').checked;
+  const source=currentProjects(),matched=source.filter(p=>(!onlySaved||radarSaved.has(p.id))&&(!q||[p.name,p.category,p.summary].join(' ').toLowerCase().includes(q)));
+  const counts=new Map();for(const p of matched)counts.set(p.category,(counts.get(p.category)||0)+1);
+  if(radarFilter!=='全部'&&!counts.has(radarFilter))radarFilter='全部';
+  const filtered=matched.filter(p=>radarFilter==='全部'||p.category===radarFilter);
+  document.getElementById('filters').innerHTML=['全部',...counts.keys()].map(category=>`<button class="filter-btn ${category===radarFilter?'active':''}" data-filter="${esc(category)}" aria-pressed="${category===radarFilter}">${esc(category)}</button>`).join('');
+  document.getElementById('radarTopics').innerHTML=[...counts].sort((a,b)=>b[1]-a[1]).slice(0,4).map(([category,count],i)=>`<button class="radar-topic" data-topic="${esc(category)}"><span class="radar-topic-rank">${i+1}</span><span><strong>${esc(category)}</strong><small>${count} 个项目</small></span><span class="radar-topic-arrow">→</span></button>`).join('');
+  document.querySelector('#page-radar .radar-spotlight').hidden=!filtered.length;
+  document.getElementById('featuredProject').innerHTML=filtered.length?projectCard(filtered[0],true):'';
+  document.getElementById('radarSavedCount').textContent=source.filter(p=>radarSaved.has(p.id)).length;
   document.getElementById('radarListCount').textContent=Math.max(0,filtered.length-1)+' 项';
-  const counts=new Map();for(const p of filtered)counts.set(p.category,(counts.get(p.category)||0)+1);
-  document.getElementById('radarTopics').innerHTML=[...counts].sort((a,b)=>b[1]-a[1]).slice(0,4).map(([category,count],i)=>`<button class="radar-topic" data-topic="${esc(category)}"><span class="radar-topic-rank">${i+1}</span><span><strong>${esc(category)}</strong><small>${count} 条项目线索</small></span><span class="radar-topic-arrow">→</span></button>`).join('')||'<p class="empty-state">暂无主题</p>';
-  if(!filtered.length){const msg=onlySaved?'当前来源与筛选条件下暂无收藏。收藏保存在本机浏览器。':radarSource==='live'&&!liveProjects.length?(hasSearchedGithub?'本次搜索没有找到仓库，请尝试其他关键词。':'输入关键词，点击「搜索 GitHub」发现项目。'):'没有匹配项目，请调整关键词或分类。';featured.innerHTML='<div class="empty-state radar-empty">'+esc(msg)+'</div>';box.replaceChildren();renderStatus();return;}
-  featured.innerHTML=projectCard(filtered[0],true);box.innerHTML=filtered.slice(1).map(p=>projectCard(p)).join('');renderStatus(filtered.length+' / '+sourceList.length+' 个项目');
+  document.getElementById('radarCount').textContent=filtered.length+' / '+source.length+' 个项目';
+  const status=radarSnapshot(),parts=[];
+  if(radarLoading)parts.push('正在检查更新');
+  if(status.failed)parts.push('更新失败'+(status.timestamp?'，保留上次快照':''));
+  if(status.old)parts.push('历史快照');
+  if(!status.isNew&&radarFeed?.generatedAt&&radarFeed.scope!=='all-github')parts.push('旧版 AI 榜单');
+  if(status.partial)parts.push('部分数据未取得');
+  parts.push(status.timestamp?'采集于 '+formatDate(status.timestamp)+'（北京时间）':'尚无成功采集记录');
+  document.getElementById('radarCollectionStatus').textContent=parts.join(' · ');
+  const empty=source.length?'当前筛选下没有匹配项目。':status.failed?'项目采集暂不可用。':radarLoading?'正在读取榜单…':status.isNew?'本次采集未找到符合条件的当日新项目。':'本次采集没有可验证热度的项目。';
+  document.getElementById('projectGrid').innerHTML=filtered.length?filtered.slice(1).map(p=>projectCard(p)).join(''):`<div class="empty-state radar-empty" style="grid-column:1/-1">${esc(empty)}</div>`;
+  for(const button of document.querySelectorAll('[data-radar-source]')){
+    const selected=button.dataset.radarSource===radarSource;button.classList.toggle('active',selected);button.setAttribute('aria-pressed',String(selected));
+  }
 }
-
-function refreshCuratedView(message){if(radarSource==='curated'){renderProjects();if(message)renderStatus(message);}}
-async function loadCuratedProjects(showToast=false){
-  if(radarLoading)return;radarLoading=true;const button=document.getElementById('refreshCurated');button.disabled=true;
-  try{const response=await fetchWithTimeout('./radar-feed.json?v=0.15.8',{cache:'no-store'},10000);if(!response.ok)throw Error('HTTP '+response.status);const raw=await response.json();if(raw.schemaVersion!==1||!Number.isFinite(Date.parse(raw.generatedAt))||!Array.isArray(raw.projects)||!raw.projects.length)throw Error('Invalid radar feed');const mapped=raw.projects.filter(p=>p&&typeof p.name==='string'&&typeof p.id==='string'&&safeRepoUrl(p.repo_url)!=='https://github.com/').map(mapAwesomeProject);if(!mapped.length)throw Error('Empty radar feed');projects=mapped;radarMeta={generatedAt:raw.generatedAt,sources:raw.sources||[],automation:raw.automation,refreshError:raw.refreshError};radarFeedError=response.headers.get('X-Desk-Cache')==='offline';try{localStorage.setItem('ai-desk-hub-curated-cache',JSON.stringify({fetchedAt:raw.generatedAt,projects,meta:radarMeta}));}catch{}if(showToast)toast(radarFeedError?'网络不可用，正在显示缓存':'每日项目库已读取 · '+projects.length+' 个项目');
-  }catch{radarFeedError=true;try{const cached=JSON.parse(localStorage.getItem('ai-desk-hub-curated-cache')||'null');if(cached?.projects?.length){projects=cached.projects;radarMeta=cached.meta||null;}else{const response=await fetchWithTimeout('./projects-seed.json',{cache:'no-cache'},5000);const raw=await response.json();if(Array.isArray(raw.projects)&&raw.projects.length)projects=raw.projects.map(mapAwesomeProject);}}catch{}if(showToast)toast('更新失败，已保留上次项目快照');
-  }finally{radarLoading=false;radarCheckedAt=Date.now();button.disabled=false;refreshCuratedView();}
+async function loadCuratedProjects(){
+  if(radarLoading)return;
+  const button=document.getElementById('refreshCurated'),controller=new AbortController(),timer=setTimeout(()=>controller.abort(),12000);
+  radarLoading=true;button.disabled=true;button.textContent='正在检查…';
+  try{
+    const response=await fetch('./hotlist-feed.json?v=0.16.6',{cache:'no-store',signal:controller.signal});
+    if(!response.ok)throw Error('HTTP '+response.status);
+    const data=await response.json();if(!validRadarFeed(data))throw Error('Invalid snapshot');
+    radarFeed=data;radarFeedError=response.headers.get('X-Desk-Cache')==='offline';
+    try{localStorage.setItem(RADAR_FEED_KEY,JSON.stringify(data));}catch{}
+  }catch{radarFeedError=true;}
+  finally{clearTimeout(timer);radarLoading=false;radarCheckedAt=Date.now();button.disabled=false;button.textContent='检查项目更新 ↻';renderProjects();}
 }
-function switchRadarSource(source){radarSource=source;renderProjects();if(source==='live'&&!liveProjects.length)renderStatus('等待搜索 · 点击「搜索 GitHub」获取实时仓库');}
-function checkGithubSearchLimit(){let logs=[];try{logs=JSON.parse(localStorage.getItem('ai-desk-hub-gh-search-log')||'[]');}catch(e){}if(!Array.isArray(logs))logs=[];const now=Date.now();logs=logs.filter(t=>now-t<60000);if(logs.length>=8)return false;logs.push(now);try{localStorage.setItem('ai-desk-hub-gh-search-log',JSON.stringify(logs));}catch(e){}return true;}
-async function searchGithub(){const input=(document.getElementById('radarSearch').value||'').trim();const preset=document.getElementById('githubPreset').value;let query=input?`${input} in:name,description,readme`:githubSearchPresets[preset]||githubSearchPresets.hardware;switchRadarSource('live');const box=document.getElementById('projectGrid');document.getElementById('featuredProject').replaceChildren();document.getElementById('radarTopics').replaceChildren();document.getElementById('radarListCount').textContent='搜索中';box.innerHTML='<div class="empty-state" style="grid-column:1/-1">正在搜索 GitHub 公开仓库…</div>';renderStatus('正在搜索 · '+query);if(!checkGithubSearchLimit()){renderStatus('已达到本地保护阈值 · 请等待 1 分钟后再搜索');box.innerHTML='<div class="empty-state" style="grid-column:1/-1">为避免触发 GitHub 匿名搜索限额，近 1 分钟内最多发起 8 次搜索。请稍后再试。</div>';return;}try{const url='https://api.github.com/search/repositories?q='+encodeURIComponent(query)+'&sort=updated&order=desc&per_page=20';const res=await fetchWithTimeout(url,{headers:{Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'},cache:'no-store'},12000);if(res.status===403||res.status===429)throw new Error('GitHub 搜索 API 暂时达到速率限制，请稍后再试。');if(!res.ok)throw new Error('GitHub 返回 HTTP '+res.status);const data=await res.json();liveProjects=(data.items||[]).map(mapGithubRepo);hasSearchedGithub=true;renderProjects();renderStatus('实时结果 · '+liveProjects.length+' 个仓库 · '+new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}));if(!liveProjects.length)toast('没有找到结果，试试更短的英文关键词。');}catch(e){box.innerHTML='<div class="empty-state" style="grid-column:1/-1">'+esc(e.message||'无法连接 GitHub。请确认网络连接后重试。')+'<br><br>每日项目库仍可离线浏览。</div>';renderStatus('实时搜索失败 · 保留精选库');}}
-
-function switchPage(name){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===`page-${name}`));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));window.scrollTo({top:0,behavior:'smooth'});if(name==='radar'&&Date.now()-radarCheckedAt>30*60000)loadCuratedProjects(false);if(name==='today')requestAnimationFrame(()=>window.deskCalendar?.updateSize());}
+function switchPage(name){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===`page-${name}`));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));window.scrollTo({top:0,behavior:'smooth'});if(name==='radar'&&Date.now()-radarCheckedAt>30*60000)loadCuratedProjects();if(name==='today')requestAnimationFrame(()=>window.deskCalendar?.updateSize());}
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>switchPage(b.dataset.page)));
-setInterval(()=>{if(!document.hidden&&document.getElementById('page-radar').classList.contains('active')&&Date.now()-radarCheckedAt>30*60000)loadCuratedProjects(false);},60000);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden&&document.getElementById('page-radar').classList.contains('active')&&Date.now()-radarCheckedAt>30*60000)loadCuratedProjects(false);});
+setInterval(()=>{if(!document.hidden&&document.getElementById('page-radar').classList.contains('active')&&Date.now()-radarCheckedAt>30*60000)loadCuratedProjects();},60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&document.getElementById('page-radar').classList.contains('active')&&Date.now()-radarCheckedAt>30*60000)loadCuratedProjects();});
 document.getElementById('taskList').addEventListener('change',e=>{if(!e.target.matches('.task-check'))return;const row=e.target.closest('[data-task]');const task=state.tasks.find(t=>t.id===row.dataset.task);if(task){task.done=e.target.checked;persist();renderTasks();}});
 document.getElementById('taskList').addEventListener('click',e=>{if(!e.target.matches('.delete-task'))return;const row=e.target.closest('[data-task]');state.tasks=state.tasks.filter(t=>t.id!==row.dataset.task);persist();renderTasks();toast('待办已删除');});
 function addTask(text,category='待办'){state.tasks.push({id:'t'+Date.now()+Math.random().toString(16).slice(2,6),text,category,done:false});const saved=persist();renderTasks();return saved;}
-function capture(){const input=document.getElementById('captureInput');const text=input.value.trim();if(!text){input.focus();toast('先写下一句话，再保存。');return;}const type=document.getElementById('captureType').value;const now=new Date();const time=now.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});let saved;if(type==='待办'){saved=addTask(text,'快速记录');if(saved)toast('已加入待办');}else{state.notes.push({id:'n'+Date.now(),text,type,time});saved=persist();renderNotes();if(saved)toast(type==='灵感'?'灵感已保存':'研究线索已保存');}if(!saved)toast('保存失败，内容仅留在当前页面，请立即导出备份');input.value='';}
+function capture(){const input=document.getElementById('captureInput');const text=input.value.trim();if(!text){input.focus();toast('先写下一句话，再保存。');return;}const type=document.getElementById('captureType').value;const now=new Date();const time=now.toLocaleTimeString('zh-CN',{timeZone:'Asia/Shanghai',hour:'2-digit',minute:'2-digit'});let saved;if(type==='待办'){saved=addTask(text,'快速记录');if(saved)toast('已加入待办');}else{state.notes.push({id:'n'+Date.now(),text,type,time});saved=persist();renderNotes();if(saved)toast(type==='灵感'?'灵感已保存':'研究线索已保存');}if(!saved)toast('保存失败，内容仅留在当前页面，请立即导出备份');input.value='';}
 document.getElementById('captureSave').addEventListener('click',capture);document.getElementById('captureInput').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing&&e.keyCode!==229){e.preventDefault();capture();}});
-document.getElementById('filters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;document.querySelectorAll('.filter-btn').forEach(x=>x.classList.toggle('active',x===b));renderProjects();});document.getElementById('radarSearch').addEventListener('input',renderProjects);document.getElementById('radarSearch').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing&&e.keyCode!==229){e.preventDefault();if(radarSource==='live')searchGithub();else renderProjects();}});document.querySelectorAll('[data-radar-source]').forEach(b=>b.addEventListener('click',()=>switchRadarSource(b.dataset.radarSource)));document.getElementById('discoverGithub').addEventListener('click',searchGithub);document.getElementById('refreshCurated').addEventListener('click',()=>loadCuratedProjects(true));
-document.getElementById('page-radar').addEventListener('click',e=>{const b=e.target.closest('[data-add-project]');if(!b)return;const p=currentProjects().find(x=>x.id===b.dataset.addProject)||projects.find(x=>x.id===b.dataset.addProject)||liveProjects.find(x=>x.id===b.dataset.addProject);if(p){addTask('研究项目：'+p.name,'AI Radar');toast('已加入待办：'+p.name);}});
+document.getElementById('filters').addEventListener('click',e=>{const button=e.target.closest('[data-filter]');if(button){radarFilter=button.dataset.filter;renderProjects();}});
+document.getElementById('radarSearch').addEventListener('input',renderProjects);
 document.getElementById('radarSavedOnly').addEventListener('change',renderProjects);
-document.getElementById('page-radar').addEventListener('click',e=>{const saveButton=e.target.closest('[data-save-project]');if(saveButton){const id=saveButton.dataset.saveProject;const saved=!radarSaved.has(id);if(saved)radarSaved.add(id);else radarSaved.delete(id);try{localStorage.setItem(RADAR_SAVED_KEY,JSON.stringify([...radarSaved]));}catch(error){document.getElementById('storageWarning').hidden=false;}if(document.getElementById('radarSavedOnly').checked&&!saved){renderProjects();}else{document.querySelectorAll('[data-save-project]').forEach(button=>{if(button.dataset.saveProject===id){button.textContent=saved?'已收藏':'收藏';button.setAttribute('aria-pressed',String(saved));button.setAttribute('aria-label',(saved?'取消收藏 ':'收藏 ')+(currentProjects().find(p=>p.id===id)?.name||''));}});document.getElementById('radarSavedCount').textContent=radarSaved.size;}return;}const topic=e.target.closest('[data-topic]');if(topic){const filter=[...document.querySelectorAll('[data-filter]')].find(b=>b.dataset.filter===topic.dataset.topic);if(filter)filter.click();}});
+for(const button of document.querySelectorAll('[data-radar-source]'))button.addEventListener('click',()=>{radarSource=button.dataset.radarSource;radarFilter='全部';renderProjects();});
+document.getElementById('refreshCurated').addEventListener('click',loadCuratedProjects);
+document.getElementById('page-radar').addEventListener('click',e=>{
+  const save=e.target.closest('[data-save-project]'),add=e.target.closest('[data-add-project]'),topic=e.target.closest('[data-topic]');
+  if(topic){radarFilter=topic.dataset.topic;renderProjects();return;}
+  if(add){const project=currentProjects().find(p=>p.id===add.dataset.addProject);if(project)toast(addTask('研究项目：'+project.name,'项目雷达')?'已加入待办：'+project.name:'待办保存失败');return;}
+  if(save){const next=new Set(radarSaved),id=save.dataset.saveProject;if(next.has(id))next.delete(id);else next.add(id);
+    try{localStorage.setItem(RADAR_SAVED_KEY,JSON.stringify([...next]));radarSaved=next;renderProjects();window.dispatchEvent(new Event('desk-preferences-change'));}catch{document.getElementById('storageWarning').hidden=false;toast('收藏保存失败');}
+  }
+});
 document.getElementById('exportBtn').addEventListener('click',()=>{const payload={exportedAt:new Date().toISOString(),tasks:state.tasks,notes:state.notes,workday:state.workday||null,calendarEvents:window.deskCalendarEvents?window.deskCalendarEvents():[]};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='ai-desk-hub-records.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('已导出本地任务与记录');});
-function updateClock(){const now=new Date();document.getElementById('clock').textContent=now.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',hour12:false});document.getElementById('dateText').textContent=now.toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'long'});}setInterval(updateClock,1000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)updateClock();});window.addEventListener('pageshow',updateClock);updateClock();renderTasks();renderNotes();renderProjects();loadCuratedProjects(false);
-if('serviceWorker' in navigator && (location.protocol==='https:' || ['localhost','127.0.0.1'].includes(location.hostname))){navigator.serviceWorker.register('./sw.js?v=0.15.8-nature-1',{updateViaCache:'none'}).catch(()=>{console.warn('离线缓存注册失败，请检查 HTTPS 与 sw.js 路径。');});}
+window.addEventListener('desk-preferences-applied',()=>{radarSaved=new Set(JSON.parse(localStorage.getItem(RADAR_SAVED_KEY)||'[]'));renderProjects();});
+function updateClock(){const now=new Date();document.getElementById('clock').textContent=now.toLocaleTimeString('zh-CN',{timeZone:'Asia/Shanghai',hour:'2-digit',minute:'2-digit',hour12:false});document.getElementById('dateText').textContent=now.toLocaleDateString('zh-CN',{timeZone:'Asia/Shanghai',year:'numeric',month:'long',day:'numeric',weekday:'long'});}setInterval(updateClock,1000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)updateClock();});window.addEventListener('pageshow',updateClock);updateClock();renderTasks();renderNotes();renderProjects();loadCuratedProjects();
+if('serviceWorker' in navigator && (location.protocol==='https:' || ['localhost','127.0.0.1'].includes(location.hostname))){navigator.serviceWorker.register('./sw.js?v=0.16.11',{updateViaCache:'none'}).catch(()=>{console.warn('离线缓存注册失败，请检查 HTTPS 与 sw.js 路径。');});}
 </script>
 <dialog id="eventDialog" aria-labelledby="eventDialogTitle">
   <form id="eventForm">
@@ -254,12 +303,12 @@ if('serviceWorker' in navigator && (location.protocol==='https:' || ['localhost'
     <div class="dialog-actions"><button type="button" class="btn btn-danger" id="deleteEvent" hidden>删除日程</button><button type="button" class="btn btn-soft" id="cancelEvent">取消</button><button type="submit" class="btn btn-primary">保存日程</button></div>
   </form>
 </dialog>
-<script src="./calendar.js?v=0.15.8"></script>
+<script src="./calendar.js?v=0.16.11"></script>
 <dialog id="returnPrivacy" aria-labelledby="returnPrivacyTitle"><div class="privacy-content"><div class="eyebrow accent-cyan">RETURN / 隐私画面演示</div><h2 id="returnPrivacyTitle">你好，欢迎回来。</h2><p>身份不确定，已遮住当前应用内容。</p><p class="return-note">这是手动模拟，不是真实身份认证。停止演示后会重新显示本机数据。</p><button class="btn btn-primary" id="endPrivacyDemo">结束模拟，返回应用</button></div></dialog>
-<script src="./return.js?v=0.15.8"></script>
+<script src="./return.js?v=0.16.11"></script>
 
 
-<dialog id="ambientDialog" aria-labelledby="ambientTitle">
+<dialog id="ambientDialog" data-controls="hidden" aria-labelledby="ambientTitle">
   <canvas id="aquariumCanvas" role="img" aria-label="赛博鱼缸：轻触水面冒泡，与附近鱼儿互动"></canvas><div class="ambient-art" id="ambientArt" aria-hidden="true"></div><video id="ambientVideo" hidden muted loop playsinline webkit-playsinline preload="none" aria-label="自然美学视频"></video><img id="ambientImage" alt="" hidden decoding="async"><div class="ambient-scrim" aria-hidden="true"></div>
   <div class="ambient-top"><span id="ambientTitle">AMBIENT / 环境屏</span><button class="btn btn-light" id="leaveAmbient">进入工作台</button></div>
   <div class="ambient-clock"><time id="ambientClock"></time><p id="ambientDate"></p><p id="ambientWeather">天气未启用</p></div>
@@ -289,10 +338,11 @@ if('serviceWorker' in navigator && (location.protocol==='https:' || ['localhost'
  <label class="companion-field">配对码<input type="password" id="pushPairing" autocomplete="off" placeholder="从独立 Railway 服务的私有变量 PAIRING_CODE 获取"></label>
  <div class="media-modes"><button class="btn btn-light" id="pushCheck">检查服务</button><button class="btn btn-primary" id="pushEnable">开启后台通知</button><button class="btn btn-light" id="pushTest">发送测试通知</button><button class="btn btn-light" id="pushSync">同步提醒</button><button class="btn btn-danger" id="pushDisable">关闭并删除订阅</button></div>
  <p class="companion-note" id="pushDiagnostics" role="status"></p><p class="companion-note" id="pushStatus" role="status">尚未连接。</p><p class="companion-note">填入配对码不会自动完成授权；需点击「开启后台通知」并允许系统权限。锁屏仅系统通知，日程内容的语音朗读仅在前台。仅发送匿名日程标识、提醒时间和设备推送订阅，不发送日程标题、记录或定位。最多同步未来 30 天内 100 条重要日程。锁屏后修改无法同步，需返回 APP；网络、系统设置与设备电量可能影响送达。</p></section>
- <section class="connection-row"><strong>飞书日历 · 只读连接</strong>
+ <section class="connection-row" id="feishuConnection"><strong>飞书日历 · 只读连接</strong>
  <p class="companion-note">连接后保留本机日程，将选定飞书日历叠加到横向时间轴。飞书标题与时间只读，不会创建、修改或删除飞书日程。</p>
  <label class="companion-field">独立飞书授权服务地址<input id="feishuServiceURL" type="url" placeholder="https://你的飞书服务.up.railway.app" autocomplete="off"></label>
- <div class="media-modes"><button class="btn btn-light" id="feishuCheck">检查飞书服务</button><button class="btn btn-primary" id="feishuConnect" disabled>连接飞书日历</button><button class="btn btn-light" id="feishuSync" disabled>立即同步</button><button class="btn btn-danger" id="feishuDisconnect" disabled>断开飞书连接</button></div>
+ <p id="feishuConnectionState" role="status" aria-live="polite">先检查服务，再连接飞书日历。</p>
+ <div class="media-modes"><button type="button" class="btn btn-light" id="feishuCheck">检查飞书服务</button><button type="button" class="btn btn-primary" id="feishuConnect" disabled>连接飞书日历</button><button type="button" class="btn btn-light" id="feishuSync" disabled>立即同步</button><button type="button" class="btn btn-danger" id="feishuDisconnect" disabled>断开飞书连接</button></div>
  <label class="companion-field">显示的飞书日历<select id="feishuCalendar" disabled><option value="">授权后选择</option></select></label>
  <p id="feishuStatus" class="companion-note" role="status">正在检查接入配置…</p>
  <details><summary>首次配置说明</summary><p class="companion-note">在飞书开放平台创建企业自建应用，启用用户身份的「获取日历、日程及忙闲信息」只读权限，以及 offline_access。App Secret 仅放在独立服务的私有变量，不要填入网页。</p><p class="companion-note">安全设置的重定向 URL 必须精确填写下方地址；应用可用范围须包含你本人，并完成版本发布／管理员审批。</p><code id="feishuCallback" style="overflow-wrap:anywhere">检查服务后显示回调地址。</code><p class="companion-note">服务端加密保存飞书令牌；网页仅保存本机连接凭据。日程内容经服务转发到本次页面内存，不缓存到离线文件或浏览器日历库；断开后移除飞书内容，本机日程保留。飞书日程的本机重要标记可用于提醒；关闭 APP 后不再获取飞书变更。</p><a href="https://open.feishu.cn/app" target="_blank" rel="noopener noreferrer">飞书开放平台 ↗</a></details>
@@ -313,41 +363,55 @@ if('serviceWorker' in navigator && (location.protocol==='https:' || ['localhost'
  <label class="companion-field">任务内容<input id="repeatText" maxlength="240" required></label><label class="companion-field">重复频率<select id="repeatFrequency"><option value="daily">每天</option><option value="weekly">每周指定日期</option></select></label>
  <fieldset class="day-weekdays"><legend>每周日期（每天任务忽略此项）</legend><label><input type="checkbox" name="repeatWeekday" value="0">日</label><label><input type="checkbox" name="repeatWeekday" value="1">一</label><label><input type="checkbox" name="repeatWeekday" value="2">二</label><label><input type="checkbox" name="repeatWeekday" value="3">三</label><label><input type="checkbox" name="repeatWeekday" value="4">四</label><label><input type="checkbox" name="repeatWeekday" value="5">五</label><label><input type="checkbox" name="repeatWeekday" value="6">六</label></fieldset>
  <label class="day-check"><input type="checkbox" id="repeatImportant">标为重点</label><p class="companion-note">生成到原待办列表。编辑模板只影响尚未生成的日期；编辑某次待办只影响该次。删除某次后当天不会重新生成。</p><div class="day-actions"><button class="btn btn-primary" id="repeatSave">保存重复任务</button><button class="btn btn-light" type="button" id="repeatCancel">取消编辑</button></div></form></details>
- <details id="projectEditor"><summary>项目步骤清单</summary><div id="projectList"></div><form id="projectForm"><label class="companion-field">项目名称<input id="projectName" maxlength="100" required></label><label class="companion-field">每行一个步骤<textarea id="projectSteps" rows="4" maxlength="4000" required placeholder="整理资料&#10;确定结构&#10;制作图表&#10;检查汇报"></textarea></label><button class="btn btn-primary">创建项目清单</button></form></details>
+ <details id="projectEditor"><summary>项目卡与步骤</summary>
+ <p class="companion-note">记住上次结论，明确下一步。内容由你确认保存，步骤与原待办共用进度。</p>
+ <div id="projectList"></div>
+ <form id="projectForm" class="project-card-editor" aria-labelledby="projectFormTitle">
+ <h3 id="projectFormTitle">新建项目卡</h3>
+ <label class="companion-field">项目名称<input id="projectName" maxlength="100" required></label>
+ <label class="companion-field">上次定了什么<textarea id="projectDecision" rows="3" maxlength="1500" placeholder="填写最近一次已确认的结论；暂不确定可留空"></textarea></label>
+ <label class="companion-field">下一步做什么<input id="projectNextAction" maxlength="240" placeholder="一个明确、可执行的动作"></label>
+ <label class="companion-field">结论来源<input id="projectSource" maxlength="600" placeholder="例如：11月6日评审纪要、某次讨论或文件名称"></label>
+ <label class="companion-field">继续工作入口<textarea id="projectLinks" rows="3" maxlength="11000" aria-describedby="projectLinksHelp" placeholder="研究计划 | https://…&#10;评审材料 | /Users/…/评审材料.pdf"></textarea></label>
+ <p class="companion-note" id="projectLinksHelp">每行“名称 | 地址”，最多 5 个。网页或对话填完整链接；本机文件填绝对路径，保存后可复制路径，在文件所在电脑打开。</p>
+ <label class="companion-field" id="projectStepsField">项目步骤（可选，每行一步，最多 20 步）<textarea id="projectSteps" rows="3" maxlength="4000" placeholder="整理资料&#10;确定结构&#10;制作图表&#10;检查汇报"></textarea></label>
+ <p class="companion-note">卡片更新时间仅在内容变化并确认保存后更新；勾选步骤不会刷新结论时间。</p>
+ <div class="day-actions"><button class="btn btn-primary" id="projectSave">确认并创建项目卡</button><button class="btn btn-light" id="projectCancel" type="button" hidden>取消编辑</button></div>
+ </form></details>
 </dialog>
-<script src="./wallpapers.js?v=0.15.8-nature-1"></script>
-<script src="./ambient-video.js?v=0.15.8-nature-1"></script>
-<script src="./companion.js?v=0.15.8-nature-1"></script>
-<script src="./feishu.js?v=0.15.8"></script>
-<script src="./desk-media.js?v=0.15.8"></script>
-<script src="./attention.js?v=0.15.8"></script>
-<script src="./topics.js?v=0.15.8"></script>
+<script src="./wallpapers.js?v=0.16.11"></script>
+<script src="./ambient-video.js?v=0.16.11"></script>
+<script src="./companion.js?v=0.16.11"></script>
+<script src="./feishu.js?v=0.16.11"></script>
+<script src="./desk-media.js?v=0.16.11"></script>
+<script src="./attention.js?v=0.16.11"></script>
+<script src="./topics.js?v=0.16.11"></script>
 
-<script src="./open-canvas.js?v=0.15.8"></script>
-<script src="./hotlist.js?v=0.15.8"></script>
+<script src="./open-canvas.js?v=0.16.11"></script>
 <dialog id="intakeDialog" aria-labelledby="intakeTitle">
  <div class="dialog-head"><h2 id="intakeTitle">整理通知</h2><button class="icon-btn" id="intakeClose">关闭</button></div>
  <p class="companion-note">粘贴文字 → 核对草稿 → 逐项确认入库。本机规则识别，不调用模型、不上传通知。</p>
- <label class="companion-field">通知原文<textarea id="intakeInput" rows="6" maxlength="12000" placeholder="粘贴会议通知、活动介绍或聊天文字；多项通知可空行分隔。"></textarea></label>
+ <label class="companion-field">通知原文<textarea id="intakeInput" rows="6" maxlength="12000" placeholder="例如：安排每天晚上八点半学习英语。多项内容可用空行分隔。"></textarea></label>
  <div class="day-actions"><button id="intakeParse" class="btn btn-primary">生成草稿</button><button id="intakeReset" class="btn btn-light">重新整理</button></div>
  <p id="intakeFeedback" role="status" aria-live="polite">尚未生成草稿。关闭可保留本次内容；刷新或关闭页面后未入库草稿不保留。</p>
  <div id="intakeDrafts"></div>
  <p class="companion-note">当前支持文字。图片与 PDF 将后续扩展，不会把未读取的文件当作识别结果。</p>
 </dialog>
-<script src="./workday-core.js?v=0.15.8"></script>
-<script src="./workday.js?v=0.15.8"></script>
+<script src="./workday-core.js?v=0.16.11"></script>
+<script src="./workday.js?v=0.16.11"></script>
 <dialog id="deviceSyncDialog" aria-labelledby="deviceSyncTitle">
- <div class="dialog-head"><h2 id="deviceSyncTitle">手机与 iPad 同步</h2><button class="icon-btn" id="syncClose">关闭</button></div>
+ <div class="dialog-head"><h2 id="deviceSyncTitle">同一套工作台 · 跨设备同步</h2><button class="icon-btn" id="syncClose">关闭</button></div>
  <p id="deviceSyncState" role="status" aria-live="polite">已保存到本机 · 未启用同步</p>
- <p class="companion-note">待办、记录、本机日程与每日流程先在浏览器加密，再发送到独立同步服务。飞书凭据、定位、媒体及未确认草稿不参与。页面前台约每 15 秒检查，返回页面时重试；锁屏后不保证继续同步。</p>
+ <p class="companion-note">日程、待办、记录、项目清单、收藏，以及环境屏、歌单、提醒与免打扰偏好，共用同一套加密工作台。配对只需做一次，后续修改自动同步；前台约每 15 秒检查，离线先保存在本机，联网后补同步。</p>
+ <p class="companion-note">新设备首次需配对确认身份，不能仅靠公开链接识别你。飞书服务地址自动带入；飞书登录、系统通知与语音许可仍由各设备单独授权。本机上传的图片、音频、定位与未确认草稿不上传。</p>
  <button class="btn btn-light" id="syncBackup">导出同步前本机备份</button>
  <section id="syncConnectPanel">
  <label class="companion-field">同步服务地址<input id="syncService" type="url" autocomplete="off" placeholder="https://独立同步服务.workers.dev"></label>
  <label class="companion-field">本机名称<input id="syncDeviceName" maxlength="60" autocomplete="off" placeholder="例如：手机 / 书桌 iPad"></label>
  <button class="btn btn-light" id="syncPreview">预览待同步的本机记录</button><p id="syncPreviewText" class="companion-note"></p>
- <label class="day-check"><input type="checkbox" id="syncConsent">确认将预览的记录加密合并到此同步空间</label>
+ <label class="day-check"><input type="checkbox" id="syncConsent">确认加密合并记录和收藏，并沿用已连接工作台的设置</label>
  <details><summary>第一台设备：创建同步空间</summary><label class="companion-field">创建授权码<input id="syncSetupCode" type="password" autocomplete="off"></label><button class="btn btn-primary" id="syncCreate">创建并启用同步</button></details>
- <details><summary>另一台设备：使用配对内容加入</summary><label class="companion-field">从已连接设备复制的配对内容<textarea id="syncPairInput" rows="3" autocomplete="off" spellcheck="false"></textarea></label><button class="btn btn-primary" id="syncJoin">配对并合并本机记录</button></details>
+ <details><summary>新设备：配对一次，沿用整套工作台</summary><label class="companion-field">从已连接设备复制的配对内容<textarea id="syncPairInput" rows="3" autocomplete="off" spellcheck="false"></textarea></label><button class="btn btn-light" id="syncPairRead">读取配对内容</button><p id="syncPairReadStatus" class="companion-note"></p><button class="btn btn-primary" id="syncJoin">配对并使用同一工作台</button></details>
  </section>
  <section id="syncConnectedPanel" hidden>
  <div class="day-actions"><button class="btn btn-primary" id="syncNow">立即同步</button><button class="btn btn-light" id="syncPairGenerate">生成另一设备的配对内容</button></div>
@@ -357,11 +421,15 @@ if('serviceWorker' in navigator && (location.protocol==='https:' || ['localhost'
  </section>
  <div id="syncConflicts"></div>
 </dialog>
-<script src="./sync-core.js?v=0.15.8"></script><script src="./sync-crypto.js?v=0.15.8"></script><script src="./sync-engine.js?v=0.15.8"></script><script src="./device-sync.js?v=0.15.8"></script>
-<script src="./intake-core.js?v=0.15.8"></script>
-<script src="./intake.js?v=0.15.8"></script>
-<script src="./aquarium-motion.js?v=0.15.8"></script>
-<script src="./aquarium-render.js?v=0.15.8"></script>
-<script src="./aquarium.js?v=0.15.8"></script>
+<script src="./sync-preferences.js?v=0.16.11"></script>
+<script src="./sync-core.js?v=0.16.11"></script><script src="./sync-crypto.js?v=0.16.11"></script><script src="./sync-engine.js?v=0.16.11"></script><script src="./device-sync.js?v=0.16.11"></script>
+<script src="./intake-core.js?v=0.16.11"></script>
+<script src="./intake.js?v=0.16.11"></script>
+<script src="./aquarium-motion.js?v=0.16.11"></script>
+<script src="./aquarium-render.js?v=0.16.11"></script>
+<script src="./aquarium.js?v=0.16.11"></script>
+<script src="./rondesign.js?v=0.16.11"></script>
+<script src="./rondesign-content.js?v=0.16.11"></script>
+<script src="./ambient-clean.js?v=0.16.11"></script>
 </body>
 </html>
