@@ -13,3 +13,5 @@ artifacts/
 sync-service/.wrangler/
 sync-service/.private/
 sync-service/wrangler.jsonc
+
+content-studio/cloud/.wrangler/

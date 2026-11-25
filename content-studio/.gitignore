@@ -1,0 +1,8 @@
+.venv/
+.tools/
+data/
+.env
+__pycache__/
+render/node_modules/
+render/bundle/
+data-last30-*

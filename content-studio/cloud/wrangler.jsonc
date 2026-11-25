@@ -1,0 +1,14 @@
+{
+  "name":"ai-desk-hub-studio",
+  "main":"worker.mjs",
+  "account_id":"5671747013d3ff7cfe181f5339bd4749",
+  "compatibility_date":"2026-11-25",
+  "workers_dev":true,
+  "preview_urls":false,
+  "observability":{"enabled":false},
+  "vars":{"ALLOWED_ORIGINS":"https://zhaokongkong96-ux.github.io,http://localhost:8775,http://127.0.0.1:8775,http://localhost:8876,http://127.0.0.1:8876"},
+  "d1_databases":[
+    {"binding":"DB","database_name":"ai-desk-hub-studio","database_id":"d2651b98-fc54-41c9-a8c2-d90c9d0c6aeb"},
+    {"binding":"AUTH_DB","database_name":"ai-desk-hub-sync","database_id":"d81f7ff3-0f59-4d76-8567-121acf57e177"}
+  ]
+}

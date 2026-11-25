@@ -1,0 +1,422 @@
+{
+  "topics": [
+    {
+      "id": "f03e76a86ad4446e8369c924d2addb50",
+      "run_id": "8b7402f90acc4e808ff295b6098a6968",
+      "title": "Biscuit-tin lids, horse brasses and scrap metal form sculptural V&A Christmas tree by Burberry",
+      "summary": "Fashion brand Burberry's chief creative officer Daniel Lee worked with artist Ann Carrington to create a Christmas tree sculpture for the Victoria & Albert Museum, made from \"memories, traditions and little treasures.\" The post Biscuit-tin lids, horse brasses and scrap metal form sculptural V&A Christmas tree by Burberry appeared first on Dezeen .",
+      "url": "https://www.dezeen.com/2026/11/24/va-christmas-tree-burberry/",
+      "provider": "Dezeen",
+      "published_at": "2026-11-24T10:45:00+00:00",
+      "collected_at": "2026-11-24T12:54:22.288794+00:00",
+      "category": "A",
+      "score": 91.8,
+      "recommended": 1,
+      "plan": {
+        "category": "设计与科技",
+        "reason": "来源 Dezeen，发布距今 0.1 天，摘要信息量 349 字符。近7天未入选。评分采用时效、来源可追溯、信息量和新颖度规则，尚无跨平台热度验证。"
+      },
+      "options": {
+        "display_title": "Burberry 用旧物做了一棵 V&A 圣诞树",
+        "overview": "Burberry 与艺术家以饼干盒盖、旧金属等物件制作博物馆圣诞树。",
+        "angles": [
+          {
+            "id": "a",
+            "title": "旧物怎样变成有情绪的设计",
+            "focus": "拆解材料、个人记忆与节庆体验之间的设计联系。"
+          },
+          {
+            "id": "b",
+            "title": "奢侈品牌为何走进博物馆",
+            "focus": "从品牌表达和公共文化空间的合作切入，研究传播方式。"
+          }
+        ],
+        "ref": "A1"
+      },
+      "plan_version": "0",
+      "review": "pending"
+    },
+    {
+      "id": "da226449265e49f4b6ea84abfa9bdd88",
+      "run_id": "8b7402f90acc4e808ff295b6098a6968",
+      "title": "Israeli air strike kills Hamas internal security chief in Gaza",
+      "summary": "Naeem Abu Nahel, who had only been in the position for two months, was targeted in western Gaza City, Gaza's interior ministry says.",
+      "url": "https://www.bbc.co.uk/news/articles/c6rrg7ggq190o?at_medium=RSS&at_campaign=rss",
+      "provider": "BBC World",
+      "published_at": "2026-11-24T12:12:48+00:00",
+      "collected_at": "2026-11-24T12:54:23.141666+00:00",
+      "category": "C",
+      "score": 87.6,
+      "recommended": 1,
+      "plan": {
+        "category": "全球多领域",
+        "reason": "来源 BBC World，发布距今 0.0 天，摘要信息量 132 字符。近7天未入选。评分采用时效、来源可追溯、信息量和新颖度规则，尚无跨平台热度验证。"
+      },
+      "options": {
+        "display_title": "加沙一名哈马斯安全负责人遭袭身亡的报道",
+        "overview": "BBC 引述加沙内政部门报道一名安全负责人的死亡，具体信息需多源交叉核对。",
+        "angles": [
+          {
+            "id": "a",
+            "title": "先分清已确认事实与各方说法",
+            "focus": "按时间线整理通报、报道和仍待核实的信息。"
+          },
+          {
+            "id": "b",
+            "title": "新闻事件怎样影响当地日常",
+            "focus": "寻找可靠的人道与居民生活资料，避免仅用冲突人物串联事件。"
+          }
+        ],
+        "ref": "C1"
+      },
+      "plan_version": "0",
+      "review": "pending"
+    },
+    {
+      "id": "cc13d84710234e63af0a4ed020273487",
+      "run_id": "8b7402f90acc4e808ff295b6098a6968",
+      "title": "Why I love Rome in winter: ‘We reclaim the city and slip back into familiar routines’",
+      "summary": "There is plenty of sunshine, the tourists have thinned out – and no one does a traditional Christmas like the Romans There was a time when, during a Rome winter, I would crave the warmer months. Not any more. The combination of intense heat and overtourism has made summer poco piacevole , as Italians would say – not very pleasant. So come mid-September, when the temperature drops and the crowds thin out, our mood lifts as we reclaim the city and slip back into familiar routines. In winter, the temperature is mostly mild and there is still plenty of sunshine (we do tend to grumble if the rain and grey skies persist for a few days). Rome is best seen on foot, and my favourite time to walk it is on a Sunday. Until earlier this year, I lived in Esquilino, a vibrant neighbourhood close to Termini train station. I’d begin with coffee at Gatsby Cafe by Piazza Vittorio before walking along Via Merulana – a tree-lined street similar to a Parisian boulevard – and then through the Colle Oppio park, past the Colosseum and towards Circo Massimo . Continue reading...",
+      "url": "https://www.theguardian.com/travel/2026/nov/24/why-i-love-rome-in-winter-chistmas",
+      "provider": "Guardian Travel",
+      "published_at": "2026-11-24T07:00:10+00:00",
+      "collected_at": "2026-11-24T12:54:22.343490+00:00",
+      "category": "B",
+      "score": 84.6,
+      "recommended": 1,
+      "plan": {
+        "category": "生活与旅行",
+        "reason": "来源 Guardian Travel，发布距今 0.2 天，摘要信息量 1069 字符。近7天已入选，降低新颖度分。评分采用时效、来源可追溯、信息量和新颖度规则，尚无跨平台热度验证。"
+      },
+      "options": {
+        "display_title": "冬天的罗马，如何回到本地人的日常",
+        "overview": "Guardian 作者从冬季步行、街区和节庆活动讲述罗马生活。",
+        "angles": [
+          {
+            "id": "a",
+            "title": "旅游城市什么时候属于居民",
+            "focus": "用淡季街区生活讨论旅游体验与本地日常的关系。"
+          },
+          {
+            "id": "b",
+            "title": "一条冬日散步路线如何展开",
+            "focus": "按原文的咖啡馆、街道与公园组织体验故事，实用信息另行核对。"
+          }
+        ],
+        "ref": "B1"
+      },
+      "plan_version": "0",
+      "review": "pending"
+    },
+    {
+      "id": "06c166f28568429ca1b6e8f2ced0befc",
+      "run_id": "8b7402f90acc4e808ff295b6098a6968",
+      "title": "\"Intensely physical patterns\" cloak Gerhard Richter's self-designed gallery in Doha",
+      "summary": "Kaleidoscopic patterns adorn the exterior of this blocky pavilion in Doha, Qatar, designed by artist Gerhard Richter with US studio Selldorf Architects as an art gallery. The post \"Intensely physical patterns\" cloak Gerhard Richter's self-designed gallery in Doha appeared first on Dezeen .",
+      "url": "https://www.dezeen.com/2026/11/24/gerhard-richters-doha-pavilion-selldorf-architects/",
+      "provider": "Dezeen",
+      "published_at": "2026-11-24T11:30:00+00:00",
+      "collected_at": "2026-11-24T12:54:22.288315+00:00",
+      "category": "A",
+      "score": 90.7,
+      "recommended": 0,
+      "plan": {
+        "category": "设计与科技",
+        "reason": "来源 Dezeen，发布距今 0.1 天，摘要信息量 290 字符。近7天未入选。评分采用时效、来源可追溯、信息量和新颖度规则，尚无跨平台热度验证。"
+      },
+      "options": {
+        "display_title": "里希特参与设计的多哈画廊，以图案包裹建筑",
+        "overview": "里希特与 Selldorf Architects 合作，用万花筒般的图案塑造画廊外观。",
+        "angles": [
+          {
+            "id": "a",
+            "title": "一座建筑如何成为一件作品",
+            "focus": "拆解图案、体块和观看体验，讨论艺术与建筑的边界。"
+          },
+          {
+            "id": "b",
+            "title": "美术馆该突出建筑还是展品",
+            "focus": "从观众体验切入，比较外观吸引力与展陈功能，结论待研究。"
+          }
+        ],
+        "ref": "A2"
+      },
+      "plan_version": "0",
+      "review": "pending"
+    },
+    {
+      "id": "0ccbe46f55294c228d273974a6243e29",
+      "run_id": "8b7402f90acc4e808ff295b6098a6968",
+      "title": "Architects and designers celebrate at Dezeen Awards 2026 party in London",
+      "summary": "The world's leading architects and designers from over 40 countries joined to celebrate Dezeen Awards 2026, in partnership with Trimble, announcing this year's winners at a party in London. The post Architects and designers celebrate at Dezeen Awards 2026 party in London appeared first on Dezeen .",
+      "url": "https://www.dezeen.com/2026/11/24/dezeen-awards-2026-party-london/",
+      "provider": "Dezeen",
+      "published_at": "2026-11-24T08:00:00+00:00",
+      "collected_at": "2026-11-24T12:54:22.289572+00:00",
+      "category": "A",
+      "score": 90.7,
+      "recommended": 0,
+      "plan": {
+        "category": "设计与科技",
+        "reason": "来源 Dezeen，发布距今 0.2 天，摘要信息量 298 字符。近7天未入选。评分采用时效、来源可追溯、信息量和新颖度规则，尚无跨平台热度验证。"
+      },
+      "options": {
+        "display_title": "Dezeen Awards 2026 公布获奖者",
+        "overview": "来自多个国家的建筑师、设计师在伦敦参加本届颁奖活动。",
+        "angles": [
+          {
+            "id": "a",
+            "title": "获奖项目里有哪些值得看的设计方法",
+            "focus": "先补齐获奖名单与项目原始资料，再寻找具体方法。"
+          },
+          {
+            "id": "b",
+            "title": "设计奖项怎样影响行业关注",
+            "focus": "研究评审标准、传播与设计机构之间的关系，避免把获奖等同品质。"
+          }
+        ],
+        "ref": "A3"
+      },
+      "plan_version": "0",
+      "review": "pending"
+    },
+    {
+      "id": "6bb931ab0a46451ba751648c4c59eb94",
+      "run_id": "8b7402f90acc4e808ff295b6098a6968",
+      "title": "Meet Courage Dzidula Kpodo, Lesley Lokko's pick for the most influential architect of the next 20 years",
+      "summary": "Lesley Lokko has nominated Courage Dzidula Kpodo as a key name to watch over the next two decades for Dezeen’s 20×20 project. The post Meet Courage Dzidula Kpodo, Lesley Lokko's pick for the most influential architect of the next 20 years appeared first on Dezeen .",
+      "url": "https://www.dezeen.com/2026/11/24/courage-dzidula-kpodo-interview-lesley-lokko-20x20/",
+      "provider": "Dezeen",
+      "published_at": "2026-11-24T11:00:00+00:00",
+      "collected_at": "2026-11-24T12:54:22.288570+00:00",
+      "category": "A",
+      "score": 90.2,
+      "recommended": 0,
+      "plan": {
+        "category": "设计与科技",
+        "reason": "来源 Dezeen，发布距今 0.1 天，摘要信息量 265 字符。近7天未入选。评分采用时效、来源可追溯、信息量和新颖度规则，尚无跨平台热度验证。"
+      },
+      "options": {
+        "display_title": "一位被看好的建筑师，为什么值得认识",
+        "overview": "Lesley Lokko 在 Dezeen 的 20×20 项目中提名 Courage Dzidula Kpodo。",
+        "angles": [
+          {
+            "id": "a",
+            "title": "从具体作品认识一个建筑师",
+            "focus": "从作品、服务人群和实际场景梳理他的方法，作品资料待补。"
+          },
+          {
+            "id": "b",
+            "title": "未来建筑需要什么能力",
+            "focus": "以这次提名为起点，讨论建筑教育与地域实践，明确区分提名观点与事实。"
+          }
+        ],
+        "ref": "A4"
+      },
+      "plan_version": "0",
+      "review": "pending"
+    },
+    {
+      "id": "2d9cb76136c84fe3a2a31f1e8a310320",
+      "run_id": "8b7402f90acc4e808ff295b6098a6968",
+      "title": "Pope Francis' diary reveals claims he saw the devil three times",
+      "summary": "Published extracts from the late pontiff's diary claim one of the visions happened \"in the choir loft\" during Mass.",
+      "url": "https://www.bbc.co.uk/news/articles/cm78270l4z7no?at_medium=RSS&at_campaign=rss",
+      "provider": "BBC World",
+      "published_at": "2026-11-24T11:10:57+00:00",
+      "collected_at": "2026-11-24T12:54:23.141768+00:00",
+      "category": "C",
+      "score": 87.2,
+      "recommended": 0,
+      "plan": {
+        "category": "全球多领域",
+        "reason": "来源 BBC World，发布距今 0.1 天，摘要信息量 115 字符。近7天未入选。评分采用时效、来源可追溯、信息量和新颖度规则，尚无跨平台热度验证。"
+      },
+      "options": {
+        "display_title": "教宗私人日记摘录中的异象叙述",
+        "overview": "BBC 报道已故教宗日记摘录中的个人叙述，属于当事人的经验描述。",
+        "angles": [
+          {
+            "id": "a",
+            "title": "媒体怎样报道私人日记",
+            "focus": "讨论原始文本、编辑摘录和新闻标题之间的差异。"
+          },
+          {
+            "id": "b",
+            "title": "个人体验与可验证事实怎样区分",
+            "focus": "从史料阅读和证据边界切入，避免把信仰叙述包装成事实证明。"
+          }
+        ],
+        "ref": "C2"
+      },
+      "plan_version": "0",
+      "review": "pending"
+    },
+    {
+      "id": "4895a40a334d45128284b625c70e73a8",
+      "run_id": "8b7402f90acc4e808ff295b6098a6968",
+      "title": "Car bomb tears through Colombian city wounding more than 20",
+      "summary": "The explosion is the latest in a string of attacks on buildings housing the security forces and government offices.",
+      "url": "https://www.bbc.co.uk/news/articles/cjqlq2n4np7do?at_medium=RSS&at_campaign=rss",
+      "provider": "BBC World",
+      "published_at": "2026-11-24T11:45:52+00:00",
+      "collected_at": "2026-11-24T12:54:23.141881+00:00",
+      "category": "C",
+      "score": 87.2,
+      "recommended": 0,
+      "plan": {
+        "category": "全球多领域",
+        "reason": "来源 BBC World，发布距今 0.0 天，摘要信息量 115 字符。近7天未入选。评分采用时效、来源可追溯、信息量和新颖度规则，尚无跨平台热度验证。"
+      },
+      "options": {
+        "display_title": "哥伦比亚城市汽车炸弹袭击报道",
+        "overview": "BBC 报道汽车炸弹爆炸造成多人受伤，并提及近期相关袭击。",
+        "angles": [
+          {
+            "id": "a",
+            "title": "把事件的地点、时间和证据讲清楚",
+            "focus": "依据官方通报与多家报道核对事实，伤亡数字随核验更新。"
+          },
+          {
+            "id": "b",
+            "title": "公共安全如何改变城市生活",
+            "focus": "研究公共空间、安全措施与居民日常的联系，补齐当地可靠资料。"
+          }
+        ],
+        "ref": "C3"
+      },
+      "plan_version": "0",
+      "review": "pending"
+    },
+    {
+      "id": "bbd6e2b50237456a951c96b142c5b6d5",
+      "run_id": "8b7402f90acc4e808ff295b6098a6968",
+      "title": "Why I love Berlin in winter: ‘Christmas markets arrive in a blaze of twinkling lights’",
+      "summary": "The cold is legendary, but there’s hot chocolate and Glühwein to warm you up, plus crowd-free museums and galleries and cosy candlelit pubs One of the first things Berliners warned me about when I moved here in 2008 was the winters. They talked in hushed, conspiratorial tones about the harsh winds that blew in from the Russian steppes, temperatures of minus 15C and the horrors of frozen bike locks. Having survived 17 of these winters (and counting), and still no hospitalisations for frostbite to report, I can confirm that the warnings, although not necessarily untrue, are not the whole story. Although some Berlin winter days are cold, miserable and grey, they can also be charming, cheerful and chock-full of possibilities. No sooner has the temperature dropped, and the last yellow leaves see-sawed from the trees at the end of November, than the city’s Christmas markets assert themselves in a blaze of twinkling lights, aromatic grill smoke, candied nuts and warming cups of Glühwein. Continue reading...",
+      "url": "https://www.theguardian.com/travel/2026/nov/23/why-i-love-berlin-in-winter-christmas-markets",
+      "provider": "Guardian Travel",
+      "published_at": "2026-11-23T07:00:50+00:00",
+      "collected_at": "2026-11-24T12:54:22.343710+00:00",
+      "category": "B",
+      "score": 83.1,
+      "recommended": 0,
+      "plan": {
+        "category": "生活与旅行",
+        "reason": "来源 Guardian Travel，发布距今 1.2 天，摘要信息量 1015 字符。近7天已入选，降低新颖度分。评分采用时效、来源可追溯、信息量和新颖度规则，尚无跨平台热度验证。"
+      },
+      "options": {
+        "display_title": "柏林的冬天，除了寒冷还有什么",
+        "overview": "Guardian 作者从圣诞市场、博物馆和室内空间讲述冬日柏林。",
+        "angles": [
+          {
+            "id": "a",
+            "title": "一座城市怎样让冬天更好过",
+            "focus": "研究市场、公共文化空间和社交场所如何构成冬季体验。"
+          },
+          {
+            "id": "b",
+            "title": "从市场到博物馆的慢旅行",
+            "focus": "以一天的节奏讲述冬日旅行，路线和开放信息需进一步查证。"
+          }
+        ],
+        "ref": "B2"
+      },
+      "plan_version": "0",
+      "review": "pending"
+    },
+    {
+      "id": "82a38844f679430395bf9fbf595c3488",
+      "run_id": "8b7402f90acc4e808ff295b6098a6968",
+      "title": "‘I found the best mountain view in Europe’: readers’ favourite wild escapes in Scotland",
+      "summary": "From the Isle of Skye to the Cairngorms, our explorers find white-sand beaches, secret lochs and solitude • Tell us about your favourite European national park – the best tip wins a £200 holiday voucher At Camasunary bay on the Strathaird peninsula of the Isle of Skye, we watched an otter at low tide lifting seaweed to find crabs. Boots off, we crossed one of Skye’s shortest (and coldest) rivers, before slogging upwards through unforgiving heather to the col beneath the pathless hill Sgùrr na Strì . The mountain view from the summit’s glaciated slabs is perhaps the finest in Scotland – or even Europe. Below is landlocked Loch Coruisk, girdled by the black teeth of the entire Cuillin ridge. Extraordinary. An hour passed, maybe two, before we headed back. The otter was by then long gone, hopefully just as replete and satisfied as we were. Hugh Jones Continue reading...",
+      "url": "https://www.theguardian.com/travel/2026/nov/13/readers-favourite-wild-escapes-scotland-skye-cairngorms",
+      "provider": "Guardian Travel",
+      "published_at": "2026-11-13T07:00:11+00:00",
+      "collected_at": "2026-11-24T12:54:22.345412+00:00",
+      "category": "B",
+      "score": 83.1,
+      "recommended": 0,
+      "plan": {
+        "category": "生活与旅行",
+        "reason": "来源 Guardian Travel，发布距今 11.2 天，摘要信息量 879 字符。近7天未入选。评分采用时效、来源可追溯、信息量和新颖度规则，尚无跨平台热度验证。"
+      },
+      "options": {
+        "display_title": "苏格兰野外旅行，读者最难忘的地方",
+        "overview": "Guardian 汇集了斯凯岛、凯恩戈姆等地的读者旅行体验，发布于 11 月 13 日。",
+        "angles": [
+          {
+            "id": "a",
+            "title": "为什么安静的风景让人愿意出发",
+            "focus": "从原文的感官细节讲述野外体验，避免把个人感受当作疗效。"
+          },
+          {
+            "id": "b",
+            "title": "风景背后的路线与准备",
+            "focus": "研究路线难度、天气和装备信息，安全与路线细节需核对权威资料。"
+          }
+        ],
+        "ref": "B3"
+      },
+      "plan_version": "0",
+      "review": "pending"
+    }
+  ],
+  "runs": [
+    {
+      "id": "8b7402f90acc4e808ff295b6098a6968",
+      "created_at": "2026-11-24T12:54:27.251123+00:00",
+      "status": "complete",
+      "result": {
+        "id": "8b7402f90acc4e808ff295b6098a6968",
+        "status": "complete",
+        "outcomes": [
+          {
+            "category": "A",
+            "provider": "NASA",
+            "url": "https://www.nasa.gov/feed/",
+            "count": 10,
+            "status": "ok"
+          },
+          {
+            "category": "A",
+            "provider": "Dezeen",
+            "url": "https://www.dezeen.com/feed/",
+            "count": 20,
+            "status": "ok"
+          },
+          {
+            "category": "B",
+            "provider": "Guardian Travel",
+            "url": "https://www.theguardian.com/travel/rss",
+            "count": 15,
+            "status": "ok"
+          },
+          {
+            "category": "C",
+            "provider": "BBC World",
+            "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+            "count": 20,
+            "status": "ok"
+          },
+          {
+            "category": "A",
+            "provider": "Last30Days / Hacker News",
+            "url": "https://news.ycombinator.com/",
+            "count": 6,
+            "status": "ok"
+          }
+        ],
+        "count": 10,
+        "weights": {
+          "A": 40,
+          "B": 30,
+          "C": 30
+        },
+        "coverage": "RSS live",
+        "last30days": "free Hacker News adapter",
+        "scoring": "rule-v1",
+        "collected_at": "2026-11-24T12:54:27.251123+00:00"
+      }
+    }
+  ]
+}
