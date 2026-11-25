@@ -293,5 +293,6 @@ async function connectCloud(){
 }
 $('pairStudio').onclick=()=>{location.href='./index.html?open=sync';};
 if(!preview&&location.port!=='8876')connectCloud();
+if(!preview&&location.port==='8876')$('legacyConnection').hidden=false;
 step('topics');
 })();

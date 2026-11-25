@@ -7,7 +7,7 @@
 .review-placeholder{display:grid;place-items:center;aspect-ratio:16/9;background:#183a30;color:#e7efd8;border-radius:20px;margin:20px 0;font-size:24px}</style></head><body>
 <header><div><small>AI DESK HUB / CREATE & REVIEW</small><h1>AI Content Studio</h1><p>先一起决定讲什么、怎么讲，再开始制作</p></div><nav><a href="./index.html">返回工作台</a><a href="#jobs">制作与审核</a></nav></header>
 <section id="connectionPanel"><h2>同一套内容工作室</h2><p id="connectionHelp" class="muted">线上使用工作台的设备配对身份自动连接。首次使用请先在工作台完成配对。</p>
-<details id="legacyConnection"><summary>本机后台连接（可选）</summary><div id="connectionFields" class="row"><input id="endpoint" placeholder="http://Mac局域网IP:8876" aria-label="Mac后台地址"><input id="token" type="password" autocomplete="off" placeholder="Mac 的访问令牌" aria-label="访问令牌"><button id="connect" class="primary">连接</button></div></details>
+<details id="legacyConnection" hidden><summary>本机后台连接（可选）</summary><div id="connectionFields" class="row"><input id="endpoint" placeholder="http://Mac局域网IP:8876" aria-label="Mac后台地址"><input id="token" type="password" autocomplete="off" placeholder="Mac 的访问令牌" aria-label="访问令牌"><button id="connect" class="primary">连接</button></div></details>
 <button id="pairStudio" class="primary" hidden>返回工作台配对</button><p id="status" role="status">等待连接</p></section>
 <section id="pendingOperations" hidden aria-live="polite"></section>
 <section id="previewNotice" hidden><strong>交互演示</strong><p>本页使用今天的真实选题快照。选择、填写要求、确认脚本等操作仅在本页预览。正式创作在连接 Mac 后保存与执行。</p></section>
