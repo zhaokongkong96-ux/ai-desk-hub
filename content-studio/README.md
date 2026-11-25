@@ -1,4 +1,8 @@
-# AI Content Studio 本机版本 0.1
+# AI Content Studio
+
+**线上 v0.17.0 已交付。** 从现有 AI Desk Hub 的“今日内容选题”或“内容工作室”进入，已配对设备自动共用选题和创作进度。新设备先完成工作台配对；不需要逐台填写 Mac 后台令牌。线上运行、离线排队、私有数据与免费容量说明见 [ONLINE_DELIVERY.md](ONLINE_DELIVERY.md)。
+
+以下是本机维护与早期局域网调试说明。
 
 在原 AI Desk Hub 增补内容工作室，使用独立 FastAPI、SQLite 和本机素材目录。原日程、同步和环境屏继续走各自已有模块。
 
@@ -21,7 +25,7 @@ cd ..
 
 iPad 与 Mac 同网时，在 Safari 打开 http://Mac局域网IP:8876/ 。界面会自动带入后台地址，输入这台 Mac 的访问令牌。设备 IP 可在 Mac 系统设置的网络详情中查看。HTTP 入口仅适合可信局域网，远程使用需额外提供受保护 HTTPS 入口。
 
-GitHub Pages 的入口为 content-studio.html。HTTPS Pages 远程连接 Mac 需要 HTTPS 后台。当前交付以 Mac 同源局域网审核入口为准，远程隧道与 iPad 真机验收仍待完成。
+GitHub Pages 的入口为 content-studio.html；v0.17.0 使用独立的受保护云端服务和 Mac 主动连接，不依赖局域网地址或临时隧道。实体 iPad 体验仍由用户单独试用确认。
 
 ## 每日执行与后台运行
 
